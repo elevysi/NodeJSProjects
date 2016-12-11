@@ -47,7 +47,7 @@ class User{
 	}
 
 	static getByName(name, cb){
-		User.getId(name, (err, cb) =>{
+		User.getId(name, (err, id) =>{
 			if(err) cb(err);
 			User.get(id, cb);
 		});
@@ -70,10 +70,17 @@ class User{
 			if(!user.id) return cb();
 			bcrypt.hash(pass, user.salt, (err, hash) => {
 				if(err) cb(err);
-				if(hash == user.pass) return cb(null. user);
+				if(hash == user.pass) return cb(null, user);
 				cb();
 			});
 		});
+	}
+
+	toJSON(){
+		return{
+			id: this.id,
+			name: this.name
+		}
 	}
 }
 
