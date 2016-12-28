@@ -13,10 +13,14 @@ var platform_browser_1 = require('@angular/platform-browser');
 var forms_1 = require('@angular/forms');
 var http_1 = require('@angular/http');
 var app_routing_module_1 = require("./app-routing.module");
+// import ng2-bootstrap alerts module
+// import { AlertModule } from "ng2-bootstrap/ng2-bootstrap";
+var ng2_file_upload_1 = require("ng2-file-upload/ng2-file-upload");
 var app_component_1 = require('./app.component');
 var snaps_component_1 = require('./snaps.component');
 var add_snap_component_1 = require("./add-snap.component");
 var view_snap_component_1 = require("./view-snap.component");
+var file_upload_component_1 = require('./file-upload.component');
 var snap_service_1 = require('./snap.service');
 // import './rxjs-extensions';
 var AppModule = (function () {
@@ -34,7 +38,9 @@ var AppModule = (function () {
                 app_component_1.AppComponent,
                 snaps_component_1.SnapsComponent,
                 add_snap_component_1.AddSnapComponent,
-                view_snap_component_1.ViewSnapComponent
+                view_snap_component_1.ViewSnapComponent,
+                ng2_file_upload_1.FileSelectDirective,
+                file_upload_component_1.FileUploadComponent
             ],
             providers: [snap_service_1.SnapService],
             bootstrap: [app_component_1.AppComponent]

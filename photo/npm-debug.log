@@ -1,35 +1,35 @@
 0 info it worked if it ends with ok
-1 verbose cli [ '/home/elvis/.nvm/v6.9.1/bin/node',
-1 verbose cli   '/home/elvis/.nvm/v6.9.1/bin/npm',
+1 verbose cli [ '/usr/local/Cellar/node/7.2.1/bin/node',
+1 verbose cli   '/usr/local/bin/npm',
 1 verbose cli   'start' ]
-2 info using npm@3.10.8
-3 info using node@v6.9.1
+2 info using npm@3.10.9
+3 info using node@v7.2.1
 4 verbose run-script [ 'prestart', 'start', 'poststart' ]
 5 info lifecycle photo@0.0.0~prestart: photo@0.0.0
 6 silly lifecycle photo@0.0.0~prestart: no script for prestart, continuing
 7 info lifecycle photo@0.0.0~start: photo@0.0.0
 8 verbose lifecycle photo@0.0.0~start: unsafe-perm in lifecycle true
-9 verbose lifecycle photo@0.0.0~start: PATH: /home/elvis/.nvm/v6.9.1/lib/node_modules/npm/bin/node-gyp-bin:/media/elvis/DataHDD1/Projects/NodeJSProjectsGit/NodeJSProjects/photo/node_modules/.bin:/home/elvis/.nvm/v6.9.1/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/jvm/java-8-oracle/bin:/usr/lib/jvm/java-8-oracle/db/bin:/usr/lib/jvm/java-8-oracle/jre/bin
-10 verbose lifecycle photo@0.0.0~start: CWD: /media/elvis/DataHDD1/Projects/NodeJSProjectsGit/NodeJSProjects/photo
+9 verbose lifecycle photo@0.0.0~start: PATH: /usr/local/lib/node_modules/npm/bin/node-gyp-bin:/Users/starstories/Documents/Projects/NodeJS/photo/node_modules/.bin:/usr/local/Cellar/node/7.2.1/bin:/Library/Frameworks/Python.framework/Versions/3.4/bin:/Applications/MAMP/bin/php/php5.5.3/bin/:/Applications/MAMP/Library/bin/:/Applications/MAMP/htdocs/elvis/lib/Cake/Console/:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/TeX/texbin
+10 verbose lifecycle photo@0.0.0~start: CWD: /Users/starstories/Documents/Projects/NodeJS/photo
 11 silly lifecycle photo@0.0.0~start: Args: [ '-c', 'node ./bin/www' ]
 12 silly lifecycle photo@0.0.0~start: Returned: code: 1  signal: null
 13 info lifecycle photo@0.0.0~start: Failed to exec start script
 14 verbose stack Error: photo@0.0.0 start: `node ./bin/www`
 14 verbose stack Exit status 1
-14 verbose stack     at EventEmitter.<anonymous> (/home/elvis/.nvm/v6.9.1/lib/node_modules/npm/lib/utils/lifecycle.js:255:16)
+14 verbose stack     at EventEmitter.<anonymous> (/usr/local/lib/node_modules/npm/lib/utils/lifecycle.js:255:16)
 14 verbose stack     at emitTwo (events.js:106:13)
 14 verbose stack     at EventEmitter.emit (events.js:191:7)
-14 verbose stack     at ChildProcess.<anonymous> (/home/elvis/.nvm/v6.9.1/lib/node_modules/npm/lib/utils/spawn.js:40:14)
+14 verbose stack     at ChildProcess.<anonymous> (/usr/local/lib/node_modules/npm/lib/utils/spawn.js:40:14)
 14 verbose stack     at emitTwo (events.js:106:13)
 14 verbose stack     at ChildProcess.emit (events.js:191:7)
-14 verbose stack     at maybeClose (internal/child_process.js:877:16)
+14 verbose stack     at maybeClose (internal/child_process.js:885:16)
 14 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:226:5)
 15 verbose pkgid photo@0.0.0
-16 verbose cwd /media/elvis/DataHDD1/Projects/NodeJSProjectsGit/NodeJSProjects/photo
-17 error Linux 4.2.0-16-generic
-18 error argv "/home/elvis/.nvm/v6.9.1/bin/node" "/home/elvis/.nvm/v6.9.1/bin/npm" "start"
-19 error node v6.9.1
-20 error npm  v3.10.8
+16 verbose cwd /Users/starstories/Documents/Projects/NodeJS/photo
+17 error Darwin 15.3.0
+18 error argv "/usr/local/Cellar/node/7.2.1/bin/node" "/usr/local/bin/npm" "start"
+19 error node v7.2.1
+20 error npm  v3.10.9
 21 error code ELIFECYCLE
 22 error photo@0.0.0 start: `node ./bin/www`
 22 error Exit status 1

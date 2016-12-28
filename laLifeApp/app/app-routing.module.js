@@ -13,6 +13,7 @@ var router_1 = require("@angular/router");
 var snaps_component_1 = require("./snaps.component");
 var add_snap_component_1 = require("./add-snap.component");
 var view_snap_component_1 = require("./view-snap.component");
+var file_upload_component_1 = require('./file-upload.component');
 // import { AppComponent } from "./app.component";
 var routes = [
     // {
@@ -31,6 +32,10 @@ var routes = [
     {
         path: "add",
         component: add_snap_component_1.AddSnapComponent
+    },
+    {
+        path: "upload",
+        component: file_upload_component_1.FileUploadComponent
     },
     {
         path: 'view/:id',

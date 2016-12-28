@@ -12,12 +12,26 @@ var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var common_1 = require('@angular/common');
 var snap_service_1 = require("./snap.service");
+var ng2_file_upload_1 = require("ng2-file-upload/ng2-file-upload");
 require("rxjs/add/operator/switchMap");
+var URL = "this is the URL";
 var AddSnapComponent = (function () {
+    // uploader.onBuidItemForm = (item, form) => {
+    //     form.append(key1, value1);
+    // };
+    // hasBaseDropZoneOver : boolean = false;
+    // hasAnotherDropzoneOver : boolean = false;
+    // public fileOverBase(e : any): void {
+    //     this.hasBaseDropZoneOver = e;
+    // }
+    // public fileOverAnother(e:any): void{
+    //     this.hasAnotherDropzoneOver = e;
+    // }
     function AddSnapComponent(snapService, router, location) {
         this.snapService = snapService;
         this.router = router;
         this.location = location;
+        this.uploader = new ng2_file_upload_1.FileUploader({ url: URL });
     }
     AddSnapComponent.prototype.ngOnInit = function () {
     };

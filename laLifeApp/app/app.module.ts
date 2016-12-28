@@ -7,10 +7,16 @@ import { AppRoutingModule } from "./app-routing.module";
 
 import { InMemoryWebApiModule } from "angular-in-memory-web-api";
 
+// import ng2-bootstrap alerts module
+// import { AlertModule } from "ng2-bootstrap/ng2-bootstrap";
+
+import { FileSelectDirective, FileDropDirective } from "ng2-file-upload/ng2-file-upload";
+
 import { AppComponent }  from './app.component';
 import { SnapsComponent } from './snaps.component';
 import { AddSnapComponent } from "./add-snap.component";
 import { ViewSnapComponent } from "./view-snap.component";
+import { FileUploadComponent } from './file-upload.component';
 
 import { SnapService } from './snap.service';
 
@@ -22,12 +28,15 @@ import { SnapService } from './snap.service';
       HttpModule,
       FormsModule,
       AppRoutingModule
+      // AlertModule
     ],
   declarations: [ 
     AppComponent,
     SnapsComponent,
     AddSnapComponent,
-    ViewSnapComponent
+    ViewSnapComponent,
+    FileSelectDirective,
+    FileUploadComponent
   ],
   providers : [ SnapService],
   bootstrap: [ AppComponent ]
