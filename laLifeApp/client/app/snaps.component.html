@@ -1,0 +1,75 @@
+<h2>Snaps</h2>
+
+<ul>
+        <li *ngFor="let snap of snaps">
+            <span>{{snap.name}}</span> - 
+            <span>{{snap.description}}</span> -
+            <span>{{snap.path}}</span>
+
+            <button (click)="deleteSnap(snap._id)">Delete this Snap</button>
+            <a routerLink="/view/{{snap._id}}">View</a>
+
+            
+
+            <!--<a routerLink="/add" routerLinkActive="active">Add a Snap</a>
+            <a routerLink="/" routerLinkActive="active">Snaps</a>-->
+
+        </li>
+</ul>
+
+
+
+<!-- Three Columns -->
+		<div class="container content">
+			<div class="text-center margin-bottom-50">
+				<h2 class="title-v2 title-center">THREE COLUMNS</h2>
+				<p class="space-lg-hor">If you are going to use a <span class="color-green">passage of Lorem Ipsum</span>, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making <span class="color-green">this the first</span> true generator on the Internet.</p>
+			</div>
+
+			<div class="row  margin-bottom-30">
+
+                
+                    <div *ngFor="let snap of snaps" class="col-sm-4 sm-margin-bottom-30">
+                        <a href="assets/img/main/img2.jpg" rel="gallery1" class="fancybox img-hover-v1" title="Image 1">
+                        <span><img src="{{snap.path}}" alt="{{snap.description}}" /></span>
+                        </a>
+                    </div>
+			</div>
+
+			<div class="row margin-bottom-30">
+				<div class="col-sm-4 sm-margin-bottom-30">
+					<a href="assets/img/main/img6.jpg" rel="gallery1" class="fancybox img-hover-v1" title="Image 4">
+						<span><img class="img-responsive" src="assets/img/main/img6.jpg" alt=""></span>
+					</a>
+				</div>
+				<div class="col-sm-4 sm-margin-bottom-30">
+					<a href="assets/img/main/img7.jpg" rel="gallery1" class="fancybox img-hover-v1" title="Image 5">
+						<span><img class="img-responsive" src="assets/img/main/img7.jpg" alt=""></span>
+					</a>
+				</div>
+				<div class="col-sm-4">
+					<a href="assets/img/main/img8.jpg" rel="gallery1" class="fancybox img-hover-v1" title="Image 6">
+						<span><img class="img-responsive" src="assets/img/main/img8.jpg" alt=""></span>
+					</a>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-sm-4 sm-margin-bottom-30">
+					<a href="assets/img/main/img9.jpg" rel="gallery1" class="fancybox img-hover-v1" title="Image 7">
+						<span><img class="img-responsive" src="assets/img/main/img9.jpg" alt=""></span>
+					</a>
+				</div>
+				<div class="col-sm-4 sm-margin-bottom-30">
+					<a href="assets/img/main/img10.jpg" rel="gallery1" class="fancybox img-hover-v1" title="Image 8">
+						<span><img class="img-responsive" src="assets/img/main/img10.jpg" alt=""></span>
+					</a>
+				</div>
+				<div class="col-sm-4">
+					<a href="assets/img/main/img11.jpg" rel="gallery1" class="fancybox img-hover-v1" title="Image 9">
+						<span><img class="img-responsive" src="assets/img/main/img11.jpg" alt=""></span>
+					</a>
+				</div>
+			</div>
+		</div>
+		<!-- End Three Columns -->

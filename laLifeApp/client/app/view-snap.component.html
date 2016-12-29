@@ -1,0 +1,37 @@
+<div *ngIf="snap">
+    <h3>View Snap - {{snap.name}} </h3>
+
+<table class="table">
+    <tr>
+        <td>Name</td>
+        <td>{{snap.name}}</td>
+    </tr>
+
+    <tr>
+        <td>Description</td>
+        <td>{{snap.description}}</td>
+    </tr>
+
+    <tr>
+        <td>Path</td>
+        <td>{{snap.path}}</td>
+    </tr>
+
+    <tr>
+        <td>Original Name</td>
+        <td>{{snap.originalname}}</td>
+    </tr>
+
+     <tr>
+        <td>File Name</td>
+        <td>{{snap.fileName}}</td>
+    </tr>
+
+    <tr>
+        <td>Created</td>
+        <td>{{snap.created}}</td>
+    </tr>
+</table>
+
+    <button (click)="deleteSnap(snap._id)">Delete this Snap</button>
+</div>

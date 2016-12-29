@@ -31,7 +31,7 @@ app.use(bodyParser.urlencoded({extended : true}));
 app.use(appHeaders);
 
 //Set static folder
-app.use(express.static(path.join(__dirname, "")));
+app.use(express.static(path.join(__dirname, "client")));
 //Folder for files uploads
 app.set('uploadsDir', path.join(__dirname, 'uploads'));
 
