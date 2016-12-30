@@ -23,7 +23,12 @@ var SnapsComponent = (function () {
     SnapsComponent.prototype.getSnaps = function () {
         var _this = this;
         this.snapService.getSnaps()
-            .then(function (snaps) { return _this.snaps = snaps; });
+            .then(function (snaps) {
+            _this.snaps = snaps;
+            console.log(Array.from(Array(Math.ceil(_this.snaps.length / 3)).keys()));
+            _this.rows = Array.from(Array(Math.ceil(_this.snaps.length / 3)).keys());
+            // console.log(this.rows);
+        });
     };
     SnapsComponent.prototype.ngOnInit = function () {
         this.getSnaps();

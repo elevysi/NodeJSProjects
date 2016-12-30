@@ -13,6 +13,7 @@ import { SnapService } from "./snap.service";
 
 export class SnapsComponent implements OnInit{
     snaps : Snap [] = [];
+    rows : number[];
 
     constructor(
         private snapService : SnapService,
@@ -22,7 +23,12 @@ export class SnapsComponent implements OnInit{
 
     getSnaps(): void{
         this.snapService.getSnaps()
-            .then(snaps => this.snaps = snaps);
+            .then(snaps => {
+                this.snaps = snaps;
+                console.log(Array.from(Array(Math.ceil(this.snaps.length / 3)).keys()));
+                this.rows = Array.from(Array(Math.ceil(this.snaps.length / 3)).keys());
+                // console.log(this.rows);
+            });
     }
 
     ngOnInit(): void {

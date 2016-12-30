@@ -1,9 +1,14 @@
-<nav>
-    <a routerLink="/" routerLinkActive="active">Snaps</a>
-    <a routerLink="/add" routerLinkActive="active">Add a Snap</a>
-    <a routerLink="/upload" routerLinkActive="active">Upload</a>
+<!--=== Breadcrumbs ===-->
+<div class="breadcrumbs breadcrumbs-light">
+    <div class="container">
+        <h1 class="pull-left">LaLife</h1>
+        <ul class="pull-right breadcrumb">
+            <li><a routerLink="/" routerLinkActive="active">Snaps</a></li>
+            <li><a routerLink="/upload" routerLinkActive="active">Upload</a></li>
+            <!--<li><a routerLink="/add" routerLinkActive="active">Add a Snap</a></li>-->
+        </ul>
+    </div>
+</div><!--/breadcrumbs-->
+<!--=== End Breadcrumbs ===-->
 
-</nav>
-
-<h1>Hello {{name}} - This is the template we will charge everything in</h1>
 <router-outlet></router-outlet>

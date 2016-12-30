@@ -7,6 +7,7 @@ var mime = require('mime');
 var Snap = require("../models/snap");
 
 const DIR = './client/uploads/';
+const CLIENT_DIR = "uploads/";
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -47,7 +48,7 @@ exports.add = (dir) => {
                 "description" : req.body.description,
                 "originalname" : req.file.originalname,
                 "fileName" : req.file.filename,
-                "path" : req.file.path,
+                "path" : CLIENT_DIR + req.file.filename,
                 "mime" : req.file.mimetype,
                 "size" : req.file.size,
             });
