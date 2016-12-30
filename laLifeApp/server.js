@@ -3,13 +3,28 @@ var bodyParser = require("body-parser");
 var path = require('path');
 var fs = require('fs');
 
+var passport = require('passport');
+
 var multiparty = require('connect-multiparty'); //For files uploads
 
 var appHeaders = require('./middleware/appheaders');
 
+require('./models/user');
+require('./configs/passport');
+
+//For getting the secret
+var configs = require("./configs/secret");
+
+var jwt = require('express-jwt');
+var auth = jwt({
+  secret: configs.getSecret(),
+  userProperty: 'payload'
+});
+
 
 const appRoute = require("./routes/app");
 var apiRoute = require("./routes/api");
+var usersRoute = require("./routes/users");
 
 //Connects to Mongo
 const dbConfig = require("./configs/database");
@@ -38,21 +53,30 @@ app.set('uploadsDir', path.join(__dirname, 'uploads'));
 // var upload = multer({dest : app.get('uploadsDir')});
 
 
+app.use(passport.initialize())
+
+
 
 app.use("/", appRoute);
+
+// error handlers
+// Catch unauthorised errors
+app.use(function (err, req, res, next) {
+  if (err.name === 'UnauthorizedError') {
+    res.status(401);
+    res.json({"message" : err.name + ": " + err.message});
+  }
+});
+
+
 app.get("/api/snaps", apiRoute.list);
 app.get("/api/snaps/:id", apiRoute.getSnap);
 app.post("/api/snaps", apiRoute.add(app.get('uploadsDir')));
 
-// app.post('/api/snaps', function (req, res) {
-//   upload(req, res, function (err) {
-//     if (err) {
-//       return res.end(err.toString());
-//     }
-
-//     res.end('File is uploaded');
-//   });
-// });
+app.post("/api/register", usersRoute.register);
+app.post("/api/login", usersRoute.login);
+app.get("/api/profile", auth, usersRoute.profileRead);
+app.get("/api/users", auth, usersRoute.list);
 
 
 app.delete("/api/snaps/:id", apiRoute.deleteSnap);

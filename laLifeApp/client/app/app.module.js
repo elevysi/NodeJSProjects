@@ -21,7 +21,13 @@ var snaps_component_1 = require('./snaps.component');
 var add_snap_component_1 = require("./add-snap.component");
 var view_snap_component_1 = require("./view-snap.component");
 var file_upload_component_1 = require('./file-upload.component');
+var register_component_1 = require('./register.component');
+var login_component_1 = require('./login.component');
+var profile_component_1 = require('./profile.component');
+// import 
 var snap_service_1 = require('./snap.service');
+var user_service_1 = require('./user.service');
+var logged_in_guard_1 = require("./logged-in.guard");
 // import './rxjs-extensions';
 var AppModule = (function () {
     function AppModule() {
@@ -40,9 +46,12 @@ var AppModule = (function () {
                 add_snap_component_1.AddSnapComponent,
                 view_snap_component_1.ViewSnapComponent,
                 ng2_file_upload_1.FileSelectDirective,
-                file_upload_component_1.FileUploadComponent
+                file_upload_component_1.FileUploadComponent,
+                register_component_1.RegisterComponent,
+                login_component_1.LoginComponent,
+                profile_component_1.ProfileComponent
             ],
-            providers: [snap_service_1.SnapService],
+            providers: [snap_service_1.SnapService, user_service_1.UserService, logged_in_guard_1.LoggedInGuard],
             bootstrap: [app_component_1.AppComponent]
         }), 
         __metadata('design:paramtypes', [])

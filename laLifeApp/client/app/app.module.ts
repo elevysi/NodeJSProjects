@@ -18,7 +18,15 @@ import { AddSnapComponent } from "./add-snap.component";
 import { ViewSnapComponent } from "./view-snap.component";
 import { FileUploadComponent } from './file-upload.component';
 
+import { RegisterComponent } from './register.component';
+import { LoginComponent } from './login.component';
+import { ProfileComponent } from './profile.component';
+
+// import 
+
 import { SnapService } from './snap.service';
+import { UserService } from './user.service';
+import { LoggedInGuard } from "./logged-in.guard";
 
 // import './rxjs-extensions';
 
@@ -36,9 +44,12 @@ import { SnapService } from './snap.service';
     AddSnapComponent,
     ViewSnapComponent,
     FileSelectDirective,
-    FileUploadComponent
+    FileUploadComponent,
+    RegisterComponent,
+    LoginComponent,
+    ProfileComponent
   ],
-  providers : [ SnapService],
+  providers : [ SnapService, UserService, LoggedInGuard],
   bootstrap: [ AppComponent ]
   
 })

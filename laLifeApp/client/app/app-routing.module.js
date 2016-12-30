@@ -14,6 +14,10 @@ var snaps_component_1 = require("./snaps.component");
 var add_snap_component_1 = require("./add-snap.component");
 var view_snap_component_1 = require("./view-snap.component");
 var file_upload_component_1 = require('./file-upload.component');
+var register_component_1 = require('./register.component');
+var login_component_1 = require('./login.component');
+var profile_component_1 = require('./profile.component');
+var logged_in_guard_1 = require("./logged-in.guard");
 // import { AppComponent } from "./app.component";
 var routes = [
     // {
@@ -40,6 +44,23 @@ var routes = [
     {
         path: 'view/:id',
         component: view_snap_component_1.ViewSnapComponent
+    },
+    {
+        path: "register",
+        component: register_component_1.RegisterComponent
+    },
+    {
+        path: "login",
+        component: login_component_1.LoginComponent
+    },
+    {
+        path: 'profile/:id',
+        component: profile_component_1.ProfileComponent
+    },
+    {
+        path: 'users',
+        component: profile_component_1.ProfileComponent,
+        canActivate: [logged_in_guard_1.LoggedInGuard]
     }
 ];
 var AppRoutingModule = (function () {
