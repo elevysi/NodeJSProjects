@@ -39,8 +39,11 @@ var UserService = (function () {
     UserService.prototype.getUsers = function () {
         var url = "" + this.userUrl;
         var authToken = localStorage.getItem('auth_token');
-        this.headers.append('Authorization', "Bearer " + authToken);
-        return this.http.get(this.userUrl)
+        var headers = new http_1.Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('Authorization', "Bearer " + authToken);
+        // this.headers = this.headers.append('Authorization', `Bearer ${authToken}`);
+        return this.http.get(this.userUrl, { headers: headers })
             .toPromise()
             .then(function (response) { return response.json(); })
             .catch(this.handleError);
@@ -53,10 +56,13 @@ var UserService = (function () {
             .post(this.loginUrl, JSON.stringify({ email: email, password: password }), { headers: this.headers })
             .toPromise()
             .then(function (res) {
-            if (res.json().success) {
-                _this.storeToken(res.json().token);
+            var data = res.json();
+            console.log("Success is ", data['success']);
+            if (data['success']) {
+                _this.storeToken(data['token']);
+                return _this.isLoggedIn;
             }
-            return res.json().success;
+            // return res.json().success;
         })
             .catch(this.handleError);
     };
@@ -64,12 +70,39 @@ var UserService = (function () {
         localStorage.setItem('auth_token', auth_token);
         this.loggedIn = true;
     };
+    UserService.prototype.getToken = function () {
+        return localStorage.getItem('auth_token');
+    };
     UserService.prototype.logout = function () {
         localStorage.removeItem('auth_token');
         this.loggedIn = false;
     };
+    //   isLoggedIn() {
+    //     return this.loggedIn;
+    //   }
     UserService.prototype.isLoggedIn = function () {
-        return this.loggedIn;
+        var token = this.getToken();
+        if (token) {
+            var payload = token.split('.')[1];
+            payload = atob(payload);
+            console.log(JSON.parse(payload).exp);
+            return JSON.parse(payload).exp > Date.now() / 1000;
+        }
+        else {
+            return false;
+        }
+    };
+    UserService.prototype.currentUser = function () {
+        if (this.isLoggedIn()) {
+            var token = this.getToken();
+            var payload = token.split('.')[1];
+            payload = atob(payload);
+            return {
+                email: JSON.parse(payload).email,
+                name: JSON.parse(payload).name
+            };
+        }
+        return false;
     };
     UserService.prototype.register = function (name, email, password) {
         var _this = this;
@@ -77,7 +110,9 @@ var UserService = (function () {
             .post(this.registerUrl, JSON.stringify({ name: name, email: email, password: password }), { headers: this.headers })
             .toPromise()
             .then(function (res) {
-            _this.storeToken(res.json().token);
+            var data = res.json();
+            _this.storeToken(data['token']);
+            return data['success'];
         })
             .catch(this.handleError);
     };

@@ -11,36 +11,25 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var user_service_1 = require("./user.service");
-var LoginComponent = (function () {
-    function LoginComponent(userService, router) {
+var LogoutComponent = (function () {
+    function LogoutComponent(userService, router) {
         this.userService = userService;
         this.router = router;
     }
-    LoginComponent.prototype.ngOnInit = function () {
-        if (this.userService.isLoggedIn()) {
-            console.log("User is logged in");
-            this.router.navigate(['']);
-        }
+    LogoutComponent.prototype.ngOnInit = function () {
+        console.log("logging out this user");
+        this.userService.logout();
+        this.router.navigate(['']);
     };
-    LoginComponent.prototype.submit = function () {
-        var _this = this;
-        this.userService.login(this.email, this.password)
-            .then(function (result) {
-            if (result) {
-                _this.router.navigate(['']);
-            }
-        });
-    };
-    LoginComponent = __decorate([
+    LogoutComponent = __decorate([
         core_1.Component({
             moduleId: module.id,
-            selector: "<app-login></app-login>",
-            templateUrl: "login.component.html",
-            styleUrls: ["../assets/css/pages/page_log_reg_v2.css"]
+            selector: "<app-logout></app-logout>",
+            template: ""
         }), 
         __metadata('design:paramtypes', [user_service_1.UserService, router_1.Router])
-    ], LoginComponent);
-    return LoginComponent;
+    ], LogoutComponent);
+    return LogoutComponent;
 }());
-exports.LoginComponent = LoginComponent;
-//# sourceMappingURL=login.component.js.map
+exports.LogoutComponent = LogoutComponent;
+//# sourceMappingURL=logout.component.js.map

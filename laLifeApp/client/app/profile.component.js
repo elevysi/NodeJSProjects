@@ -9,14 +9,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
-var auth_service_1 = require("./auth.service");
 var user_service_1 = require("./user.service");
 var ProfileComponent = (function () {
-    function ProfileComponent(userService, authService) {
+    function ProfileComponent(userService) {
         this.userService = userService;
-        this.authService = authService;
     }
     ProfileComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.userService.getUsers()
+            .then(function (users) {
+            if (users) {
+                _this.users = users;
+            }
+        });
     };
     ProfileComponent = __decorate([
         core_1.Component({
@@ -24,7 +29,7 @@ var ProfileComponent = (function () {
             selector: "<app-profile></app-profile>",
             templateUrl: "profile.component.html"
         }), 
-        __metadata('design:paramtypes', [user_service_1.UserService, auth_service_1.AuthService])
+        __metadata('design:paramtypes', [user_service_1.UserService])
     ], ProfileComponent);
     return ProfileComponent;
 }());

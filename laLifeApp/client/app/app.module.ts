@@ -21,6 +21,8 @@ import { FileUploadComponent } from './file-upload.component';
 import { RegisterComponent } from './register.component';
 import { LoginComponent } from './login.component';
 import { ProfileComponent } from './profile.component';
+import { UsersComponent } from "./users.component";
+import { LogoutComponent } from "./logout.component";
 
 // import 
 
@@ -47,7 +49,9 @@ import { LoggedInGuard } from "./logged-in.guard";
     FileUploadComponent,
     RegisterComponent,
     LoginComponent,
-    ProfileComponent
+    ProfileComponent,
+    LogoutComponent,
+    UsersComponent
   ],
   providers : [ SnapService, UserService, LoggedInGuard],
   bootstrap: [ AppComponent ]

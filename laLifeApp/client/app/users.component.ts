@@ -5,10 +5,10 @@ import { UserService } from "./user.service";
 @Component({
     moduleId : module.id,
     selector : "<app-profile></app-profile>",
-    templateUrl : "profile.component.html"
+    templateUrl : "users.component.html"
 })
 
-export class ProfileComponent implements OnInit{
+export class UsersComponent implements OnInit{
     users : User[];
     constructor(
         private userService : UserService

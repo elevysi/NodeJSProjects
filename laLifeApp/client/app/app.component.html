@@ -6,8 +6,11 @@
             <li><a routerLink="/" routerLinkActive="active">Snaps</a></li>
             <li><a routerLink="/upload" routerLinkActive="active">Upload</a></li>
             <li><a routerLink="/register" routerLinkActive="active">Register</a></li>
-            <li><a routerLink="/login" routerLinkActive="active">Login</a></li>
-            <li><a routerLink="/profile/2" routerLinkActive="active">Profile</a></li>
+            <li *ngIf="! user"><a routerLink="/login" routerLinkActive="active">Login</a></li>
+            <li *ngIf="user"><a routerLink="/logout" routerLinkActive="active">Logout - {{user.email}}</a></li>
+            <li *ngIf="user"><a routerLink="/profile/{{user.id}}" routerLinkActive="active">Profile - {{user.email}}</a></li>
+            <li *ngIf="user"><a routerLink="/users" routerLinkActive="active">Users</a></li>
+            
             <!--<li><a routerLink="/add" routerLinkActive="active">Add a Snap</a></li>-->
         </ul>
     </div>

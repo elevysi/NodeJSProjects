@@ -17,6 +17,8 @@ var file_upload_component_1 = require('./file-upload.component');
 var register_component_1 = require('./register.component');
 var login_component_1 = require('./login.component');
 var profile_component_1 = require('./profile.component');
+var logout_component_1 = require("./logout.component");
+var users_component_1 = require("./users.component");
 var logged_in_guard_1 = require("./logged-in.guard");
 // import { AppComponent } from "./app.component";
 var routes = [
@@ -54,13 +56,18 @@ var routes = [
         component: login_component_1.LoginComponent
     },
     {
-        path: 'profile/:id',
-        component: profile_component_1.ProfileComponent
+        path: 'users',
+        component: users_component_1.UsersComponent,
+        canActivate: [logged_in_guard_1.LoggedInGuard]
     },
     {
-        path: 'users',
+        path: 'profile/:email',
         component: profile_component_1.ProfileComponent,
         canActivate: [logged_in_guard_1.LoggedInGuard]
+    },
+    {
+        path: 'logout',
+        component: logout_component_1.LogoutComponent
     }
 ];
 var AppRoutingModule = (function () {

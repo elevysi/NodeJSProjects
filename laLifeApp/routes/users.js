@@ -3,7 +3,6 @@ var mongoose = require('mongoose');
 var User = mongoose.model('User');
 
 module.exports.login = function(req, res) {
-
   passport.authenticate('local', function(err, user, info){
     var token;
 
@@ -14,11 +13,12 @@ module.exports.login = function(req, res) {
     }
 
     // If a user is found
-    if(user){
+    if(user){ 
       token = user.generateJwt();
       res.status(200);
       res.json({
-        "token" : token
+        "token" : token,
+        "success" : true
       });
     } else {
       // If user is not found
@@ -41,7 +41,8 @@ module.exports.register = function(req, res) {
     token = user.generateJwt();
     res.status(200);
     res.json({
-      "token" : token
+      "token" : token,
+      "success" : true
     });
   });
 };

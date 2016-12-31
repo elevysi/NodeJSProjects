@@ -40,8 +40,14 @@ export class UserService{
     getUsers(): Promise<User[]> {
         const url = `${this.userUrl}`;
         let authToken = localStorage.getItem('auth_token');
-        this.headers.append('Authorization', `Bearer ${authToken}`);
-        return this.http.get(this.userUrl)
+
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('Authorization', `Bearer ${authToken}`);
+
+        // this.headers = this.headers.append('Authorization', `Bearer ${authToken}`);
+        
+        return this.http.get(this.userUrl, {headers: headers})
             .toPromise()
             .then(response => response.json() as User[])
             .catch(this.handleError);
@@ -50,17 +56,19 @@ export class UserService{
     login(email : String, password : String) {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
-
+        
         return this.http
-
             .post(this.loginUrl, JSON.stringify({ email, password }), {headers: this.headers})
             .toPromise()
             .then(res => {
-                if (res.json().success) {
-                    this.storeToken(res.json().token);
+                var data = res.json();
+                console.log("Success is ", data['success']);
+                if (data['success']) {
+                    this.storeToken(data['token']);
+                    return this.isLoggedIn;
                 }
 
-                return res.json().success;
+                // return res.json().success;
             })
             .catch(this.handleError);
 
@@ -70,16 +78,46 @@ export class UserService{
       localStorage.setItem('auth_token', auth_token);
         this.loggedIn = true;
   }
+
+  getToken() {
+      return localStorage.getItem('auth_token');
+  }
   
   logout() {
     localStorage.removeItem('auth_token');
     this.loggedIn = false;
   }
 
-  isLoggedIn() {
-    return this.loggedIn;
-  }
+//   isLoggedIn() {
+//     return this.loggedIn;
+//   }
 
+  isLoggedIn() : boolean {
+    var token = this.getToken();
+    if(token){
+        var payload = token.split('.')[1];
+        payload = atob(payload);
+        console.log(JSON.parse(payload).exp);
+
+        return JSON.parse(payload).exp > Date.now() / 1000;
+    } else {
+        return false;
+    }
+}
+
+    currentUser(){
+        if(this.isLoggedIn()){
+            var token = this.getToken();
+            var payload = token.split('.')[1];
+            payload = atob(payload);
+            return {
+                email : JSON.parse(payload).email,
+                name : JSON.parse(payload).name
+            };
+        }
+
+        return false;
+    }
 
   register(name : String, email : String, password : String) {
         
@@ -88,9 +126,13 @@ export class UserService{
             .post(this.registerUrl, JSON.stringify({name, email, password }), {headers: this.headers})
             .toPromise()
             .then(res => {
-                this.storeToken(res.json().token);
+                var data = res.json();
+                this.storeToken(data['token']);
+
+                return data['success'];
             })
             .catch(this.handleError);
     }
+
     
 }

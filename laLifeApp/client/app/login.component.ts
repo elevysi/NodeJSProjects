@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { UserService } from "./user.service";
 
@@ -9,7 +9,7 @@ import { UserService } from "./user.service";
     styleUrls : ["../assets/css/pages/page_log_reg_v2.css"]
 })
 
-export class LoginComponent{
+export class LoginComponent implements OnInit{
 
     email : String;
     password : String;
@@ -19,6 +19,13 @@ export class LoginComponent{
         private router : Router
     ){
 
+    }
+
+    ngOnInit() : void {
+        if(this.userService.isLoggedIn()){
+            console.log("User is logged in");
+            this.router.navigate(['']);
+        }
     }
 
     submit() : void {

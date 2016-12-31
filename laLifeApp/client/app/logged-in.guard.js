@@ -11,11 +11,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var user_service_1 = require('./user.service');
 var LoggedInGuard = (function () {
-    function LoggedInGuard(user) {
-        this.user = user;
+    function LoggedInGuard(userService) {
+        this.userService = userService;
     }
     LoggedInGuard.prototype.canActivate = function () {
-        return this.user.isLoggedIn();
+        return this.userService.isLoggedIn();
     };
     LoggedInGuard = __decorate([
         core_1.Injectable(), 

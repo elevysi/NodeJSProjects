@@ -25,7 +25,6 @@ var SnapsComponent = (function () {
         this.snapService.getSnaps()
             .then(function (snaps) {
             _this.snaps = snaps;
-            console.log(Array.from(Array(Math.ceil(_this.snaps.length / 3)).keys()));
             _this.rows = Array.from(Array(Math.ceil(_this.snaps.length / 3)).keys());
             // console.log(this.rows);
         });

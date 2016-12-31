@@ -9,17 +9,39 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var user_service_1 = require("./user.service");
 var AppComponent = (function () {
-    function AppComponent() {
-        this.name = 'Angular';
+    function AppComponent(userService) {
+        this.userService = userService;
+        this.name = 'LaLifeApp';
     }
+    AppComponent.prototype.ngOnInit = function () {
+        // this.userService.currentUser().subscribe(currentUser => {
+        //     var user  : User = {
+        //         name : currentUser.name,
+        //         email : currentUser.email,
+        //         id : "",
+        //         password : ""
+        //     };
+        //   });
+        var currentUser = this.userService.currentUser();
+        if (currentUser) {
+            var user = {
+                name: currentUser.name,
+                email: currentUser.email,
+                id: "",
+                password: ""
+            };
+            this.user = user;
+        }
+    };
     AppComponent = __decorate([
         core_1.Component({
             moduleId: module.id,
             selector: 'my-app',
             templateUrl: "app.component.html",
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [user_service_1.UserService])
     ], AppComponent);
     return AppComponent;
 }());

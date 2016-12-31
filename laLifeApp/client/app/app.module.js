@@ -24,6 +24,8 @@ var file_upload_component_1 = require('./file-upload.component');
 var register_component_1 = require('./register.component');
 var login_component_1 = require('./login.component');
 var profile_component_1 = require('./profile.component');
+var users_component_1 = require("./users.component");
+var logout_component_1 = require("./logout.component");
 // import 
 var snap_service_1 = require('./snap.service');
 var user_service_1 = require('./user.service');
@@ -49,7 +51,9 @@ var AppModule = (function () {
                 file_upload_component_1.FileUploadComponent,
                 register_component_1.RegisterComponent,
                 login_component_1.LoginComponent,
-                profile_component_1.ProfileComponent
+                profile_component_1.ProfileComponent,
+                logout_component_1.LogoutComponent,
+                users_component_1.UsersComponent
             ],
             providers: [snap_service_1.SnapService, user_service_1.UserService, logged_in_guard_1.LoggedInGuard],
             bootstrap: [app_component_1.AppComponent]

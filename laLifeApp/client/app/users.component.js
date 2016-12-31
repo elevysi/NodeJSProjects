@@ -9,38 +9,29 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
-var router_1 = require("@angular/router");
 var user_service_1 = require("./user.service");
-var LoginComponent = (function () {
-    function LoginComponent(userService, router) {
+var UsersComponent = (function () {
+    function UsersComponent(userService) {
         this.userService = userService;
-        this.router = router;
     }
-    LoginComponent.prototype.ngOnInit = function () {
-        if (this.userService.isLoggedIn()) {
-            console.log("User is logged in");
-            this.router.navigate(['']);
-        }
-    };
-    LoginComponent.prototype.submit = function () {
+    UsersComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.userService.login(this.email, this.password)
-            .then(function (result) {
-            if (result) {
-                _this.router.navigate(['']);
+        this.userService.getUsers()
+            .then(function (users) {
+            if (users) {
+                _this.users = users;
             }
         });
     };
-    LoginComponent = __decorate([
+    UsersComponent = __decorate([
         core_1.Component({
             moduleId: module.id,
-            selector: "<app-login></app-login>",
-            templateUrl: "login.component.html",
-            styleUrls: ["../assets/css/pages/page_log_reg_v2.css"]
+            selector: "<app-profile></app-profile>",
+            templateUrl: "users.component.html"
         }), 
-        __metadata('design:paramtypes', [user_service_1.UserService, router_1.Router])
-    ], LoginComponent);
-    return LoginComponent;
+        __metadata('design:paramtypes', [user_service_1.UserService])
+    ], UsersComponent);
+    return UsersComponent;
 }());
-exports.LoginComponent = LoginComponent;
-//# sourceMappingURL=login.component.js.map
+exports.UsersComponent = UsersComponent;
+//# sourceMappingURL=users.component.js.map
