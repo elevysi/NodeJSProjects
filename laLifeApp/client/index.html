@@ -50,6 +50,7 @@
     <script>
       System.import('app').catch(function(err){ console.error(err); });
     </script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
 
 </head>
 
@@ -127,7 +128,10 @@
 		</div>
 		<!--=== End Header ===-->
 
-    <my-app>Loading ...</my-app>
+    <my-app>
+	<div class="loader"></div>
+
+	</my-app>
 
 		
 	</div><!--/wrapper-->

@@ -41,7 +41,8 @@ var routes = [
     },
     {
         path: "upload",
-        component: file_upload_component_1.FileUploadComponent
+        component: file_upload_component_1.FileUploadComponent,
+        canActivate: [logged_in_guard_1.LoggedInGuard]
     },
     {
         path: 'view/:id',

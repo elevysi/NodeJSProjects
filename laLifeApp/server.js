@@ -34,7 +34,8 @@ var app = express ();
 
 
 //View Engine
-app.set("views", __dirname);
+// app.set("views", __dirname);
+app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', "ejs");
 app.engine("html", require('ejs').renderFile);
 
@@ -57,29 +58,69 @@ app.use(passport.initialize())
 
 
 
-app.use("/", appRoute);
+// app.use("/", appRoute);
 
 // error handlers
 // Catch unauthorised errors
+
+// app.use(function (err, req, res, next) {
+//   if (err.name === 'UnauthorizedError') {
+//     res.status(401);
+//     res.json({"message" : err.name + ": " + err.message});
+//   }
+// });
+
 app.use(function (err, req, res, next) {
-  if (err.name === 'UnauthorizedError') {
-    res.status(401);
-    res.json({"message" : err.name + ": " + err.message});
-  }
+
+    res.status(err.status || 401);
+    res.render('error', {
+        message: "err.message",
+        error: {}
+    });
+ 
+    // res.status(401);
+    // res.json({"message" : err.name + ": " + err.message});
+  
 });
 
+// development error handler
+// will print stacktrace
+if (app.get('env') === 'development') {
+    app.use(function(err, req, res, next) {
+        res.status(err.status || 500);
+        res.render('error', {
+            message: err.message,
+            error: err
+        });
+    });
+}
 
+// production error handler
+// no stacktraces leaked to user
+app.use(function(err, req, res, next) {
+    res.status(err.status || 500);
+    res.render('error', {
+        message: err.message,
+        error: {}
+    });
+});
+
+//Test authentication
+app.get("/test", auth, appRoute);
+
+//Snaps
 app.get("/api/snaps", apiRoute.list);
 app.get("/api/snaps/:id", apiRoute.getSnap);
-app.post("/api/snaps", apiRoute.add(app.get('uploadsDir')));
+app.post("/api/snaps", auth, apiRoute.add(app.get('uploadsDir')));
+app.delete("/api/snaps/:id", auth, apiRoute.deleteSnap);
 
-app.post("/api/register", usersRoute.register);
+//Users
+app.post("/api/register", auth, usersRoute.register); //only i can register users
 app.post("/api/login", usersRoute.login);
 app.get("/api/profile", auth, usersRoute.profileRead);
 app.get("/api/users", auth, usersRoute.list);
 
 
-app.delete("/api/snaps/:id", apiRoute.deleteSnap);
 
 // app.get("/", (err, req, res) => {
 //     if(err) return;

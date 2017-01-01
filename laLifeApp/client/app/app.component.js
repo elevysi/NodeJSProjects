@@ -25,7 +25,7 @@ var AppComponent = (function () {
         //     };
         //   });
         var currentUser = this.userService.currentUser();
-        if (currentUser) {
+        if (currentUser.success) {
             var user = {
                 name: currentUser.name,
                 email: currentUser.email,

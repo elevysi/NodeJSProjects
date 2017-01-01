@@ -32,7 +32,7 @@ export class AppComponent  implements OnInit{
     //   });
 
       var currentUser = this.userService.currentUser();
-      if(currentUser){
+      if(currentUser.success){
         var user  : User = {
             name : currentUser.name,
             email : currentUser.email,

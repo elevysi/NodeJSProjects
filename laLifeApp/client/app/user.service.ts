@@ -97,8 +97,6 @@ export class UserService{
     if(token){
         var payload = token.split('.')[1];
         payload = atob(payload);
-        console.log(JSON.parse(payload).exp);
-
         return JSON.parse(payload).exp > Date.now() / 1000;
     } else {
         return false;
@@ -112,11 +110,16 @@ export class UserService{
             payload = atob(payload);
             return {
                 email : JSON.parse(payload).email,
-                name : JSON.parse(payload).name
+                name : JSON.parse(payload).name,
+                success : true
             };
         }
 
-        return false;
+        return {
+                email : null,
+                name : null,
+                success : false
+            }
     }
 
   register(name : String, email : String, password : String) {

@@ -34,7 +34,8 @@ const routes : Routes = [
     },
     {
         path: "upload",
-        component : FileUploadComponent
+        component : FileUploadComponent,
+        canActivate : [LoggedInGuard]
     },
     {
         path: 'view/:id',
