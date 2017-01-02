@@ -17,19 +17,23 @@ var app_routing_module_1 = require("./app-routing.module");
 // import { AlertModule } from "ng2-bootstrap/ng2-bootstrap";
 var ng2_file_upload_1 = require("ng2-file-upload/ng2-file-upload");
 var app_component_1 = require('./app.component');
-var snaps_component_1 = require('./snaps.component');
-var add_snap_component_1 = require("./add-snap.component");
-var view_snap_component_1 = require("./view-snap.component");
-var file_upload_component_1 = require('./file-upload.component');
-var register_component_1 = require('./register.component');
-var login_component_1 = require('./login.component');
-var profile_component_1 = require('./profile.component');
-var users_component_1 = require("./users.component");
-var logout_component_1 = require("./logout.component");
+var snaps_component_1 = require('./snaps/snaps.component');
+var add_snap_component_1 = require("./addSnap/add-snap.component");
+var view_snap_component_1 = require("./viewSnap/view-snap.component");
+var file_upload_component_1 = require('./fileUpload/file-upload.component');
+var register_component_1 = require('./register/register.component');
+var login_component_1 = require('./login/login.component');
+var profile_component_1 = require('./profile/profile.component');
+var users_component_1 = require("./users/users.component");
+var logout_component_1 = require("./logout/logout.component");
+var alert_component_1 = require("./_directives/alert.component");
+var error_component_1 = require("./error/error.component");
 // import 
-var snap_service_1 = require('./snap.service');
-var user_service_1 = require('./user.service');
-var logged_in_guard_1 = require("./logged-in.guard");
+var snap_service_1 = require('./_services/snap.service');
+var alert_service_1 = require("./_services/alert.service");
+var authentication_service_1 = require('./_services/authentication.service');
+var user_service_1 = require('./_services/user.service');
+var logged_in_guard_1 = require("./_guards/logged-in.guard");
 // import './rxjs-extensions';
 var AppModule = (function () {
     function AppModule() {
@@ -53,9 +57,11 @@ var AppModule = (function () {
                 login_component_1.LoginComponent,
                 profile_component_1.ProfileComponent,
                 logout_component_1.LogoutComponent,
-                users_component_1.UsersComponent
+                users_component_1.UsersComponent,
+                alert_component_1.AlertComponent,
+                error_component_1.ErrorComponent
             ],
-            providers: [snap_service_1.SnapService, user_service_1.UserService, logged_in_guard_1.LoggedInGuard],
+            providers: [logged_in_guard_1.LoggedInGuard, snap_service_1.SnapService, user_service_1.UserService, alert_service_1.AlertService, authentication_service_1.AuthenticationService],
             bootstrap: [app_component_1.AppComponent]
         }), 
         __metadata('design:paramtypes', [])

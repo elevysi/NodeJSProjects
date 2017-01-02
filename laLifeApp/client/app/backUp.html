@@ -1,38 +1,35 @@
-
 <!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
 <!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
 <!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->
 <head>
-	<base href="/">
+  <base href="/">
 	<title>LaLife</title>
 
 	<!-- Meta -->
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="description" content="">
-	<meta name="author" content="">
+	<meta name="description" content="Snaps">
+	<meta name="author" content="Elevysi">
 
 	<!-- Favicon -->
 	<link rel="shortcut icon" href="favicon.ico">
 
 	<!-- Web Fonts -->
-	<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:400,300,600&amp;subset=cyrillic,latin">
+	<link rel='stylesheet' type='text/css' href='//fonts.googleapis.com/css?family=Open+Sans:400,300,600&amp;subset=cyrillic,latin'>
 
 	<!-- CSS Global Compulsory -->
 	<link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" href="assets/css/style.css">
 
 	<!-- CSS Header and Footer -->
-	<link rel="stylesheet" href="assets/css/headers/header-v7.css">
+	<link rel="stylesheet" href="assets/css/headers/header-default.css">
 	<link rel="stylesheet" href="assets/css/footers/footer-v1.css">
 
 	<!-- CSS Implementing Plugins -->
 	<link rel="stylesheet" href="assets/plugins/animate.css">
 	<link rel="stylesheet" href="assets/plugins/line-icons/line-icons.css">
 	<link rel="stylesheet" href="assets/plugins/font-awesome/css/font-awesome.min.css">
-	<link rel="stylesheet" href="assets/plugins/scrollbar/css/jquery.mCustomScrollbar.css">
-	<link rel="stylesheet" href="assets/plugins/owl-carousel/owl-carousel/owl.carousel.css">
 	<link rel="stylesheet" href="assets/plugins/fancybox/source/jquery.fancybox.css">
 
 	<!-- CSS Theme -->
@@ -42,8 +39,7 @@
 	<!-- CSS Customization -->
 	<link rel="stylesheet" href="assets/css/custom.css">
 
-
-	<!-- Polyfill(s) for older browsers -->
+  <!-- Polyfill(s) for older browsers -->
     <script src="node_modules/core-js/client/shim.min.js"></script>
 
     <script src="node_modules/zone.js/dist/zone.js"></script>
@@ -55,15 +51,19 @@
       System.import('app').catch(function(err){ console.error(err); });
     </script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
+
 </head>
 
 <body>
 	<div class="wrapper">
-		<!-- Angular App -->
-		<my-app>
-			<div class="loader"></div>
+		
 
-		</my-app>
+    <my-app>
+	<div class="loader"></div>
+
+	</my-app>
+
+		
 	</div><!--/wrapper-->
 
 	<!--=== Style Switcher ===-->
@@ -147,39 +147,121 @@
 	<script type="text/javascript" src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
 	<!-- JS Implementing Plugins -->
 	<script type="text/javascript" src="assets/plugins/back-to-top.js"></script>
-	<script type="text/javascript" src="assets/plugins/jquery-appear.js"></script>
 	<script type="text/javascript" src="assets/plugins/smoothScroll.js"></script>
-	<script type="text/javascript" src="assets/plugins/jquery.parallax.js"></script>
-	<script type="text/javascript" src="assets/plugins/counter/waypoints.min.js"></script>
-	<script type="text/javascript" src="assets/plugins/counter/jquery.counterup.min.js"></script>
 	<script type="text/javascript" src="assets/plugins/fancybox/source/jquery.fancybox.pack.js"></script>
-	<script type="text/javascript" src="assets/plugins/owl-carousel/owl-carousel/owl.carousel.js"></script>
-	<script type="text/javascript" src="assets/plugins/scrollbar/js/jquery.mCustomScrollbar.concat.min.js"></script>
 	<!-- JS Customization -->
 	<script type="text/javascript" src="assets/js/custom.js"></script>
 	<!-- JS Page Level -->
 	<script type="text/javascript" src="assets/js/app.js"></script>
 	<script type="text/javascript" src="assets/js/plugins/fancy-box.js"></script>
-	<script type="text/javascript" src="assets/js/plugins/progress-bar.js"></script>
-	<script type="text/javascript" src="assets/js/plugins/owl-carousel.js"></script>
 	<script type="text/javascript" src="assets/js/plugins/style-switcher.js"></script>
 	<script type="text/javascript">
 		jQuery(document).ready(function() {
 			App.init();
-			App.initCounter();
-			App.initParallaxBg();
-			App.initScrollBar();
 			FancyBox.initFancybox();
-			App.initSidebarMenuDropdown();
-			OwlCarousel.initOwlCarousel();
 			StyleSwitcher.initStyleSwitcher();
-			ProgressBar.initProgressBarHorizontal();
 		});
 	</script>
 	<!--[if lt IE 9]>
-	<script src="assets/plugins/respond.js"></script>
-	<script src="assets/plugins/html5shiv.js"></script>
-	<script src="assets/plugins/placeholder-IE-fixes.js"></script>
-	<![endif]-->
+    <script src="assets/plugins/respond.js"></script>
+    <script src="assets/plugins/html5shiv.js"></script>
+    <script src="assets/plugins/placeholder-IE-fixes.js"></script>
+  <![endif]-->
 </body>
 </html>
+
+
+
+
+<!--=== Header ===-->
+<div class="header">
+    <div class="container">
+        <!-- Logo -->
+        <a class="logo" href="/">
+            <img src="assets/img/logo1-bucket.png" alt="Logo">
+        </a>
+        <!-- End Logo -->
+
+        <!-- Topbar -->
+        <div class="topbar">
+            <ul class="loginbar pull-right">
+                <li class="hoverSelector">
+                    <i class="fa fa-globe"></i>
+                    <a>Languages</a>
+                    <ul class="languages hoverSelectorBlock">
+                        <li class="active">
+                            <a href="#">English <i class="fa fa-check"></i></a>
+                        </li>
+                        <li><a href="#">Spanish</a></li>
+                        <li><a href="#">Russian</a></li>
+                        <li><a href="#">German</a></li>
+                    </ul>
+                </li>
+                <li class="topbar-devider"></li>
+                <li><a href="page_faq.html">Help</a></li>
+                <li class="topbar-devider"></li>
+                <li><a href="page_login.html">Login</a></li>
+            </ul>
+        </div>
+        <!-- End Topbar -->
+
+        <!-- Toggle get grouped for better mobile display -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="fa fa-bars"></span>
+        </button>
+        <!-- End Toggle -->
+    </div><!--/end container-->
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse mega-menu navbar-responsive-collapse">
+        <div class="container">
+            <ul class="nav navbar-nav">
+                <!-- Home -->
+                <li>
+                    <a href="/">
+                        Home
+                    </a>
+                    
+                </li>
+                <!-- End Home -->
+
+                <!-- Search Block -->
+                <li>
+                    <i class="search fa fa-search search-btn"></i>
+                    <div class="search-open">
+                        <div class="input-group animated fadeInDown">
+                            <input type="text" class="form-control" placeholder="Search">
+                            <span class="input-group-btn">
+                                <button class="btn-u" type="button">Go</button>
+                            </span>
+                        </div>
+                    </div>
+                </li>
+                <!-- End Search Block -->
+            </ul>
+        </div><!--/end container-->
+    </div><!--/navbar-collapse-->
+</div>
+<!--=== End Header ===-->
+
+<!--=== Breadcrumbs ===-->
+<div class="breadcrumbs breadcrumbs-light">
+    <div class="container">
+        <h1 class="pull-left">LaLife</h1>
+        <ul class="pull-right breadcrumb">
+            <li><a routerLink="/" routerLinkActive="active">Snaps</a></li>
+            <li><a routerLink="/upload" routerLinkActive="active">Upload</a></li>
+            <li><a routerLink="/register" routerLinkActive="active">Register</a></li>
+            <li *ngIf="! user"><a routerLink="/login" routerLinkActive="active">Login</a></li>
+            <li *ngIf="user"><a routerLink="/logout" routerLinkActive="active">Logout - {{user.email}}</a></li>
+            <li *ngIf="user"><a routerLink="/profile/{{user.id}}" routerLinkActive="active">Profile - {{user.email}}</a></li>
+            <li *ngIf="user"><a routerLink="/users" routerLinkActive="active">Users</a></li>
+            
+            <!--<li><a routerLink="/add" routerLinkActive="active">Add a Snap</a></li>-->
+        </ul>
+    </div>
+</div><!--/breadcrumbs-->
+<!--=== End Breadcrumbs ===-->
+
+<router-outlet></router-outlet>

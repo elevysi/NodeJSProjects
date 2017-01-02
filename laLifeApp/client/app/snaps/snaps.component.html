@@ -1,0 +1,23 @@
+<!-- Image Gallery -->
+<div class="container-fluid">
+	<div class="container content-sm">
+		<div class="text-center">
+			<h2 class="title-v2 title-center">La Life</h2>
+		</div>
+	</div>
+
+
+	<div class="row no-gutter" *ngFor="let i of rows">
+			<!-- Team v2 -->
+			<div class="col-sm-3 sm-margin-bottom-30" *ngFor="let snap of snaps | slice:(i*4) : (i + 1)*4">
+				<a href="{{snap.path}}" rel="gallery" class="fancybox img-hover-v2" title="Image 2">
+					<span><img class="img-responsive" src="{{snap.path}}" alt="{{snap.name}}"></span>
+				</a>
+			</div>
+	</div>
+
+	
+</div>
+<!-- End Image Gallery -->
+
+

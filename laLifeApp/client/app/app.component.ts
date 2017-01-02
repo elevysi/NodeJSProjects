@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from "@angular/router";
 
-import {User} from "./user";
-import { UserService } from "./user.service";
+import {Subscription} from 'rxjs/Subscription';
+
+import {User} from "./_models/user";
+import { AuthenticationService } from "./_services/authentication.service";
+
 
 
 @Component({
@@ -13,36 +16,24 @@ import { UserService } from "./user.service";
 export class AppComponent  implements OnInit{ 
   name = 'LaLifeApp';
   user : User;
+  subscription : Subscription;
 
   constructor(
-    private userService : UserService
+    private authenticationService : AuthenticationService
   ){
 
   }
 
   ngOnInit() : void {
+    
+      this.subscription = this.authenticationService.user$
+        .subscribe(user => this.user = user);
 
-    // this.userService.currentUser().subscribe(currentUser => {
-    //     var user  : User = {
-    //         name : currentUser.name,
-    //         email : currentUser.email,
-    //         id : "",
-    //         password : ""
-    //     };
-    //   });
+  }
 
-      var currentUser = this.userService.currentUser();
-      if(currentUser.success){
-        var user  : User = {
-            name : currentUser.name,
-            email : currentUser.email,
-            id : "",
-            password : ""
-        };
-
-        this.user = user;
-      }
-
+  ngOnDestroy() {
+    // prevent memory leak when component is destroyed
+    this.subscription.unsubscribe();
   }
 
 

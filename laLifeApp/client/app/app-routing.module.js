@@ -10,16 +10,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
-var snaps_component_1 = require("./snaps.component");
-var add_snap_component_1 = require("./add-snap.component");
-var view_snap_component_1 = require("./view-snap.component");
-var file_upload_component_1 = require('./file-upload.component');
-var register_component_1 = require('./register.component');
-var login_component_1 = require('./login.component');
-var profile_component_1 = require('./profile.component');
-var logout_component_1 = require("./logout.component");
-var users_component_1 = require("./users.component");
-var logged_in_guard_1 = require("./logged-in.guard");
+var snaps_component_1 = require('./snaps/snaps.component');
+var add_snap_component_1 = require("./addSnap/add-snap.component");
+var view_snap_component_1 = require("./viewSnap/view-snap.component");
+var file_upload_component_1 = require('./fileUpload/file-upload.component');
+var register_component_1 = require('./register/register.component');
+var login_component_1 = require('./login/login.component');
+var profile_component_1 = require('./profile/profile.component');
+var users_component_1 = require("./users/users.component");
+var logout_component_1 = require("./logout/logout.component");
+var error_component_1 = require("./error/error.component");
+var logged_in_guard_1 = require("./_guards/logged-in.guard");
 // import { AppComponent } from "./app.component";
 var routes = [
     // {
@@ -69,6 +70,14 @@ var routes = [
     {
         path: 'logout',
         component: logout_component_1.LogoutComponent
+    },
+    {
+        path: 'error',
+        component: error_component_1.ErrorComponent
+    },
+    {
+        path: '**',
+        redirectTo: '/error'
     }
 ];
 var AppRoutingModule = (function () {

@@ -13,22 +13,28 @@ import { InMemoryWebApiModule } from "angular-in-memory-web-api";
 import { FileSelectDirective, FileDropDirective } from "ng2-file-upload/ng2-file-upload";
 
 import { AppComponent }  from './app.component';
-import { SnapsComponent } from './snaps.component';
-import { AddSnapComponent } from "./add-snap.component";
-import { ViewSnapComponent } from "./view-snap.component";
-import { FileUploadComponent } from './file-upload.component';
+import { SnapsComponent } from './snaps/snaps.component';
+import { AddSnapComponent } from "./addSnap/add-snap.component";
+import { ViewSnapComponent } from "./viewSnap/view-snap.component";
+import { FileUploadComponent } from './fileUpload/file-upload.component';
 
-import { RegisterComponent } from './register.component';
-import { LoginComponent } from './login.component';
-import { ProfileComponent } from './profile.component';
-import { UsersComponent } from "./users.component";
-import { LogoutComponent } from "./logout.component";
+import { RegisterComponent } from './register/register.component';
+import { LoginComponent } from './login/login.component';
+import { ProfileComponent } from './profile/profile.component';
+import { UsersComponent } from "./users/users.component";
+import { LogoutComponent } from "./logout/logout.component";
+
+import { AlertComponent } from "./_directives/alert.component";
+import { ErrorComponent } from "./error/error.component";
 
 // import 
 
-import { SnapService } from './snap.service';
-import { UserService } from './user.service';
-import { LoggedInGuard } from "./logged-in.guard";
+import { SnapService } from './_services/snap.service';
+import { AlertService } from "./_services/alert.service";
+import { AuthenticationService } from './_services/authentication.service';
+import { UserService } from './_services/user.service';
+import { LoggedInGuard } from "./_guards/logged-in.guard";
+
 
 // import './rxjs-extensions';
 
@@ -51,9 +57,11 @@ import { LoggedInGuard } from "./logged-in.guard";
     LoginComponent,
     ProfileComponent,
     LogoutComponent,
-    UsersComponent
+    UsersComponent,
+    AlertComponent,
+    ErrorComponent
   ],
-  providers : [ SnapService, UserService, LoggedInGuard],
+  providers : [ LoggedInGuard, SnapService, UserService, AlertService, AuthenticationService],
   bootstrap: [ AppComponent ]
   
 })

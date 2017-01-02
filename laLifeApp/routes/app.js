@@ -1,13 +1,7 @@
 var express = require("express");
 var router = express.Router();
-var Snap = require("../models/snap");
+var path = require('path');
 
-router.get("/", function(req, res, err){
-    res.render('index');
-});
-
-router.get("/test", function(req, res, err){
-    res.render('index');
-});
-
-module.exports = router;
+exports.index = (req, res, next) => {
+    res.sendFile(path.join(__dirname + '/..', 'client/index.html'));
+};

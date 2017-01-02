@@ -31,6 +31,19 @@ exports.list = (req, res, next) => {
 };
 
 
+exports.search = (req, res, next) => {
+    var term = req.query.term;
+    Snap.find({ 'name' : term }, (err, resources) => {
+        if(err) res.send(err).status(404);
+        else {
+            // console.log(resources);
+            res.send(resources).status(200);
+        }
+    });
+};
+
+
+
 exports.add = (dir) => {
     return (req, res, next) => {
 

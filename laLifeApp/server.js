@@ -7,8 +7,6 @@ var passport = require('passport');
 
 var multiparty = require('connect-multiparty'); //For files uploads
 
-var appHeaders = require('./middleware/appheaders');
-
 require('./models/user');
 require('./configs/passport');
 
@@ -22,7 +20,7 @@ var auth = jwt({
 });
 
 
-const appRoute = require("./routes/app");
+const appRoute = require("./routes/app"); // This route redirects all other requests to angular's index
 var apiRoute = require("./routes/api");
 var usersRoute = require("./routes/users");
 
@@ -35,18 +33,15 @@ var app = express ();
 
 //View Engine
 // app.set("views", __dirname);
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, 'views')); //so that all is given to angular
 app.set('view engine', "ejs");
 app.engine("html", require('ejs').renderFile);
 
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended : true}));
-// app.use(coo)
 
-app.use(appHeaders);
-
-//Set static folder
+//Set static folder, since there is an index file it will be rendered automatically
 app.use(express.static(path.join(__dirname, "client")));
 //Folder for files uploads
 app.set('uploadsDir', path.join(__dirname, 'uploads'));
@@ -57,75 +52,22 @@ app.set('uploadsDir', path.join(__dirname, 'uploads'));
 app.use(passport.initialize())
 
 
-
-// app.use("/", appRoute);
-
-// error handlers
-// Catch unauthorised errors
-
-// app.use(function (err, req, res, next) {
-//   if (err.name === 'UnauthorizedError') {
-//     res.status(401);
-//     res.json({"message" : err.name + ": " + err.message});
-//   }
-// });
-
-app.use(function (err, req, res, next) {
-
-    res.status(err.status || 401);
-    res.render('error', {
-        message: "err.message",
-        error: {}
-    });
- 
-    // res.status(401);
-    // res.json({"message" : err.name + ": " + err.message});
-  
-});
-
-// development error handler
-// will print stacktrace
-if (app.get('env') === 'development') {
-    app.use(function(err, req, res, next) {
-        res.status(err.status || 500);
-        res.render('error', {
-            message: err.message,
-            error: err
-        });
-    });
-}
-
-// production error handler
-// no stacktraces leaked to user
-app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-        message: err.message,
-        error: {}
-    });
-});
-
-//Test authentication
-app.get("/test", auth, appRoute);
-
 //Snaps
 app.get("/api/snaps", apiRoute.list);
+app.get("/api/snapSearch", apiRoute.search);
 app.get("/api/snaps/:id", apiRoute.getSnap);
 app.post("/api/snaps", auth, apiRoute.add(app.get('uploadsDir')));
 app.delete("/api/snaps/:id", auth, apiRoute.deleteSnap);
 
 //Users
 app.post("/api/register", auth, usersRoute.register); //only i can register users
+// app.post("/api/register", usersRoute.register);
 app.post("/api/login", usersRoute.login);
 app.get("/api/profile", auth, usersRoute.profileRead);
 app.get("/api/users", auth, usersRoute.list);
 
+app.get('/*', appRoute.index); // This route redirects all other requests to angular's index
 
-
-// app.get("/", (err, req, res) => {
-//     if(err) return;
-//     else res.sendFile(__dirname + "/index.html");
-// });
 
 const PORT = process.env.port || 9090;
 app.listen(PORT, () => {

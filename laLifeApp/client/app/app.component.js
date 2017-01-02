@@ -9,31 +9,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var user_service_1 = require("./user.service");
+var authentication_service_1 = require("./_services/authentication.service");
 var AppComponent = (function () {
-    function AppComponent(userService) {
-        this.userService = userService;
+    function AppComponent(authenticationService) {
+        this.authenticationService = authenticationService;
         this.name = 'LaLifeApp';
     }
     AppComponent.prototype.ngOnInit = function () {
-        // this.userService.currentUser().subscribe(currentUser => {
-        //     var user  : User = {
-        //         name : currentUser.name,
-        //         email : currentUser.email,
-        //         id : "",
-        //         password : ""
-        //     };
-        //   });
-        var currentUser = this.userService.currentUser();
-        if (currentUser.success) {
-            var user = {
-                name: currentUser.name,
-                email: currentUser.email,
-                id: "",
-                password: ""
-            };
-            this.user = user;
-        }
+        var _this = this;
+        this.subscription = this.authenticationService.user$
+            .subscribe(function (user) { return _this.user = user; });
+    };
+    AppComponent.prototype.ngOnDestroy = function () {
+        // prevent memory leak when component is destroyed
+        this.subscription.unsubscribe();
     };
     AppComponent = __decorate([
         core_1.Component({
@@ -41,7 +30,7 @@ var AppComponent = (function () {
             selector: 'my-app',
             templateUrl: "app.component.html",
         }), 
-        __metadata('design:paramtypes', [user_service_1.UserService])
+        __metadata('design:paramtypes', [authentication_service_1.AuthenticationService])
     ], AppComponent);
     return AppComponent;
 }());

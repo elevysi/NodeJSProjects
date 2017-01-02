@@ -1,17 +1,19 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 
-import { SnapsComponent } from "./snaps.component";
-import { AddSnapComponent } from "./add-snap.component";
-import { ViewSnapComponent } from "./view-snap.component";
-import { FileUploadComponent } from './file-upload.component';
-import { RegisterComponent } from './register.component';
-import { LoginComponent } from './login.component';
-import { ProfileComponent } from './profile.component';
-import { LogoutComponent } from "./logout.component";
-import { UsersComponent } from "./users.component";
 
-import { LoggedInGuard } from "./logged-in.guard";
+import { SnapsComponent } from './snaps/snaps.component';
+import { AddSnapComponent } from "./addSnap/add-snap.component";
+import { ViewSnapComponent } from "./viewSnap/view-snap.component";
+import { FileUploadComponent } from './fileUpload/file-upload.component';
+import { RegisterComponent } from './register/register.component';
+import { LoginComponent } from './login/login.component';
+import { ProfileComponent } from './profile/profile.component';
+import { UsersComponent } from "./users/users.component";
+import { LogoutComponent } from "./logout/logout.component";
+import { ErrorComponent } from "./error/error.component";
+
+import { LoggedInGuard } from "./_guards/logged-in.guard";
 // import { AppComponent } from "./app.component";
 
 const routes : Routes = [
@@ -62,6 +64,15 @@ const routes : Routes = [
     {
         path: 'logout',
         component: LogoutComponent
+    },
+    {
+        path: 'error',
+        component : ErrorComponent
+    },
+    {
+        path: '**',
+        redirectTo : '/error'
+        // pathMatch : "full"
     }
 ];
 
