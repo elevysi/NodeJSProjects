@@ -26,6 +26,7 @@ import { LogoutComponent } from "./logout/logout.component";
 
 import { AlertComponent } from "./_directives/alert.component";
 import { ErrorComponent } from "./error/error.component";
+import { CubePortfolioComponent } from "./_directives/cube.portfolio.component";
 
 // import 
 
@@ -59,7 +60,8 @@ import { LoggedInGuard } from "./_guards/logged-in.guard";
     LogoutComponent,
     UsersComponent,
     AlertComponent,
-    ErrorComponent
+    ErrorComponent,
+    CubePortfolioComponent
   ],
   providers : [ LoggedInGuard, SnapService, UserService, AlertService, AuthenticationService],
   bootstrap: [ AppComponent ]

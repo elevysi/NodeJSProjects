@@ -1,6 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { Location } from "@angular/common";
+import { Observable } from "rxjs";
+import {Subject} from 'rxjs/Subject';
 
 import { Snap } from "../_models/snap";
 import { SnapService } from "../_services/snap.service";
@@ -12,8 +14,10 @@ import { SnapService } from "../_services/snap.service";
 })
 
 export class SnapsComponent implements OnInit{
-    snaps : Snap [] = [];
-    rows : number[];
+
+    snaps : Subject <Snap[]> = new Subject();
+    snaps$ = this.snaps.asObservable();
+    compSnaps : Snap [];
 
     constructor(
         private snapService : SnapService,
@@ -24,9 +28,10 @@ export class SnapsComponent implements OnInit{
     getSnaps(): void{
         this.snapService.getSnaps()
             .then(snaps => {
-                this.snaps = snaps;
-                this.rows = Array.from(Array(Math.ceil(this.snaps.length / 3)).keys());
-                // console.log(this.rows);
+                this.compSnaps = snaps;
+                this.snaps.next(snaps);
+                // console.log(this.snaps.map());
+                console.log(this.compSnaps);
             });
     }
 

@@ -1,7 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Headers, Http, Response } from "@angular/http";
 import { Observable } from "rxjs";
-
 import 'rxjs/add/operator/toPromise';
 
 import { Snap } from "../_models/snap";
@@ -12,6 +11,8 @@ export class SnapService{
     private snapUrl = "api/snaps";
     private snapSearchUrl = "api/snapSearch";
 
+    
+
     private headers = new Headers({'Content-Type': 'application/json'});
     // public uploader : FileUploader = new FileUploader({url: this.snapUrl});
 
@@ -20,6 +21,7 @@ export class SnapService{
     // getSnaps(): Promise<Snap[]>{
     //     return Promise.resolve(SNAPS);
     // }
+
 
     getSnaps(): Promise<Snap[]>{
         return this.http.get(this.snapUrl)

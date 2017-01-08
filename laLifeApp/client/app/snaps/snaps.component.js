@@ -11,22 +11,25 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var common_1 = require("@angular/common");
+var Subject_1 = require('rxjs/Subject');
 var snap_service_1 = require("../_services/snap.service");
 var SnapsComponent = (function () {
     function SnapsComponent(snapService, router, location) {
         this.snapService = snapService;
         this.router = router;
         this.location = location;
-        this.snaps = [];
+        this.snaps = new Subject_1.Subject();
+        this.snaps$ = this.snaps.asObservable();
     }
     ;
     SnapsComponent.prototype.getSnaps = function () {
         var _this = this;
         this.snapService.getSnaps()
             .then(function (snaps) {
-            _this.snaps = snaps;
-            _this.rows = Array.from(Array(Math.ceil(_this.snaps.length / 3)).keys());
-            // console.log(this.rows);
+            _this.compSnaps = snaps;
+            _this.snaps.next(snaps);
+            // console.log(this.snaps.map());
+            console.log(_this.compSnaps);
         });
     };
     SnapsComponent.prototype.ngOnInit = function () {

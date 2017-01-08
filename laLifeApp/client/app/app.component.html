@@ -1,91 +1,16 @@
-<!--=== Header v7 Left ===-->
-<div class="header-v7 header-left-v7">
-    <nav class="navbar navbar-default mCustomScrollbar" role="navigation" data-mcs-theme="minimal-dark">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="menu-container">
-            <!-- Toggle get grouped for better mobile display -->
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <!-- End Toggle -->
-
-            <!-- Logo -->
-            <div class="logo">
-                <a href="index.html">
-                    <img id="logo-header" src="assets/img/logo1-default.png" alt="Logo">
-                </a>
-            </div>
-            <!-- End Logo -->
-        </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse navbar-responsive-collapse">
-            <div class="menu-container">
-                <ul class="nav navbar-nav">
-                    <!-- Home -->
-                    <li routerLinkActive="active">
-                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
-									Snaps
-								</a>
-								<ul class="dropdown-menu">
-									<li><a routerLink="/" >Snaps</a></li>
-                                    <li><a routerLink="/upload">Upload</a></li>
-                                    <!--<li *ngIf="user"><a routerLink="/upload" routerLinkActive="active">Upload</a></li>-->
-								</ul>
-                    </li>
-                    <!-- End Home -->
-
-                    <li routerLinkActive="active"><a routerLink="/register">Register</a></li>
-                    <li *ngIf="! user" routerLinkActive="active"><a routerLink="/login">Login</a></li>
-                    <li *ngIf="user" routerLinkActive="active"><a routerLink="/logout">Logout - {{user.name}}</a></li>
-                    <li *ngIf="user" routerLinkActive="active"> <a routerLink="/profile/{{user.id}}">Profile - {{user.name}}</a></li>
-                    <li *ngIf="user" routerLinkActive="active"><a routerLink="/users">Users</a></li>
-
-                </ul>
-
-                <ul class="list-inline header-socials">
-                    <li><a href="'#"><i class="fa fa-facebook"></i></a></li>
-                    <li><a href="'#"><i class="fa fa-instagram"></i></a></li>
-                    <li><a href="'#"><i class="fa fa-twitter"></i></a></li>
-                </ul>
-                <p class="copyright-text">&copy; 2015 Unify. All Rights Reserved.</p>
-            </div>
-        </div>
-        <!-- End Navbar Collapse -->
-    </nav>
-</div>
-<!--=== End Header v7 Left ===-->
-
-<!--=== Content Side Left Right ===-->
-<div class="content-side-right">
-    <!-- Interactive Slider -->
-    <div class="interactive-slider-v1 img-v3">
-        <div class="container">
-            <h2>Welcome to LaLife</h2>
-            <p>Sharing some bits.</p>
-        </div>
-    </div>
-    <!-- End Interactive Slider -->
-
-    
-
-    
+<div class="cube-portfolio">
     <div class="container content"><alert></alert></div>
+    <div id="filters-container" class="cbp-l-filters-button">
+        <a class="cbp-filter-item" routerLinkActive="cbp-filter-item-active" routerLink="/">Snaps</a>
+        <a class="cbp-filter-item" routerLinkActive="cbp-filter-item-active" routerLink="/upload">Upload</a>
+        <a class="cbp-filter-item" routerLinkActive="cbp-filter-item-active" routerLink="/register">Register</a>
+        <a *ngIf="! user" routerLinkActive="cbp-filter-item-active" class="cbp-filter-item" routerLink="/login">Login</a>
+        <a *ngIf="user" routerLinkActive="cbp-filter-item-active" class="cbp-filter-item" routerLink="/logout">Logout</a>
+        <a *ngIf="user" routerLinkActive="cbp-filter-item-active" class="cbp-filter-item" routerLink="/profile">Profile</a>
+        <a *ngIf="user" routerLinkActive="cbp-filter-item-active" class="cbp-filter-item" routerLink="/users">Users</a>
+    </div>
+    <!--/end Filters Container -->
+
     <router-outlet></router-outlet>
 
-    
-
-
-    <!-- Quote v2 -->
-    <div class="container content">
-        <div class="quote-v2">
-            <p>C'est la life.</p>
-            <span>Elevysi <a href="#">Elevysi Inc.</a></span>
-        </div>
-    </div>
-    <!-- End Quote v2 -->
-
-<!--=== End Content Side Left Right ===-->
+</div>
