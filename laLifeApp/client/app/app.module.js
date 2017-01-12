@@ -29,6 +29,7 @@ var logout_component_1 = require("./logout/logout.component");
 var alert_component_1 = require("./_directives/alert.component");
 var error_component_1 = require("./error/error.component");
 var cube_portfolio_component_1 = require("./_directives/cube.portfolio.component");
+var cube_image_component_1 = require("./_directives/cube.image.component");
 // import 
 var snap_service_1 = require('./_services/snap.service');
 var alert_service_1 = require("./_services/alert.service");
@@ -61,7 +62,8 @@ var AppModule = (function () {
                 users_component_1.UsersComponent,
                 alert_component_1.AlertComponent,
                 error_component_1.ErrorComponent,
-                cube_portfolio_component_1.CubePortfolioComponent
+                cube_portfolio_component_1.CubePortfolioComponent,
+                cube_image_component_1.CubeImageComponent
             ],
             providers: [logged_in_guard_1.LoggedInGuard, snap_service_1.SnapService, user_service_1.UserService, alert_service_1.AlertService, authentication_service_1.AuthenticationService],
             bootstrap: [app_component_1.AppComponent]

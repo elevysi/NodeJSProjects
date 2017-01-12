@@ -99,6 +99,26 @@ export class CubePortfolioComponent implements OnInit, AfterViewInit{
         singlePageInlineCallback: function(url : any, element : any) {
             // to update singlePageInline content use the following method: this.updateSinglePageInline(yourContent)
             var t = this;
+            console.log("In directive");
+            console.log(element);
+            var compHtml = `
+                <div class="cbp-l-inline">
+                    <div class="cbp-l-inline-left">
+                        <img src="assets/img/portfolio/6.jpg" alt="Dashboard" class="cbp-l-project-img">
+                    </div>
+
+                    <div class="cbp-l-inline-right">
+                        <div class="cbp-l-inline-title">Remind~Me Widget</div>
+                        <div class="cbp-l-inline-subtitle">by Tiberiu Neamu</div>
+
+                        <div class="cbp-l-inline-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, cumque, earum blanditiis incidunt minus commodi consequatur provident quae. Nihil, alias, vel consequatur ab aliquam aspernatur optio harum facilis excepturi mollitia autem voluptas cum ex veniam numquam quia repudiandae in iure. Assumenda, vel provident molestiae perferendis officia commodi asperiores earum sapiente inventore quam deleniti mollitia consequatur expedita quaerat natus praesentium beatae!</div>
+
+                        <a href="#" target="_blank" class="cbp-l-inline-view">VIEW PROJECT</a>
+                    </div>
+                </div>
+            `;
+            t.updateSinglePageInline(compHtml);
+            // t.updateSinglePageInline("Hello World!");
             //Update with the service
             // $.ajax({
             //         url: url,

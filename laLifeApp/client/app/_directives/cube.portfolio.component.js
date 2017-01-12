@@ -87,6 +87,11 @@ var CubePortfolioComponent = (function () {
             singlePageInlineCallback: function (url, element) {
                 // to update singlePageInline content use the following method: this.updateSinglePageInline(yourContent)
                 var t = this;
+                console.log("In directive");
+                console.log(element);
+                var compHtml = "\n                <div class=\"cbp-l-inline\">\n                    <div class=\"cbp-l-inline-left\">\n                        <img src=\"assets/img/portfolio/6.jpg\" alt=\"Dashboard\" class=\"cbp-l-project-img\">\n                    </div>\n\n                    <div class=\"cbp-l-inline-right\">\n                        <div class=\"cbp-l-inline-title\">Remind~Me Widget</div>\n                        <div class=\"cbp-l-inline-subtitle\">by Tiberiu Neamu</div>\n\n                        <div class=\"cbp-l-inline-desc\">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, cumque, earum blanditiis incidunt minus commodi consequatur provident quae. Nihil, alias, vel consequatur ab aliquam aspernatur optio harum facilis excepturi mollitia autem voluptas cum ex veniam numquam quia repudiandae in iure. Assumenda, vel provident molestiae perferendis officia commodi asperiores earum sapiente inventore quam deleniti mollitia consequatur expedita quaerat natus praesentium beatae!</div>\n\n                        <a href=\"#\" target=\"_blank\" class=\"cbp-l-inline-view\">VIEW PROJECT</a>\n                    </div>\n                </div>\n            ";
+                t.updateSinglePageInline(compHtml);
+                // t.updateSinglePageInline("Hello World!");
                 //Update with the service
                 // $.ajax({
                 //         url: url,
