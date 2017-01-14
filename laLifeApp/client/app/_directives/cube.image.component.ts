@@ -15,7 +15,6 @@ declare var $:JQueryStatic;
 })
  
 export class CubeImageComponent implements OnInit{
-
     ngOnInit() : void {
 
     }

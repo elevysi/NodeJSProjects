@@ -25,6 +25,7 @@ export class CubePortfolioComponent implements OnInit, AfterViewInit{
     // snaps : Snap [] = [];
 
     private _snaps = new BehaviorSubject<Snap[]>([]);
+    snap : Snap;
 
     @Input()
     set snaps(value) {
@@ -117,7 +118,8 @@ export class CubePortfolioComponent implements OnInit, AfterViewInit{
                     </div>
                 </div>
             `;
-            t.updateSinglePageInline(compHtml);
+            // t.updateSinglePageInline(compHtml);
+            t.updateSinglePageInline("<cubeimage>I say smoe</cubeimage>");
             // t.updateSinglePageInline("Hello World!");
             //Update with the service
             // $.ajax({
@@ -181,4 +183,7 @@ export class CubePortfolioComponent implements OnInit, AfterViewInit{
         
     }
     
+    selectedSnap(){
+        console.log("This is the snap I selected");
+    }
 }
