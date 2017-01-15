@@ -38,6 +38,7 @@ var AddSnapComponent = (function () {
     AddSnapComponent.prototype.addSnap = function () {
         var _this = this;
         var snap = {
+            _id: null,
             name: this.name,
             description: this.description,
             path: this.path

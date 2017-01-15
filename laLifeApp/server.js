@@ -23,6 +23,7 @@ var auth = jwt({
 const appRoute = require("./routes/app"); // This route redirects all other requests to angular's index
 var apiRoute = require("./routes/api");
 var usersRoute = require("./routes/users");
+var snapRoute = require("./routes/snap");
 
 //Connects to Mongo
 const dbConfig = require("./configs/database");
@@ -56,15 +57,17 @@ app.use(passport.initialize())
 app.get("/api/snaps", apiRoute.list);
 app.get("/api/snapSearch", apiRoute.search);
 app.get("/api/snaps/:id", apiRoute.getSnap);
+app.put("/api/snaps/:id", auth, apiRoute.editSnap);
 app.post("/api/snaps", auth, apiRoute.add(app.get('uploadsDir')));
 app.delete("/api/snaps/:id", auth, apiRoute.deleteSnap);
 
 //Users
-app.post("/api/register", auth, usersRoute.register); //only i can register users
+app.post("/api/register", usersRoute.register); //only i can register users
 // app.post("/api/register", usersRoute.register);
 app.post("/api/login", usersRoute.login);
 app.get("/api/profile", auth, usersRoute.profileRead);
 app.get("/api/users", auth, usersRoute.list);
+app.get("/api/snap/:id", snapRoute.snap);
 
 app.get('/*', appRoute.index); // This route redirects all other requests to angular's index
 

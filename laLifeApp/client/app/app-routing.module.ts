@@ -5,6 +5,7 @@ import { RouterModule, Routes } from "@angular/router";
 import { SnapsComponent } from './snaps/snaps.component';
 import { AddSnapComponent } from "./addSnap/add-snap.component";
 import { ViewSnapComponent } from "./viewSnap/view-snap.component";
+import { EditSnapComponent } from "./editSnap/edit-snap.component";
 import { FileUploadComponent } from './fileUpload/file-upload.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
@@ -41,7 +42,13 @@ const routes : Routes = [
     },
     {
         path: 'view/:id',
-        component: ViewSnapComponent
+        component: ViewSnapComponent,
+        canActivate : [LoggedInGuard]
+    },
+     {
+        path: 'edit/:id',
+        component: EditSnapComponent,
+        canActivate : [LoggedInGuard]
     },
     {
         path: "register",

@@ -41,7 +41,6 @@ export class LoginComponent implements OnInit{
         this.subscription = this.authenticationService.user$
         .subscribe(user => {
             this.user = user;
-            console.log(user);
             if (this.user.email != null){
                 if(this.authenticationService.isLoggedIn()){
                     this.alertService.error(this.user.name +' is already logged in.', true);

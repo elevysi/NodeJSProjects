@@ -21,11 +21,10 @@ export class CubePortfolioComponent implements OnInit, AfterViewInit{
 
     cubePortfolioInited : boolean = false;
 
-    // @Input()
-    // snaps : Snap [] = [];
 
     private _snaps = new BehaviorSubject<Snap[]>([]);
     snap : Snap;
+    selectedSnapId : string;
 
     @Input()
     set snaps(value) {
@@ -44,7 +43,6 @@ export class CubePortfolioComponent implements OnInit, AfterViewInit{
         this._snaps
             .subscribe (snaps => {
                 this.compSnaps = snaps;
-                console.log(this.compSnaps);
                 this.applyCubePortfolio();
             });
     }
@@ -99,50 +97,27 @@ export class CubePortfolioComponent implements OnInit, AfterViewInit{
         singlePageInlineInFocus: true,
         singlePageInlineCallback: function(url : any, element : any) {
             // to update singlePageInline content use the following method: this.updateSinglePageInline(yourContent)
-            var t = this;
-            console.log("In directive");
-            console.log(element);
-            var compHtml = `
-                <div class="cbp-l-inline">
-                    <div class="cbp-l-inline-left">
-                        <img src="assets/img/portfolio/6.jpg" alt="Dashboard" class="cbp-l-project-img">
-                    </div>
+            var t = this;            
+            // Update with the service
+            $.ajax({
+                    url: "api/snap/"+url,
+                    type: 'GET',
+                    dataType: 'html',
+                    timeout: 5000
+                })
+                .done(function(result) {
 
-                    <div class="cbp-l-inline-right">
-                        <div class="cbp-l-inline-title">Remind~Me Widget</div>
-                        <div class="cbp-l-inline-subtitle">by Tiberiu Neamu</div>
+                    t.updateSinglePageInline(result);
 
-                        <div class="cbp-l-inline-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, cumque, earum blanditiis incidunt minus commodi consequatur provident quae. Nihil, alias, vel consequatur ab aliquam aspernatur optio harum facilis excepturi mollitia autem voluptas cum ex veniam numquam quia repudiandae in iure. Assumenda, vel provident molestiae perferendis officia commodi asperiores earum sapiente inventore quam deleniti mollitia consequatur expedita quaerat natus praesentium beatae!</div>
-
-                        <a href="#" target="_blank" class="cbp-l-inline-view">VIEW PROJECT</a>
-                    </div>
-                </div>
-            `;
-            // t.updateSinglePageInline(compHtml);
-            t.updateSinglePageInline("<cubeimage>I say smoe</cubeimage>");
-            // t.updateSinglePageInline("Hello World!");
-            //Update with the service
-            // $.ajax({
-            //         url: url,
-            //         type: 'GET',
-            //         dataType: 'html',
-            //         timeout: 5000
-            //     })
-            //     .done(function(result) {
-
-            //         t.updateSinglePageInline(result);
-
-            //     })
-            //     .fail(function() {
-            //         t.updateSinglePageInline("Error! Please refresh the page!");
-            //     });
+                })
+                .fail(function() {
+                    t.updateSinglePageInline("Error! Please refresh the page!");
+                });
         }
     };
     
         
         if(this.compSnaps != null){
-            console.log("Called here ");
-            console.log(this.compSnaps);
             if(this.cubePortfolioInited){
                 /**
                  * Start by a destroy
@@ -155,35 +130,12 @@ export class CubePortfolioComponent implements OnInit, AfterViewInit{
                 this.cubePortfolioInited = true;
 
             }, 2000);
-
-            
-//             var htmlContent : string =  `<div class="cbp-item print motion" *ngFor="let snap of compSnaps">
-//         <a href="assets_onepageclassic/ajax/project1.html" class="cbp-caption cbp-singlePageInline" data-title="World Clock Widget<br>by Paul Flavius Nechita">
-//         <div class="cbp-caption-defaultWrap">
-//             <img src="assets_onepageclassic/img/portfolio/1.jpg" alt="">
-//         </div>
-//         <div class="cbp-caption-activeWrap">
-//             <div class="cbp-l-caption-alignLeft">
-//                 <div class="cbp-l-caption-body">
-//                     <div class="cbp-l-caption-title">World Clock Widget</div>
-//                     <div class="cbp-l-caption-desc">by Paul Flavius Nechita</div>
-//                 </div>
-//             </div>
-//         </div>
-//     </a>
-// </div>`;
-
 //     $(this.el.nativeElement).cubeportfolio('appendItems', htmlContent);
-                
-            
-            }
+        }
     }
 
     ngAfterViewInit() {
         
     }
     
-    selectedSnap(){
-        console.log("This is the snap I selected");
-    }
 }

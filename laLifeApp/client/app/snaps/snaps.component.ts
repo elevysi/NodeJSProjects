@@ -30,8 +30,6 @@ export class SnapsComponent implements OnInit{
             .then(snaps => {
                 this.compSnaps = snaps;
                 this.snaps.next(snaps);
-                // console.log(this.snaps.map());
-                console.log(this.compSnaps);
             });
     }
 

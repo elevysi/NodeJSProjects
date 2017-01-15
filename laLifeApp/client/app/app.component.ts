@@ -27,7 +27,7 @@ export class AppComponent  implements OnInit{
   ngOnInit() : void {
     
       this.subscription = this.authenticationService.user$
-        .subscribe(user => {this.user = user; console.log("I am receiving the user");});
+        .subscribe(user => {this.user = user; });
 
   }
 

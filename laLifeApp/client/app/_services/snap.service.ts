@@ -29,15 +29,42 @@ export class SnapService{
             .then(response => response.json() as Snap[])
             .catch(this.handleError);
     }
+    
 
     addSnap(snap : Snap): Promise<Snap>{
+
+        const url = `${this.snapUrl}`;
+        let authToken = localStorage.getItem('auth_token');
+
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('Authorization', `Bearer ${authToken}`);
         
         return this.http
             // .post(this.snapUrl, JSON.stringify({snap : snap}), {headers: this.headers})
-            .post(this.snapUrl, JSON.stringify({snap : snap}), {headers: this.headers})
+            .post(this.snapUrl, JSON.stringify({snap : snap}), {headers: headers})
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
+    }
+
+    editSnap(snap : Snap){
+
+        const url = `${this.snapUrl}/${snap._id}`;
+        let authToken = localStorage.getItem('auth_token');
+
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('Authorization', `Bearer ${authToken}`);
+
+        return this.http.put(url, JSON.stringify({snap : snap}), {headers: headers})
+            .map((response: Response) => {
+            var data = response.json();
+
+            return data;
+            
+
+            });
     }
 
     private handleError(error : any) : Promise<any> {
@@ -45,18 +72,24 @@ export class SnapService{
         return Promise.reject(error.message || error);
     }
 
-    deleteSnap(id : String) : Promise<void> {
+    deleteSnap(id : String){
+        
         const url = `${this.snapUrl}/${id}`;
-        return this.http
-            .delete(url, {headers: this.headers})
-            .toPromise()
-            .then(() => null)
-            .catch(this.handleError);
+        let authToken = localStorage.getItem('auth_token');
+
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('Authorization', `Bearer ${authToken}`);
+
+        return this.http.delete(url, {headers: headers})
+            .map((response: Response) => {
+            var data = response.json();
+                return data;
+            });
     }
 
     getSnap(id : String): Promise<Snap> {
         const url = `${this.snapUrl}/${id}`;
-        console.log("I am called in snap service");
         return this.http.get(url)
             .toPromise()
             .then(response => {

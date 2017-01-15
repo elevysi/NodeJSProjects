@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { Location } from '@angular/common';
+import { Headers } from "@angular/http";
 
 import { Snap } from "../_models/snap";
 
@@ -28,10 +29,12 @@ export class FileUploadComponent implements OnInit{
 
     public uploader : FileUploader = new FileUploader({
         url: this.snapUrl,
-        // headers: [{
-        //         name:'Content-Type',
-        //         value:'application/json'
-        //     }]
+        headers: [
+                {
+                    name:'Authorization',
+                    value:'Bearer '+localStorage.getItem('auth_token')
+                }
+            ]
     });
     
 
@@ -42,21 +45,16 @@ export class FileUploadComponent implements OnInit{
     ){ }
 
     ngOnInit(): void {
-        console.log("Staring file uploads");
+
     }
 
     addSnap(): void {
         var snap  : Snap = {
+            _id : null,
             name : this.name,
             description : this.description,
             path : this.path
         };
-
-        // var snap = {
-        //     name : this.name,
-        //     description : this.description,
-        //     path : this.path
-        // };
 
         this.snapService.addSnap(snap)
             .then(() => this.goBack());
@@ -75,16 +73,9 @@ export class FileUploadComponent implements OnInit{
 
     appendToFile() : void {
         this.uploader.onBuildItemForm = (item : any, form : any) => {
-            var snap = {
-                name : this.name,
-                description : this.description,
-                path : ""
-            };
             form.append("name", this.name);
             form.append("description", this.description);
         };
 
     }
-
-
 }

@@ -55,13 +55,10 @@ export class AuthenticationService{
         if(_currentUser.email === null){
             this.user.next(null);
         }else{
-            console.log("Setting ...");
             var _newUser= new User();
             _newUser.email = _currentUser.email;
             _newUser.name = _currentUser.name;
             this.user.next(_newUser);
-
-            console.log(_currentUser);
         }
         
     }

@@ -55,12 +55,10 @@ var AuthenticationService = (function () {
             this.user.next(null);
         }
         else {
-            console.log("Setting ...");
             var _newUser = new user_1.User();
             _newUser.email = _currentUser.email;
             _newUser.name = _currentUser.name;
             this.user.next(_newUser);
-            console.log(_currentUser);
         }
     };
     AuthenticationService.prototype.storeToken = function (auth_token) {

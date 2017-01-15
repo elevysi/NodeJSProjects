@@ -13,7 +13,7 @@ var mongoose = require("mongoose");
 // });
 
 var snapSchema = new mongoose.Schema({
-
+    // _id: Number,
     name: {
         type: String,
         required: true

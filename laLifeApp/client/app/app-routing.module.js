@@ -13,6 +13,7 @@ var router_1 = require("@angular/router");
 var snaps_component_1 = require('./snaps/snaps.component');
 var add_snap_component_1 = require("./addSnap/add-snap.component");
 var view_snap_component_1 = require("./viewSnap/view-snap.component");
+var edit_snap_component_1 = require("./editSnap/edit-snap.component");
 var file_upload_component_1 = require('./fileUpload/file-upload.component');
 var register_component_1 = require('./register/register.component');
 var login_component_1 = require('./login/login.component');
@@ -47,7 +48,13 @@ var routes = [
     },
     {
         path: 'view/:id',
-        component: view_snap_component_1.ViewSnapComponent
+        component: view_snap_component_1.ViewSnapComponent,
+        canActivate: [logged_in_guard_1.LoggedInGuard]
+    },
+    {
+        path: 'edit/:id',
+        component: edit_snap_component_1.EditSnapComponent,
+        canActivate: [logged_in_guard_1.LoggedInGuard]
     },
     {
         path: "register",

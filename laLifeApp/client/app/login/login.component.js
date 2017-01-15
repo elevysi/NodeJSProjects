@@ -31,7 +31,6 @@ var LoginComponent = (function () {
         this.subscription = this.authenticationService.user$
             .subscribe(function (user) {
             _this.user = user;
-            console.log(user);
             if (_this.user.email != null) {
                 if (_this.authenticationService.isLoggedIn()) {
                     _this.alertService.error(_this.user.name + ' is already logged in.', true);

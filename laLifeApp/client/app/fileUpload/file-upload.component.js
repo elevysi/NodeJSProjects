@@ -22,23 +22,24 @@ var FileUploadComponent = (function () {
         this.snapUrl = "api/snaps";
         this.uploader = new ng2_file_upload_1.FileUploader({
             url: this.snapUrl,
+            headers: [
+                {
+                    name: 'Authorization',
+                    value: 'Bearer ' + localStorage.getItem('auth_token')
+                }
+            ]
         });
     }
     FileUploadComponent.prototype.ngOnInit = function () {
-        console.log("Staring file uploads");
     };
     FileUploadComponent.prototype.addSnap = function () {
         var _this = this;
         var snap = {
+            _id: null,
             name: this.name,
             description: this.description,
             path: this.path
         };
-        // var snap = {
-        //     name : this.name,
-        //     description : this.description,
-        //     path : this.path
-        // };
         this.snapService.addSnap(snap)
             .then(function () { return _this.goBack(); });
         // console.log(snap);
@@ -53,11 +54,6 @@ var FileUploadComponent = (function () {
     FileUploadComponent.prototype.appendToFile = function () {
         var _this = this;
         this.uploader.onBuildItemForm = function (item, form) {
-            var snap = {
-                name: _this.name,
-                description: _this.description,
-                path: ""
-            };
             form.append("name", _this.name);
             form.append("description", _this.description);
         };

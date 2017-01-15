@@ -15,45 +15,58 @@ require("rxjs/add/operator/switchMap");
 var snap_1 = require("../_models/snap");
 var snap_service_1 = require("../_services/snap.service");
 var alert_service_1 = require("../_services/alert.service");
-var ViewSnapComponent = (function () {
-    function ViewSnapComponent(snapService, route, alertService, location) {
+var EditSnapComponent = (function () {
+    function EditSnapComponent(snapService, route, alertService, location) {
         this.snapService = snapService;
         this.route = route;
         this.alertService = alertService;
         this.location = location;
+        this.model = {};
     }
-    ViewSnapComponent.prototype.ngOnInit = function () {
+    EditSnapComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.route.params
             .switchMap(function (params) { return _this.snapService.getSnap(params['id']); })
-            .subscribe(function (snap) { return _this.snap = snap; });
+            .subscribe(function (snap) {
+            _this.snap = snap;
+            _this.model._id = snap._id;
+            _this.model.name = snap.name;
+            _this.model.description = snap.description;
+            _this.model.path = snap.path;
+        });
     };
-    ViewSnapComponent.prototype.deleteSnap = function (id) {
+    EditSnapComponent.prototype.submit = function () {
         var _this = this;
-        this.snapService.deleteSnap(id)
+        var snap = {
+            _id: this.model._id,
+            name: this.model.name,
+            description: this.model.description,
+            path: this.model.path,
+        };
+        this.snapService.editSnap(snap)
             .subscribe(function (data) {
-            _this.alertService.success('Successfully deleted', true);
+            _this.alertService.success('Successfully edited', true);
             _this.goBack();
         }, function (error) {
             _this.alertService.error(error);
         });
     };
-    ViewSnapComponent.prototype.goBack = function () {
+    EditSnapComponent.prototype.goBack = function () {
         this.location.back();
     };
     __decorate([
         core_1.Input(), 
         __metadata('design:type', snap_1.Snap)
-    ], ViewSnapComponent.prototype, "snap", void 0);
-    ViewSnapComponent = __decorate([
+    ], EditSnapComponent.prototype, "snap", void 0);
+    EditSnapComponent = __decorate([
         core_1.Component({
             moduleId: module.id,
-            selector: "view-snap",
-            templateUrl: "view-snap.component.html"
+            selector: "edit-snap",
+            templateUrl: "edit-snap.component.html"
         }), 
         __metadata('design:paramtypes', [snap_service_1.SnapService, router_1.ActivatedRoute, alert_service_1.AlertService, common_1.Location])
-    ], ViewSnapComponent);
-    return ViewSnapComponent;
+    ], EditSnapComponent);
+    return EditSnapComponent;
 }());
-exports.ViewSnapComponent = ViewSnapComponent;
-//# sourceMappingURL=view-snap.component.js.map
+exports.EditSnapComponent = EditSnapComponent;
+//# sourceMappingURL=edit-snap.component.js.map

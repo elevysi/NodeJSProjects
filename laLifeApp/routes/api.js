@@ -83,12 +83,12 @@ exports.add = (dir) => {
 
 //         console.log(util.inspect(req.body, {showHidden: false, depth: null}));
 
-//         var snap = new Snap(req.body.snap);
-//         // *console.log(util.inspect(snap, {showHidden: false, depth: null}));
-//         snap.save((err, resource) => {
-//                 if(err) res.send(err).status(501);
-//                 else res.json(resource).status(201); //201 HTML code for created
-//             });
+        // var snap = new Snap(req.body.snap);
+        // // *console.log(util.inspect(snap, {showHidden: false, depth: null}));
+        // snap.save((err, resource) => {
+        //         if(err) res.send(err).status(501);
+        //         else res.json(resource).status(201); //201 HTML code for created
+        //     });
 //     };
 // };
 
@@ -110,6 +110,25 @@ exports.getSnap = (req, res, err) => {
             // var Snap = resource;
             // console.log("I have found a snap " + Snap.name);
             res.send(resource).status(200);
+        }
+    });
+};
+
+exports.editSnap = (req, res, err) => {
+
+    
+    Snap.findById(req.body.snap._id, (err, foundSnap) => {
+        if(err) res.send(err).status(501);
+        else{
+
+            foundSnap.name = req.body.snap.name || foundSnap.name;
+            foundSnap.description = req.body.snap.description || foundSnap.description;
+
+            foundSnap.save((err, resource) => {
+                if(err) res.send(err).status(501);
+                else res.json(resource).status(200); //201 HTML code for created
+            });
+            
         }
     });
 };

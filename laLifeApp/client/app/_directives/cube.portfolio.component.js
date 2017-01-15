@@ -14,8 +14,6 @@ var BehaviorSubject_1 = require('rxjs/BehaviorSubject');
 var CubePortfolioComponent = (function () {
     function CubePortfolioComponent() {
         this.cubePortfolioInited = false;
-        // @Input()
-        // snaps : Snap [] = [];
         this._snaps = new BehaviorSubject_1.BehaviorSubject([]);
     }
     Object.defineProperty(CubePortfolioComponent.prototype, "snaps", {
@@ -36,7 +34,6 @@ var CubePortfolioComponent = (function () {
         this._snaps
             .subscribe(function (snaps) {
             _this.compSnaps = snaps;
-            console.log(_this.compSnaps);
             _this.applyCubePortfolio();
         });
     };
@@ -87,30 +84,22 @@ var CubePortfolioComponent = (function () {
             singlePageInlineCallback: function (url, element) {
                 // to update singlePageInline content use the following method: this.updateSinglePageInline(yourContent)
                 var t = this;
-                console.log("In directive");
-                console.log(element);
-                var compHtml = "\n                <div class=\"cbp-l-inline\">\n                    <div class=\"cbp-l-inline-left\">\n                        <img src=\"assets/img/portfolio/6.jpg\" alt=\"Dashboard\" class=\"cbp-l-project-img\">\n                    </div>\n\n                    <div class=\"cbp-l-inline-right\">\n                        <div class=\"cbp-l-inline-title\">Remind~Me Widget</div>\n                        <div class=\"cbp-l-inline-subtitle\">by Tiberiu Neamu</div>\n\n                        <div class=\"cbp-l-inline-desc\">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, cumque, earum blanditiis incidunt minus commodi consequatur provident quae. Nihil, alias, vel consequatur ab aliquam aspernatur optio harum facilis excepturi mollitia autem voluptas cum ex veniam numquam quia repudiandae in iure. Assumenda, vel provident molestiae perferendis officia commodi asperiores earum sapiente inventore quam deleniti mollitia consequatur expedita quaerat natus praesentium beatae!</div>\n\n                        <a href=\"#\" target=\"_blank\" class=\"cbp-l-inline-view\">VIEW PROJECT</a>\n                    </div>\n                </div>\n            ";
-                // t.updateSinglePageInline(compHtml);
-                t.updateSinglePageInline("<cubeimage>I say smoe</cubeimage>");
-                // t.updateSinglePageInline("Hello World!");
-                //Update with the service
-                // $.ajax({
-                //         url: url,
-                //         type: 'GET',
-                //         dataType: 'html',
-                //         timeout: 5000
-                //     })
-                //     .done(function(result) {
-                //         t.updateSinglePageInline(result);
-                //     })
-                //     .fail(function() {
-                //         t.updateSinglePageInline("Error! Please refresh the page!");
-                //     });
+                // Update with the service
+                $.ajax({
+                    url: "api/snap/" + url,
+                    type: 'GET',
+                    dataType: 'html',
+                    timeout: 5000
+                })
+                    .done(function (result) {
+                    t.updateSinglePageInline(result);
+                })
+                    .fail(function () {
+                    t.updateSinglePageInline("Error! Please refresh the page!");
+                });
             }
         };
         if (this.compSnaps != null) {
-            console.log("Called here ");
-            console.log(this.compSnaps);
             if (this.cubePortfolioInited) {
                 /**
                  * Start by a destroy
@@ -124,9 +113,6 @@ var CubePortfolioComponent = (function () {
         }
     };
     CubePortfolioComponent.prototype.ngAfterViewInit = function () {
-    };
-    CubePortfolioComponent.prototype.selectedSnap = function () {
-        console.log("This is the snap I selected");
     };
     __decorate([
         core_1.ViewChild('gridSnapsContainer'), 

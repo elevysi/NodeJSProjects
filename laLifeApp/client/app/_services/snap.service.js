@@ -29,11 +29,28 @@ var SnapService = (function () {
             .catch(this.handleError);
     };
     SnapService.prototype.addSnap = function (snap) {
+        var url = "" + this.snapUrl;
+        var authToken = localStorage.getItem('auth_token');
+        var headers = new http_1.Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('Authorization', "Bearer " + authToken);
         return this.http
-            .post(this.snapUrl, JSON.stringify({ snap: snap }), { headers: this.headers })
+            .post(this.snapUrl, JSON.stringify({ snap: snap }), { headers: headers })
             .toPromise()
             .then(function (res) { return res.json().data; })
             .catch(this.handleError);
+    };
+    SnapService.prototype.editSnap = function (snap) {
+        var url = this.snapUrl + "/" + snap._id;
+        var authToken = localStorage.getItem('auth_token');
+        var headers = new http_1.Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('Authorization', "Bearer " + authToken);
+        return this.http.put(url, JSON.stringify({ snap: snap }), { headers: headers })
+            .map(function (response) {
+            var data = response.json();
+            return data;
+        });
     };
     SnapService.prototype.handleError = function (error) {
         console.error('An error has occured', error);
@@ -41,15 +58,18 @@ var SnapService = (function () {
     };
     SnapService.prototype.deleteSnap = function (id) {
         var url = this.snapUrl + "/" + id;
-        return this.http
-            .delete(url, { headers: this.headers })
-            .toPromise()
-            .then(function () { return null; })
-            .catch(this.handleError);
+        var authToken = localStorage.getItem('auth_token');
+        var headers = new http_1.Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('Authorization', "Bearer " + authToken);
+        return this.http.delete(url, { headers: headers })
+            .map(function (response) {
+            var data = response.json();
+            return data;
+        });
     };
     SnapService.prototype.getSnap = function (id) {
         var url = this.snapUrl + "/" + id;
-        console.log("I am called in snap service");
         return this.http.get(url)
             .toPromise()
             .then(function (response) {

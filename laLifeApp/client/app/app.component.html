@@ -2,7 +2,7 @@
     <div class="container content"><alert></alert></div>
     <div id="filters-container" class="cbp-l-filters-button">
         <a class="cbp-filter-item" routerLinkActive="cbp-filter-item-active" routerLink="/">Snaps</a>
-        <a class="cbp-filter-item" routerLinkActive="cbp-filter-item-active" routerLink="/upload">Upload</a>
+        <a *ngIf="user" class="cbp-filter-item" routerLinkActive="cbp-filter-item-active" routerLink="/upload">Upload</a>
         <a class="cbp-filter-item" routerLinkActive="cbp-filter-item-active" routerLink="/register">Register</a>
         <a *ngIf="! user" routerLinkActive="cbp-filter-item-active" class="cbp-filter-item" routerLink="/login">Login</a>
         <a *ngIf="user" routerLinkActive="cbp-filter-item-active" class="cbp-filter-item" routerLink="/logout">Logout</a>

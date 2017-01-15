@@ -55,6 +55,7 @@ export class AddSnapComponent implements OnInit{
 
     addSnap(): void {
         var snap  : Snap = {
+            _id : null,
             name : this.name,
             description : this.description,
             path : this.path

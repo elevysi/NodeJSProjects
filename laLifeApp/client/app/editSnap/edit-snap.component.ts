@@ -11,14 +11,15 @@ import { AlertService } from "../_services/alert.service";
 
 @Component({
     moduleId : module.id,
-    selector : "view-snap",
-    templateUrl : "view-snap.component.html"
+    selector : "edit-snap",
+    templateUrl : "edit-snap.component.html"
 })
 
-export class ViewSnapComponent implements OnInit {
+export class EditSnapComponent implements OnInit {
 
     @Input()
     snap : Snap;
+    model: any = {};
 
     constructor(
         private snapService : SnapService,
@@ -30,15 +31,29 @@ export class ViewSnapComponent implements OnInit {
     ngOnInit(): void {
         this.route.params
             .switchMap((params : Params) => this.snapService.getSnap(params['id']))
-            .subscribe(snap => this.snap = snap);
+            .subscribe(snap => {
+                this.snap = snap;
+                this.model._id = snap._id;
+                this.model.name = snap.name;
+                this.model.description = snap.description;
+                this.model.path = snap.path;
+
+            });
     }
 
-    deleteSnap(id : String): void {
-        
-        this.snapService.deleteSnap(id)
+
+    submit() : void {
+        var snap  : Snap = {
+            _id : this.model._id,
+            name : this.model.name,
+            description : this.model.description,
+            path : this.model.path,
+        };
+
+        this.snapService.editSnap(snap)
             .subscribe(
                 data => {
-                    this.alertService.success('Successfully deleted', true);
+                    this.alertService.success('Successfully edited', true);
                     this.goBack();
                 },
                 error => {
@@ -47,7 +62,7 @@ export class ViewSnapComponent implements OnInit {
                 });
     }
 
-    goBack() : void {
+    goBack() {
         this.location.back();
     }
 }

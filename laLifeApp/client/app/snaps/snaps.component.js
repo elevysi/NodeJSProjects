@@ -28,8 +28,6 @@ var SnapsComponent = (function () {
             .then(function (snaps) {
             _this.compSnaps = snaps;
             _this.snaps.next(snaps);
-            // console.log(this.snaps.map());
-            console.log(_this.compSnaps);
         });
     };
     SnapsComponent.prototype.ngOnInit = function () {

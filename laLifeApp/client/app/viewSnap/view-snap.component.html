@@ -32,6 +32,13 @@
         <td>{{snap.created}}</td>
     </tr>
 </table>
+    <div class="btn-group">
+        <button class="btn-u btn-brd rounded-2x btn-u-aqua btn-u-xs" (click)="deleteSnap(snap._id)">
+            <i class="fa fa-trash"></i>Delete this Snap
+        </button>
 
-    <button (click)="deleteSnap(snap._id)">Delete this Snap</button>
+        <a class="btn-u btn-brd rounded-2x btn-u-aqua btn-u-xs" routerLink="/edit/{{snap._id}}">
+            <i class="fa fa-edit"></i>Edit this Snap
+        </a>
+    </div>
 </div>
