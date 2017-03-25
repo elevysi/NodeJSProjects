@@ -33,14 +33,6 @@ var SnapsComponent = (function () {
     SnapsComponent.prototype.ngOnInit = function () {
         this.getSnaps();
     };
-    SnapsComponent.prototype.deleteSnap = function (id) {
-        var _this = this;
-        this.snapService.deleteSnap(id)
-            .then(function () {
-            // this.goBack();
-            _this.router.navigateByUrl("/");
-        });
-    };
     SnapsComponent.prototype.goBack = function () {
         this.location.back();
     };

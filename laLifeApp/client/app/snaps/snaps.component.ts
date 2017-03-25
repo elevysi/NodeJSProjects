@@ -37,14 +37,6 @@ export class SnapsComponent implements OnInit{
         this.getSnaps();
     }
 
-    deleteSnap(id : string): void{
-        this.snapService.deleteSnap(id)
-            .then(() => {
-                // this.goBack();
-                this.router.navigateByUrl("/");
-            });
-    }
-
     goBack() : void {
         this.location.back();
     }
