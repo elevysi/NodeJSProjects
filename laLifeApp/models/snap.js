@@ -25,6 +25,8 @@ var snapSchema = new mongoose.Schema({
     path : "String",
     mime : "String",
     size : "number",
+    thumbanailPath : "String",
+    fullImagePath : "String",
     created : {type: Date, default: Date.now}  
 });
 

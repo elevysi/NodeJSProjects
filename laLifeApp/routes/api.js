@@ -5,6 +5,7 @@ var router = express.Router();
 var mime = require('mime');
 
 var Snap = require("../models/snap");
+var sharp = require("sharp");
 
 const DIR = './client/uploads/';
 const CLIENT_DIR = "uploads/";
@@ -49,27 +50,49 @@ exports.add = (dir) => {
 
         upload(req,res,function(err){
             if(err){
-                 res.json({error_code:1,err_desc:err});
-                 return;
+                res.json({error_code:1,err_desc:err});
+                return
+            }else{
+                var thumbainNailPath = "";
+                var appPath = "";
+                sharp().resize().toFile(thumbainNailPath, (err) => {
+                    if(err){
+                        res.json({error_code:1,err_desc:err});
+                        return
+                    }
+
+                    sharp().resize().toFile(thumbainNailPath, (err) => {
+                        if(err){
+                            res.json({error_code:1,err_desc:err});
+                            return
+                        }
+
+                        /**
+                         * Create the corresponding snap model item
+                         */
+                        // console.log(util.inspect(req.file, {showHidden: false, depth: null}));
+                        var snap = new Snap({
+                            "name" : req.body.name,
+                            "description" : req.body.description,
+                            "originalname" : req.file.originalname,
+                            "fileName" : req.file.filename,
+                            "path" : appPath,
+                            "mime" : req.file.mimetype,
+                            "size" : req.file.size,
+                            "thumbanailPath": thumbainNailPath,
+                            "fullImagePath": CLIENT_DIR + req.file.filename
+                        });
+                        
+                        snap.save((err, resource) => {
+                            if(err) res.send(err).status(501);
+                            else res.json(resource).status(201); //201 HTML code for created
+                        });
+                        
+
+                    });
+                }); 
+                
             }
-            /**
-             * Create the corresponding snap model item
-             */
-            // console.log(util.inspect(req.file, {showHidden: false, depth: null}));
-            var snap = new Snap({
-                "name" : req.body.name,
-                "description" : req.body.description,
-                "originalname" : req.file.originalname,
-                "fileName" : req.file.filename,
-                "path" : CLIENT_DIR + req.file.filename,
-                "mime" : req.file.mimetype,
-                "size" : req.file.size,
-            });
-            
-            snap.save((err, resource) => {
-                if(err) res.send(err).status(501);
-                else res.json(resource).status(201); //201 HTML code for created
-            });
         });   
     };
 };
