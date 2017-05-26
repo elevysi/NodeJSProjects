@@ -2,12 +2,18 @@ import { Component, Input, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { Location } from '@angular/common';
 import { Headers } from "@angular/http";
+import {Subscription} from "rxjs/Subscription";
 
 import { Snap } from "../_models/snap";
+import { User } from "../_models/user";
 
 import { SnapService } from "../_services/snap.service";
+import { AuthenticationService } from "../_services/authentication.service";
+
 
 import { FileUploader } from "ng2-file-upload/ng2-file-upload";
+
+import { Observable } from 'rxjs/Observable';
 
 import "rxjs/add/operator/switchMap";
 
@@ -22,6 +28,9 @@ export class FileUploadComponent implements OnInit{
     private snapUrl = "api/snaps";
 
     snap : Snap;
+
+    private user : User;
+
 
     name : string;
     description : string;
@@ -41,11 +50,14 @@ export class FileUploadComponent implements OnInit{
     constructor(
         private snapService : SnapService,
         private router : Router,
-        private location : Location
+        private location : Location,
+        private authenticationService : AuthenticationService
     ){ }
 
-    ngOnInit(): void {
-
+    ngOnInit(): void {       
+        this.authenticationService.getUser().subscribe(userObservabble => {
+            this.user = userObservabble;
+        });
     }
 
     addSnap(): void {
@@ -75,6 +87,8 @@ export class FileUploadComponent implements OnInit{
         this.uploader.onBuildItemForm = (item : any, form : any) => {
             form.append("name", this.name);
             form.append("description", this.description);
+            // console.log("logged user is "+ this.user.);
+            form.append("userIdentifier", this.user.email);
         };
 
     }

@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 
 import 'rxjs/add/operator/map';
 import {Subject} from 'rxjs/Subject';
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 
 import { User } from "../_models/user";
  
@@ -14,8 +15,18 @@ export class AuthenticationService{
     private loginUrl = "api/login";
     private headers = new Headers({'Content-Type': 'application/json'});
 
-    user : Subject <User> = new Subject();
-    user$ = this.user.asObservable();
+
+    //https://www.lucidchart.com/techblog/2016/11/08/angular-2-and-observables-data-sharing-in-a-multi-view-application/
+    // private user$ = new BehaviorSubject(User);
+
+    private user : BehaviorSubject<any> = new BehaviorSubject(null);
+    
+
+    // user$ = this.user.asObservable();
+
+    getUser() : Observable<User>{
+        return this.user.asObservable();
+    }
 
     constructor(private http: Http) { this.init(); }
 
@@ -58,7 +69,9 @@ export class AuthenticationService{
             var _newUser= new User();
             _newUser.email = _currentUser.email;
             _newUser.name = _currentUser.name;
+
             this.user.next(_newUser);
+            
         }
         
     }

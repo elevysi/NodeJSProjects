@@ -23,10 +23,10 @@ var snapSchema = new mongoose.Schema({
     originalname : "String",
     fileName : "String",
     path : "String",
-    mime : "String",
-    size : "number",
     thumbanailPath : "String",
     fullImagePath : "String",
+    mime : "String",
+    size : "number",
     created : {type: Date, default: Date.now}  
 });
 

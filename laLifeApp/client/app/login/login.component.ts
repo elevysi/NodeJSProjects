@@ -37,17 +37,20 @@ export class LoginComponent implements OnInit{
         // get return url from route parameters or default to '/'
         // this.authenticationService.logout();
         this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+        
+         this.authenticationService.getUser().subscribe(userObservable => {
+          this.user = userObservable;
 
-        this.subscription = this.authenticationService.user$
-        .subscribe(user => {
-            this.user = user;
             if (this.user.email != null){
                 if(this.authenticationService.isLoggedIn()){
                     this.alertService.error(this.user.name +' is already logged in.', true);
                     this.router.navigate([this.returnUrl]);
                 }
             }
+         
         });
+
+       
         
     }
 

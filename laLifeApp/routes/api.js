@@ -4,31 +4,91 @@ const util = require('util');
 var router = express.Router();
 var mime = require('mime');
 
+var fs = require("fs");
+
 var Snap = require("../models/snap");
-var sharp = require("sharp");
 
 const DIR = './client/uploads/';
+const THUMB_DIR = './client/uploads/thumbnails/';
+
 const CLIENT_DIR = "uploads/";
 
+// var storage = multer.diskStorage({
+//   destination: function (req, file, cb) {
+//     cb(null, DIR)
+//   },
+//   filename: function (req, file, cb) {
+//     cb(null, file.fieldname + '-' + Date.now()+ '.' + mime.extension(file.mimetype))
+//   }
+// });
+
+//Dynamic Storage
 var storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, DIR)
-  },
-  filename: function (req, file, cb) {
+    destination: function (req, file, cb) {
+        // var newDestination = 'uploads/' + req.user._username;
+        var newDestination = DIR + req.body.userIdentifier + "/";
+        var stat = null;
+        try {
+            stat = fs.statSync(newDestination);
+        } catch (err) {
+            fs.mkdirSync(newDestination);
+        }
+        if (stat && !stat.isDirectory()) {
+            throw new Error('Directory cannot be created because an inode of a different type exists at "' + dest + '"');
+        }       
+        cb(null, newDestination);
+    },
+    filename: function (req, file, cb) {
     cb(null, file.fieldname + '-' + Date.now()+ '.' + mime.extension(file.mimetype))
   }
 });
 
 var upload = multer({storage:storage}).single('file');
 
+// var upload = multer(
+//     { 
+//         dest: 'uploads/',
+//         limits: {
+//             fieldNameSize: 100,
+//             fileSize: 60000000
+//         },
+//         storage: storage
+//     }
+// );
+
+
 exports.list = (req, res, next) => {
-    Snap.find({}, (err, resources) => {
+//     Snap.find({}, (err, resources) => {
+//         if(err) res.send(err).status(404);
+//         else {
+//             // console.log(resources);
+//             res.send(resources).status(200);
+//         }
+//     });
+
+// News.find({
+//     deal_id:deal._id // Search Filters
+// },
+// ['type','date_added'], // Columns to Return
+// {
+//     skip:0, // Starting Row
+//     limit:10, // Ending Row
+//     sort:{
+//         date_added: -1 //Sort by Date Added DESC
+//     }
+// },
+
+    Snap.find({})
+        .sort({created: 'desc'})
+        .limit(20)
+        .exec(function(err, resources){
         if(err) res.send(err).status(404);
         else {
             // console.log(resources);
             res.send(resources).status(200);
         }
     });
+
 };
 
 
@@ -50,49 +110,29 @@ exports.add = (dir) => {
 
         upload(req,res,function(err){
             if(err){
-                res.json({error_code:1,err_desc:err});
-                return
-            }else{
-                var thumbainNailPath = "";
-                var appPath = "";
-                sharp().resize().toFile(thumbainNailPath, (err) => {
-                    if(err){
-                        res.json({error_code:1,err_desc:err});
-                        return
-                    }
-
-                    sharp().resize().toFile(thumbainNailPath, (err) => {
-                        if(err){
-                            res.json({error_code:1,err_desc:err});
-                            return
-                        }
-
-                        /**
-                         * Create the corresponding snap model item
-                         */
-                        // console.log(util.inspect(req.file, {showHidden: false, depth: null}));
-                        var snap = new Snap({
-                            "name" : req.body.name,
-                            "description" : req.body.description,
-                            "originalname" : req.file.originalname,
-                            "fileName" : req.file.filename,
-                            "path" : appPath,
-                            "mime" : req.file.mimetype,
-                            "size" : req.file.size,
-                            "thumbanailPath": thumbainNailPath,
-                            "fullImagePath": CLIENT_DIR + req.file.filename
-                        });
-                        
-                        snap.save((err, resource) => {
-                            if(err) res.send(err).status(501);
-                            else res.json(resource).status(201); //201 HTML code for created
-                        });
-                        
-
-                    });
-                }); 
-                
+                 res.json({error_code:1,err_desc:err});
+                 return;
             }
+
+            /**
+             * Create the corresponding snap model item
+             */
+            // console.log(util.inspect(req.file, {showHidden: false, depth: null}));
+            // console.log(util.inspect(req.body, {showHidden: false, depth: null}));
+            var snap = new Snap({
+                "name" : req.body.name,
+                "description" : req.body.description,
+                "originalname" : req.file.originalname,
+                "fileName" : req.file.filename,
+                "path" : CLIENT_DIR + req.body.userIdentifier + "/" + req.file.filename,
+                "mime" : req.file.mimetype,
+                "size" : req.file.size,
+            });
+            
+            snap.save((err, resource) => {
+                if(err) res.send(err).status(501);
+                else res.json(resource).status(201); //201 HTML code for created
+            });
         });   
     };
 };
@@ -123,6 +163,7 @@ exports.deleteSnap = (req, res, err) => {
         if(err) res.send(err).status(501);
         else res.send(resource).status(200);
     });
+    //remove snap from the Directory
 };
 
 exports.getSnap = (req, res, err) => {

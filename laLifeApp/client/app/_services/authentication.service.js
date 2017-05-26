@@ -11,7 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
 require('rxjs/add/operator/map');
-var Subject_1 = require('rxjs/Subject');
+var BehaviorSubject_1 = require('rxjs/BehaviorSubject');
 var user_1 = require("../_models/user");
 var AuthenticationService = (function () {
     function AuthenticationService(http) {
@@ -19,10 +19,15 @@ var AuthenticationService = (function () {
         this.loggedIn = false;
         this.loginUrl = "api/login";
         this.headers = new http_1.Headers({ 'Content-Type': 'application/json' });
-        this.user = new Subject_1.Subject();
-        this.user$ = this.user.asObservable();
+        //https://www.lucidchart.com/techblog/2016/11/08/angular-2-and-observables-data-sharing-in-a-multi-view-application/
+        // private user$ = new BehaviorSubject(User);
+        this.user = new BehaviorSubject_1.BehaviorSubject(null);
         this.init();
     }
+    // user$ = this.user.asObservable();
+    AuthenticationService.prototype.getUser = function () {
+        return this.user.asObservable();
+    };
     /**
      * OnInit not possible for injectables
      * http://stackoverflow.com/questions/35110690/ngoninit-not-being-called-when-injectable-class-is-instantiated

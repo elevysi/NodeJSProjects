@@ -12,13 +12,15 @@ var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var common_1 = require('@angular/common');
 var snap_service_1 = require("../_services/snap.service");
+var authentication_service_1 = require("../_services/authentication.service");
 var ng2_file_upload_1 = require("ng2-file-upload/ng2-file-upload");
 require("rxjs/add/operator/switchMap");
 var FileUploadComponent = (function () {
-    function FileUploadComponent(snapService, router, location) {
+    function FileUploadComponent(snapService, router, location, authenticationService) {
         this.snapService = snapService;
         this.router = router;
         this.location = location;
+        this.authenticationService = authenticationService;
         this.snapUrl = "api/snaps";
         this.uploader = new ng2_file_upload_1.FileUploader({
             url: this.snapUrl,
@@ -31,6 +33,10 @@ var FileUploadComponent = (function () {
         });
     }
     FileUploadComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.authenticationService.getUser().subscribe(function (userObservabble) {
+            _this.user = userObservabble;
+        });
     };
     FileUploadComponent.prototype.addSnap = function () {
         var _this = this;
@@ -56,6 +62,8 @@ var FileUploadComponent = (function () {
         this.uploader.onBuildItemForm = function (item, form) {
             form.append("name", _this.name);
             form.append("description", _this.description);
+            // console.log("logged user is "+ this.user.);
+            form.append("userIdentifier", _this.user.email);
         };
     };
     FileUploadComponent = __decorate([
@@ -64,7 +72,7 @@ var FileUploadComponent = (function () {
             selector: "<file-upload></file-upload>",
             templateUrl: "file-upload.component.html"
         }), 
-        __metadata('design:paramtypes', [snap_service_1.SnapService, router_1.Router, common_1.Location])
+        __metadata('design:paramtypes', [snap_service_1.SnapService, router_1.Router, common_1.Location, authentication_service_1.AuthenticationService])
     ], FileUploadComponent);
     return FileUploadComponent;
 }());

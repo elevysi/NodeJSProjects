@@ -1,13 +1,32 @@
+<!--'<h1>{{ (user | async | json )}}</h1>'-->
+
+<!--<div class="cube-portfolio">
+    <div class="container content"><alert></alert></div>
+    <div id="filters-container" class="cbp-l-filters-button">
+        <a class="cbp-filter-item" routerLinkActive="cbp-filter-item-active" routerLink="/">Snaps</a>
+        <a *ngIf="(loggedUser | async)" class="cbp-filter-item" routerLinkActive="cbp-filter-item-active" routerLink="/upload">Upload</a>
+        <a class="cbp-filter-item" routerLinkActive="cbp-filter-item-active" routerLink="/register">Register</a>
+        <a *ngIf="! (loggedUser | async)" routerLinkActive="cbp-filter-item-active" class="cbp-filter-item" routerLink="/login">Login</a>
+        <a *ngIf="(loggedUser | async)" routerLinkActive="cbp-filter-item-active" class="cbp-filter-item" routerLink="/logout">Logout - {{(loggedUser | async)?.email}}</a>
+        <a *ngIf="(loggedUser | async)" routerLinkActive="cbp-filter-item-active" class="cbp-filter-item" routerLink="/profile">Profile</a>
+        <a *ngIf="(loggedUser | async)" routerLinkActive="cbp-filter-item-active" class="cbp-filter-item" routerLink="/users">Users</a>
+    </div>
+    
+
+    
+
+<!--</div>-->
+
 <div class="cube-portfolio">
     <div class="container content"><alert></alert></div>
     <div id="filters-container" class="cbp-l-filters-button">
         <a class="cbp-filter-item" routerLinkActive="cbp-filter-item-active" routerLink="/">Snaps</a>
-        <a *ngIf="user" class="cbp-filter-item" routerLinkActive="cbp-filter-item-active" routerLink="/upload">Upload</a>
+        <a *ngIf="(loggedUser)" class="cbp-filter-item" routerLinkActive="cbp-filter-item-active" routerLink="/upload">Upload</a>
         <a class="cbp-filter-item" routerLinkActive="cbp-filter-item-active" routerLink="/register">Register</a>
-        <a *ngIf="! user" routerLinkActive="cbp-filter-item-active" class="cbp-filter-item" routerLink="/login">Login</a>
-        <a *ngIf="user" routerLinkActive="cbp-filter-item-active" class="cbp-filter-item" routerLink="/logout">Logout</a>
-        <a *ngIf="user" routerLinkActive="cbp-filter-item-active" class="cbp-filter-item" routerLink="/profile">Profile</a>
-        <a *ngIf="user" routerLinkActive="cbp-filter-item-active" class="cbp-filter-item" routerLink="/users">Users</a>
+        <a *ngIf="! (loggedUser)" routerLinkActive="cbp-filter-item-active" class="cbp-filter-item" routerLink="/login">Login</a>
+        <a *ngIf="(loggedUser)" routerLinkActive="cbp-filter-item-active" class="cbp-filter-item" routerLink="/logout">Logout - {{loggedUser.email}}</a>
+        <a *ngIf="(loggedUser)" routerLinkActive="cbp-filter-item-active" class="cbp-filter-item" routerLink="/profile">Profile</a>
+        <a *ngIf="(loggedUser)" routerLinkActive="cbp-filter-item-active" class="cbp-filter-item" routerLink="/users">Users</a>
     </div>
     <!--/end Filters Container -->
 

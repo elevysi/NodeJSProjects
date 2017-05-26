@@ -28,9 +28,8 @@ var LoginComponent = (function () {
         // get return url from route parameters or default to '/'
         // this.authenticationService.logout();
         this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-        this.subscription = this.authenticationService.user$
-            .subscribe(function (user) {
-            _this.user = user;
+        this.authenticationService.getUser().subscribe(function (userObservable) {
+            _this.user = userObservable;
             if (_this.user.email != null) {
                 if (_this.authenticationService.isLoggedIn()) {
                     _this.alertService.error(_this.user.name + ' is already logged in.', true);

@@ -2,7 +2,6 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var path = require('path');
 var fs = require('fs');
-var sharp = require("sharp");
 
 var passport = require('passport');
 
@@ -63,7 +62,7 @@ app.post("/api/snaps", auth, apiRoute.add(app.get('uploadsDir')));
 app.delete("/api/snaps/:id", auth, apiRoute.deleteSnap);
 
 //Users
-app.post("/api/register", usersRoute.register); //only i can register users
+app.post("/api/register", auth, usersRoute.register); //only i can register users
 // app.post("/api/register", usersRoute.register);
 app.post("/api/login", usersRoute.login);
 app.get("/api/profile", auth, usersRoute.profileRead);

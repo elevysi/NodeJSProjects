@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from "@angular/router";
 
 import {Subscription} from 'rxjs/Subscription';
+import { Observable } from 'rxjs/Observable';
 
 import {User} from "./_models/user";
 import { AuthenticationService } from "./_services/authentication.service";
@@ -15,8 +16,11 @@ import { AuthenticationService } from "./_services/authentication.service";
 })
 export class AppComponent  implements OnInit{ 
   name = 'LaLifeApp';
-  user : User;
+  // user : User;
+  user : Observable<User>;
   subscription : Subscription;
+
+  loggedUser : User;
 
   constructor(
     private authenticationService : AuthenticationService
@@ -25,9 +29,10 @@ export class AppComponent  implements OnInit{
   }
 
   ngOnInit() : void {
-    
-      this.subscription = this.authenticationService.user$
-        .subscribe(user => {this.user = user; });
+
+        this.authenticationService.getUser().subscribe(userObservable => {
+          this.loggedUser = userObservable;
+        });
 
   }
 

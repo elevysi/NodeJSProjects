@@ -17,8 +17,9 @@ var AppComponent = (function () {
     }
     AppComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.subscription = this.authenticationService.user$
-            .subscribe(function (user) { _this.user = user; });
+        this.authenticationService.getUser().subscribe(function (userObservable) {
+            _this.loggedUser = userObservable;
+        });
     };
     AppComponent.prototype.ngOnDestroy = function () {
         // prevent memory leak when component is destroyed
