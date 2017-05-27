@@ -23,11 +23,14 @@ var snapSchema = new mongoose.Schema({
     originalname : "String",
     fileName : "String",
     path : "String",
-    thumbanailPath : "String",
-    fullImagePath : "String",
+    thumbnailPath : "String",
+    originalPath : "String",
     mime : "String",
     size : "number",
-    created : {type: Date, default: Date.now}  
+    created : {type: Date, default: Date.now},
+    featured : "boolean",
+    publicSnap : "boolean",
+    album : {name : "String", description: "String", address : "String"}
 });
 
 module.exports = mongoose.model('Snap', snapSchema);

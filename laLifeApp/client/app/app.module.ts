@@ -19,6 +19,11 @@ import { ViewSnapComponent } from "./viewSnap/view-snap.component";
 import { EditSnapComponent } from "./editSnap/edit-snap.component";
 import { FileUploadComponent } from './fileUpload/file-upload.component';
 
+import { AlbumsComponent } from './albums/albums.component';
+import { AddAlbumComponent } from "./addAlbum/add-album.component";
+import { ViewAlbumComponent } from "./viewAlbum/view-album.component";
+import { EditAlbumComponent } from "./editAlbum/edit-album.component";
+
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
@@ -35,6 +40,7 @@ import { SnapService } from './_services/snap.service';
 import { AlertService } from "./_services/alert.service";
 import { AuthenticationService } from './_services/authentication.service';
 import { UserService } from './_services/user.service';
+import { AlbumService } from './_services/album.service';
 import { LoggedInGuard } from "./_guards/logged-in.guard";
 
 
@@ -63,9 +69,13 @@ import { LoggedInGuard } from "./_guards/logged-in.guard";
     UsersComponent,
     AlertComponent,
     ErrorComponent,
-    CubePortfolioComponent
+    CubePortfolioComponent,
+    AlbumsComponent,
+    AddAlbumComponent,
+    EditAlbumComponent,
+    ViewAlbumComponent
   ],
-  providers : [ LoggedInGuard, SnapService, UserService, AlertService, AuthenticationService],
+  providers : [ LoggedInGuard, SnapService, UserService, AlertService, AuthenticationService, AlbumService],
   bootstrap: [ AppComponent ]
   
 })

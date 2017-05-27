@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit{
          this.authenticationService.getUser().subscribe(userObservable => {
           this.user = userObservable;
 
-            if (this.user.email != null){
+            if (this.user != null){
                 if(this.authenticationService.isLoggedIn()){
                     this.alertService.error(this.user.name +' is already logged in.', true);
                     this.router.navigate([this.returnUrl]);

@@ -30,7 +30,7 @@ var LoginComponent = (function () {
         this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
         this.authenticationService.getUser().subscribe(function (userObservable) {
             _this.user = userObservable;
-            if (_this.user.email != null) {
+            if (_this.user != null) {
                 if (_this.authenticationService.isLoggedIn()) {
                     _this.alertService.error(_this.user.name + ' is already logged in.', true);
                     _this.router.navigate([_this.returnUrl]);

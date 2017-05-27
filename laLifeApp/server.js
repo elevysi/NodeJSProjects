@@ -24,6 +24,7 @@ const appRoute = require("./routes/app"); // This route redirects all other requ
 var apiRoute = require("./routes/api");
 var usersRoute = require("./routes/users");
 var snapRoute = require("./routes/snap");
+var albumRoute = require("./routes/albums");
 
 //Connects to Mongo
 const dbConfig = require("./configs/database");
@@ -60,6 +61,16 @@ app.get("/api/snaps/:id", apiRoute.getSnap);
 app.put("/api/snaps/:id", auth, apiRoute.editSnap);
 app.post("/api/snaps", auth, apiRoute.add(app.get('uploadsDir')));
 app.delete("/api/snaps/:id", auth, apiRoute.deleteSnap);
+
+//albums//Snaps
+app.get("/api/albums", albumRoute.list); //for public
+app.get("/api/all/albums/featured", albumRoute.listFeatured); //for featured
+
+app.post("/api/albums", auth, albumRoute.add);
+app.get("/api/albums/view/:id", auth, albumRoute.view);
+app.put("/api/albums/edit/:id", auth, albumRoute.edit);
+app.delete("/api/albums/:id", auth, albumRoute.delete);
+
 
 //Users
 app.post("/api/register", auth, usersRoute.register); //only i can register users

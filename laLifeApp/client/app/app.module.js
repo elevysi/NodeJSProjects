@@ -22,6 +22,10 @@ var add_snap_component_1 = require("./addSnap/add-snap.component");
 var view_snap_component_1 = require("./viewSnap/view-snap.component");
 var edit_snap_component_1 = require("./editSnap/edit-snap.component");
 var file_upload_component_1 = require('./fileUpload/file-upload.component');
+var albums_component_1 = require('./albums/albums.component');
+var add_album_component_1 = require("./addAlbum/add-album.component");
+var view_album_component_1 = require("./viewAlbum/view-album.component");
+var edit_album_component_1 = require("./editAlbum/edit-album.component");
 var register_component_1 = require('./register/register.component');
 var login_component_1 = require('./login/login.component');
 var profile_component_1 = require('./profile/profile.component');
@@ -35,6 +39,7 @@ var snap_service_1 = require('./_services/snap.service');
 var alert_service_1 = require("./_services/alert.service");
 var authentication_service_1 = require('./_services/authentication.service');
 var user_service_1 = require('./_services/user.service');
+var album_service_1 = require('./_services/album.service');
 var logged_in_guard_1 = require("./_guards/logged-in.guard");
 // import './rxjs-extensions';
 var AppModule = (function () {
@@ -63,9 +68,13 @@ var AppModule = (function () {
                 users_component_1.UsersComponent,
                 alert_component_1.AlertComponent,
                 error_component_1.ErrorComponent,
-                cube_portfolio_component_1.CubePortfolioComponent
+                cube_portfolio_component_1.CubePortfolioComponent,
+                albums_component_1.AlbumsComponent,
+                add_album_component_1.AddAlbumComponent,
+                edit_album_component_1.EditAlbumComponent,
+                view_album_component_1.ViewAlbumComponent
             ],
-            providers: [logged_in_guard_1.LoggedInGuard, snap_service_1.SnapService, user_service_1.UserService, alert_service_1.AlertService, authentication_service_1.AuthenticationService],
+            providers: [logged_in_guard_1.LoggedInGuard, snap_service_1.SnapService, user_service_1.UserService, alert_service_1.AlertService, authentication_service_1.AuthenticationService, album_service_1.AlbumService],
             bootstrap: [app_component_1.AppComponent]
         }), 
         __metadata('design:paramtypes', [])

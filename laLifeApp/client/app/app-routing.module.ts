@@ -14,6 +14,11 @@ import { UsersComponent } from "./users/users.component";
 import { LogoutComponent } from "./logout/logout.component";
 import { ErrorComponent } from "./error/error.component";
 
+import { AlbumsComponent } from './albums/albums.component';
+import { AddAlbumComponent } from "./addAlbum/add-album.component";
+import { ViewAlbumComponent } from "./viewAlbum/view-album.component";
+import { EditAlbumComponent } from "./editAlbum/edit-album.component";
+
 import { LoggedInGuard } from "./_guards/logged-in.guard";
 // import { AppComponent } from "./app.component";
 
@@ -77,6 +82,26 @@ const routes : Routes = [
         component : ErrorComponent
     },
     {
+        path: 'albums',
+        component: AlbumsComponent,
+        canActivate : [LoggedInGuard]
+    },
+    {
+        path: 'addAlbum',
+        component: AddAlbumComponent,
+        canActivate : [LoggedInGuard]
+    },
+    {
+        path: 'editAlbum/:id',
+        component: EditAlbumComponent,
+        canActivate : [LoggedInGuard]
+    },
+    {
+        path: 'viewalbum/:id',
+        component: ViewAlbumComponent,
+        canActivate : [LoggedInGuard]
+    },
+     {
         path: '**',
         redirectTo : '/error'
         // pathMatch : "full"

@@ -21,6 +21,10 @@ var profile_component_1 = require('./profile/profile.component');
 var users_component_1 = require("./users/users.component");
 var logout_component_1 = require("./logout/logout.component");
 var error_component_1 = require("./error/error.component");
+var albums_component_1 = require('./albums/albums.component');
+var add_album_component_1 = require("./addAlbum/add-album.component");
+var view_album_component_1 = require("./viewAlbum/view-album.component");
+var edit_album_component_1 = require("./editAlbum/edit-album.component");
 var logged_in_guard_1 = require("./_guards/logged-in.guard");
 // import { AppComponent } from "./app.component";
 var routes = [
@@ -81,6 +85,26 @@ var routes = [
     {
         path: 'error',
         component: error_component_1.ErrorComponent
+    },
+    {
+        path: 'albums',
+        component: albums_component_1.AlbumsComponent,
+        canActivate: [logged_in_guard_1.LoggedInGuard]
+    },
+    {
+        path: 'addAlbum',
+        component: add_album_component_1.AddAlbumComponent,
+        canActivate: [logged_in_guard_1.LoggedInGuard]
+    },
+    {
+        path: 'editAlbum/:id',
+        component: edit_album_component_1.EditAlbumComponent,
+        canActivate: [logged_in_guard_1.LoggedInGuard]
+    },
+    {
+        path: 'viewalbum/:id',
+        component: view_album_component_1.ViewAlbumComponent,
+        canActivate: [logged_in_guard_1.LoggedInGuard]
     },
     {
         path: '**',
