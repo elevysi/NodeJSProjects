@@ -26,15 +26,15 @@ var UserService = (function () {
         console.error('An error has occured', error);
         return Promise.reject(error.message || error);
     };
-    UserService.prototype.getProfile = function (id) {
-        var url = this.userUrl + "/" + id;
-        console.log("I am called in auth service");
-        return this.http.get(url)
+    UserService.prototype.getProfile = function (username) {
+        var url = this.userUrl + "/" + username;
+        var authToken = localStorage.getItem('auth_token');
+        var headers = new http_1.Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('Authorization', "Bearer " + authToken);
+        return this.http.get(url, { headers: headers })
             .toPromise()
-            .then(function (response) {
-            var user = response.json();
-            return user;
-        })
+            .then(function (response) { return response.json(); })
             .catch(this.handleError);
     };
     UserService.prototype.getUsers = function () {
@@ -43,7 +43,6 @@ var UserService = (function () {
         var headers = new http_1.Headers();
         headers.append('Content-Type', 'application/json');
         headers.append('Authorization', "Bearer " + authToken);
-        // this.headers = this.headers.append('Authorization', `Bearer ${authToken}`);
         return this.http.get(this.userUrl, { headers: headers })
             .toPromise()
             .then(function (response) { return response.json(); })
@@ -64,6 +63,18 @@ var UserService = (function () {
         headers.append('Content-Type', 'application/json');
         headers.append('Authorization', "Bearer " + authToken);
         return this.http.post(url, JSON.stringify({ user: user }), { headers: headers })
+            .map(function (response) {
+            var data = response.json();
+            return data;
+        });
+    };
+    UserService.prototype.edit = function (user) {
+        var url = "" + this.userUrl;
+        var authToken = localStorage.getItem('auth_token');
+        var headers = new http_1.Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('Authorization', "Bearer " + authToken);
+        return this.http.put(url, JSON.stringify({ user: user }), { headers: headers })
             .map(function (response) {
             var data = response.json();
             return data;

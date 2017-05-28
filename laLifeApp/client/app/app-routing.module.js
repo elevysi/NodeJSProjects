@@ -74,7 +74,7 @@ var routes = [
         canActivate: [logged_in_guard_1.LoggedInGuard]
     },
     {
-        path: 'profile/:email',
+        path: 'profile/:username',
         component: profile_component_1.ProfileComponent,
         canActivate: [logged_in_guard_1.LoggedInGuard]
     },

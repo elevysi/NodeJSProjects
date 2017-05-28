@@ -22,7 +22,7 @@
     <div id="filters-container" class="cbp-l-filters-button">
         <a class="cbp-filter-item" routerLinkActive="cbp-filter-item-active" routerLink="/">Snaps</a>
        
-        <a *ngIf="(loggedUser)" routerLinkActive="cbp-filter-item-active" class="cbp-filter-item" routerLink="/profile">Profile</a>
+        <a *ngIf="(loggedUser)" routerLinkActive="cbp-filter-item-active" class="cbp-filter-item" routerLink="/profile/{{loggedUser.username}}">Profile</a>
         <a *ngIf="(loggedUser)" routerLinkActive="cbp-filter-item-active" class="cbp-filter-item" routerLink="/users">Users</a>
 
          <a *ngIf="(loggedUser)" class="cbp-filter-item" routerLinkActive="cbp-filter-item-active" routerLink="/upload">Upload</a>

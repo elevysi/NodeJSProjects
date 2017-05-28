@@ -69,7 +69,7 @@ const routes : Routes = [
         canActivate : [LoggedInGuard]
     },
     {
-        path: 'profile/:email',
+        path: 'profile/:username',
         component: ProfileComponent,
         canActivate : [LoggedInGuard]
     },

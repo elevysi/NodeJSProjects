@@ -27,15 +27,18 @@ export class UserService{
         return Promise.reject(error.message || error);
     }
 
-    getProfile(id : String): Promise<User> {
-        const url = `${this.userUrl}/${id}`;
-        console.log("I am called in auth service");
-        return this.http.get(url)
+    getProfile(username : String): Promise<User> {
+
+        const url = `${this.userUrl}/${username}`;
+        let authToken = localStorage.getItem('auth_token');
+
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('Authorization', `Bearer ${authToken}`);
+        
+        return this.http.get(url, {headers: headers})
             .toPromise()
-            .then(response => {
-                   var user : User = response.json();
-                   return user;
-            })
+            .then(response => response.json() as User)
             .catch(this.handleError);
     }
 
@@ -46,8 +49,6 @@ export class UserService{
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
         headers.append('Authorization', `Bearer ${authToken}`);
-
-        // this.headers = this.headers.append('Authorization', `Bearer ${authToken}`);
         
         return this.http.get(this.userUrl, {headers: headers})
             .toPromise()
@@ -81,6 +82,23 @@ export class UserService{
         headers.append('Authorization', `Bearer ${authToken}`);
 
         return this.http.post(url, JSON.stringify({user : user}), {headers: headers})
+            .map((response: Response) => {
+            var data = response.json();
+
+            return data;
+            });
+    }
+
+    edit(user : User){
+
+        const url = `${this.userUrl}`;
+        let authToken = localStorage.getItem('auth_token');
+
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('Authorization', `Bearer ${authToken}`);
+
+        return this.http.put(url, JSON.stringify({user : user}), {headers: headers})
             .map((response: Response) => {
             var data = response.json();
 

@@ -35,7 +35,7 @@ exports.delete = (req, res, err) => {
         if(err) res.send(err).status(501);
         else res.send(resource).status(200);
     });
-    //remove snap from the Directory
+  
 };
 
 module.exports.register = function(req, res) {
@@ -83,4 +83,37 @@ module.exports.profileRead = function(req, res) {
       });
   }
 
+};
+
+exports.getUser = (req, res, err) => {
+    var username = req.params.username;
+    User.findOne({username : username})
+    .exec(function(err, user) {
+        if(err) res.send(err).status(501);
+        else{            
+            res.status(200).json(user);
+        }
+    });
+    
+};
+
+
+exports.edit = (req, res, err) => {
+    
+    User.findById(req.body.user._id, (err, foundUser) => {
+        if(err) res.send(err).status(501);
+        else{
+
+            //https://stackoverflow.com/questions/7267102/how-do-i-update-upsert-a-document-in-mongoose
+            
+            console.log("Posted username is "+req.body.user.username);
+            var query = {'username':req.body.user.username};
+            User.findOneAndUpdate(query, req.body.user, {upsert:true}, function(err, resource){
+                if (err) return res.send(500, { error: err });
+                return res.json(resource).status(201); //201 HTML code for created
+            });
+
+            
+        }
+    });
 };
