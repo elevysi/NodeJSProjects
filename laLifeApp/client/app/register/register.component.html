@@ -1,3 +1,6 @@
+<form class="form-horizontal" role="form" #userForm="ngForm" (submit)="userForm.form.valid && submit()" novalidate>
+
+
 <!--Reg Block-->
 <div class="reg-block">
     <div class="reg-block-header">
@@ -8,37 +11,64 @@
             <li><a class="rounded-x social_googleplus" data-original-title="Google Plus" href="#"></a></li>
             <li><a class="rounded-x social_linkedin" data-original-title="Linkedin" href="#"></a></li>
         </ul>
-        <p>Already Signed Up? Click <a class="color-green" href="page_login1.html">Sign In</a> to login your account.</p>
+        <p>Already Signed Up? Click <a class="color-green" routerLink="/login">Sign In</a> to login your account.</p>
+    </div>
+
+     <div class="input-group margin-bottom-20">
+        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+        <input type="text" class="form-control" placeholder="Username" [(ngModel)]="model.username" name="username" #username="ngModel" required>
+        <div *ngIf="userForm.submitted && !username.valid" class="help-block alert alert-danger">Username is required</div>
     </div>
 
     <div class="input-group margin-bottom-20">
         <span class="input-group-addon"><i class="fa fa-user"></i></span>
-        <input type="text" class="form-control" placeholder="Name" [(ngModel)]="name">
+        <input type="text" class="form-control" placeholder="First Name" [(ngModel)]="model.firstName" name="firstName" #firstName="ngModel" required>
+        <div *ngIf="userForm.submitted && !firstName.valid" class="help-block alert alert-danger">First Name is required</div>
     </div>
+
+
+    <div class="input-group margin-bottom-20">
+        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+        <input type="text" class="form-control" placeholder="Last Name" [(ngModel)]="model.lastName" name="lastName" #lastName="ngModel" required>
+        <div *ngIf="userForm.submitted && !lastName.valid" class="help-block alert alert-danger">Last Name is required</div>
+    </div>
+
     <div class="input-group margin-bottom-20">
         <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-        <input type="text" class="form-control" placeholder="Email" [(ngModel)]="email">
+        <input type="email" class="form-control" placeholder="Email" [(ngModel)]="model.email" name="email" #email="ngModel" required>
+        <div *ngIf="userForm.submitted && !email.valid" class="help-block alert alert-danger">A valid email is required</div>
     </div>
+
     <div class="input-group margin-bottom-20">
         <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-        <input type="password" class="form-control" placeholder="Password" [(ngModel)]="password">
+        <input type="password" class="form-control" placeholder="Password" [(ngModel)]="model.password" name="password" #password="ngModel" required>
+        <div *ngIf="userForm.submitted && !password.valid" class="help-block alert alert-danger">A password is required</div>
     </div>
-    <!--<div class="input-group margin-bottom-30">
-        <span class="input-group-addon"><i class="fa fa-key"></i></span>
-        <input type="text" class="form-control" placeholder="Confirm Password">
-    </div>-->
+
+    <div class="input-group margin-bottom-20">
+        <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+        <input type="password" class="form-control" placeholder="Confirm Password" [(ngModel)]="model.confirmPassword" name="confirmPassword" #confirmPassword="ngModel" required>
+        <div *ngIf="userForm.submitted && !confirmPassword.valid" class="help-block alert alert-danger">Please confirm the password</div>
+    </div>
+
+    <div class="input-group margin-bottom-20">
+        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+        <textarea class="form-control" placeholder="Bio" [(ngModel)]="model.bio" name="bio" #bio="ngModel"></textarea>
+    </div>
+    
     <hr>
+
 
     <div class="checkbox">
         <label>
-            <input type="checkbox">
-            I read <a target="_blank" href="page_terms.html">Terms and Conditions</a>
+            <input type="checkbox" [(ngModel)]="model.conditions" name="conditions">I have read <a target="_blank" routerLink="terms">Terms and Conditions</a>
+            
         </label>
     </div>
 
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
-            <button type="submit" class="btn-u btn-block" (click)="submit()">Register</button>
+            <button type="submit" class="btn-u btn-u-green"> Register</button>
         </div>
     </div>
 </div>

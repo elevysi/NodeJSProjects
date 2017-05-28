@@ -10,9 +10,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var user_service_1 = require("../_services/user.service");
+var alert_service_1 = require("../_services/alert.service");
+var router_1 = require("@angular/router");
+var common_1 = require("@angular/common");
 var UsersComponent = (function () {
-    function UsersComponent(userService) {
+    function UsersComponent(userService, route, alertService, location) {
         this.userService = userService;
+        this.route = route;
+        this.alertService = alertService;
+        this.location = location;
     }
     UsersComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -23,13 +29,26 @@ var UsersComponent = (function () {
             }
         });
     };
+    UsersComponent.prototype.delete = function (id) {
+        var _this = this;
+        this.userService.delete(id)
+            .subscribe(function (data) {
+            _this.alertService.success('Successfully deleted', true);
+            _this.goBack();
+        }, function (error) {
+            _this.alertService.error(error);
+        });
+    };
+    UsersComponent.prototype.goBack = function () {
+        this.location.back();
+    };
     UsersComponent = __decorate([
         core_1.Component({
             moduleId: module.id,
             selector: "<app-profile></app-profile>",
             templateUrl: "users.component.html"
         }), 
-        __metadata('design:paramtypes', [user_service_1.UserService])
+        __metadata('design:paramtypes', [user_service_1.UserService, router_1.ActivatedRoute, alert_service_1.AlertService, common_1.Location])
     ], UsersComponent);
     return UsersComponent;
 }());

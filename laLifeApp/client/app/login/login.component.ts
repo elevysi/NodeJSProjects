@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit{
 
             if (this.user != null){
                 if(this.authenticationService.isLoggedIn()){
-                    this.alertService.error(this.user.name +' is already logged in.', true);
+                    this.alertService.error(this.user.username +' is already logged in.', true);
                     this.router.navigate([this.returnUrl]);
                 }
             }
@@ -59,7 +59,7 @@ export class LoginComponent implements OnInit{
 
         this.loading = true;
 
-        this.authenticationService.login(this.model.email, this.model.password)
+        this.authenticationService.login(this.model.username, this.model.password)
             .subscribe(
                 data => {
                     this.alertService.success('Successfully logged in', true);

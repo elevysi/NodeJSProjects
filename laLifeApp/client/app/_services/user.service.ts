@@ -69,10 +69,42 @@ export class UserService{
         });
             
     }
+
+
+    registerUser(user : User){
+
+        const url = `${this.registerUrl}`;
+        let authToken = localStorage.getItem('auth_token');
+
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('Authorization', `Bearer ${authToken}`);
+
+        return this.http.post(url, JSON.stringify({user : user}), {headers: headers})
+            .map((response: Response) => {
+            var data = response.json();
+
+            return data;
+            });
+    }
+
+    delete(id : String){
+
+        const url = `${this.userUrl}/${id}`;
+        let authToken = localStorage.getItem('auth_token');
+
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('Authorization', `Bearer ${authToken}`);
+
+        return this.http.delete(url, {headers: headers})
+            .map((response: Response) => {
+            var data = response.json();
+
+                return data;
+            });
+    }
  
-    // update(user: User) {
-    //     return this.http.put('/api/users/' + user.id, user, this.jwt()).map((response: Response) => response.json());
-    // }
 
     logout() {
 

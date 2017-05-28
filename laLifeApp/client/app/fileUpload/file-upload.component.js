@@ -63,7 +63,7 @@ var FileUploadComponent = (function () {
             form.append("name", _this.name);
             form.append("description", _this.description);
             // console.log("logged user is "+ this.user.);
-            form.append("userIdentifier", _this.user.email);
+            form.append("userIdentifier", _this.user.username);
         };
     };
     FileUploadComponent = __decorate([

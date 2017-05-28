@@ -32,7 +32,7 @@ var LoginComponent = (function () {
             _this.user = userObservable;
             if (_this.user != null) {
                 if (_this.authenticationService.isLoggedIn()) {
-                    _this.alertService.error(_this.user.name + ' is already logged in.', true);
+                    _this.alertService.error(_this.user.username + ' is already logged in.', true);
                     _this.router.navigate([_this.returnUrl]);
                 }
             }
@@ -41,7 +41,7 @@ var LoginComponent = (function () {
     LoginComponent.prototype.submit = function () {
         var _this = this;
         this.loading = true;
-        this.authenticationService.login(this.model.email, this.model.password)
+        this.authenticationService.login(this.model.username, this.model.password)
             .subscribe(function (data) {
             _this.alertService.success('Successfully logged in', true);
             _this.router.navigate([_this.returnUrl]);

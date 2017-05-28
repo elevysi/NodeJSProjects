@@ -41,8 +41,8 @@ export class AuthenticationService{
         this.setCurrentUser();
     }
  
-    login(email: string, password: string) {
-        return this.http.post(this.loginUrl, JSON.stringify({ email, password }), {headers: this.headers})
+    login(username: string, password: string) {
+        return this.http.post(this.loginUrl, JSON.stringify({ username, password }), {headers: this.headers})
             .map((response: Response) => {
                 // login successful if there's a jwt token in the response
 
@@ -61,17 +61,12 @@ export class AuthenticationService{
         /**
          * Set the current user
          */
-        var _currentUser = this.currentUser();
+        var _currentUser : User = this.currentUser();
         
-        if(_currentUser.email === null){
+        if(_currentUser.username === null){
             this.user.next(null);
         }else{
-            var _newUser= new User();
-            _newUser.email = _currentUser.email;
-            _newUser.name = _currentUser.name;
-
-            this.user.next(_newUser);
-            
+            this.user.next(_currentUser);
         }
         
     }
@@ -105,22 +100,29 @@ export class AuthenticationService{
             return false;
         }
     }
-    currentUser(){
+    currentUser() : User{
         if(this.isLoggedIn()){
             var token = this.getToken();
             var payload = token.split('.')[1];
             payload = atob(payload);
             return {
                 email : JSON.parse(payload).email,
-                name : JSON.parse(payload).name,
-                success : true
+                firstName : JSON.parse(payload).firstName,
+                lastName : JSON.parse(payload).lastName,
+                username : JSON.parse(payload).username,
+                bio : JSON.parse(payload).bio,
+                avatarPath : JSON.parse(payload).avatarPath,
+                avatarPathThumbnail : JSON.parse(payload).avatarPathThumbnail
             };
         }
-
-        return {
+        return  {
                 email : null,
-                name : null,
-                success : false
+                firstName : null,
+                lastName : null,
+                username : null,
+                bio : null,
+                avatarPath : null,
+                avatarPathThumbnail : null
             }
     }
 

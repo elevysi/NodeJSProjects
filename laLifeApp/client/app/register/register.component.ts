@@ -3,6 +3,8 @@ import { Router } from "@angular/router";
 import { UserService } from "../_services/user.service";
 import { AlertService } from "../_services/alert.service";
 
+import { User } from "../_models/user";
+
 @Component({
     moduleId : module.id,
     selector : "<app-register></app-register>",
@@ -11,6 +13,8 @@ import { AlertService } from "../_services/alert.service";
 })
 
 export class RegisterComponent{
+
+    model: any = {};
 
     email : String;
     password : String;
@@ -26,13 +30,23 @@ export class RegisterComponent{
     }
 
     submit() : void {
-        this.userService.create(this.name, this.email, this.password)
+          
+         var user  : User = {
+            firstName : this.model.firstName,
+            lastName : this.model.lastName,
+            email : this.model.email,
+            password : this.model.password,
+            username : this.model.username,
+            bio : this.model.bio
+        };
+
+
+        this.userService.registerUser(user)
             .subscribe(
                 data => {
-                    console.log(data);
                     // set success message and pass true paramater to persist the message after redirecting to the login page
-                    this.alertService.success('Registration successful', true);
-                    this.router.navigate(['/login']);
+                    this.alertService.success('The registration was successful', true);
+                    this.router.navigate(['/']);
                 },
                 error => {
                     this.alertService.error(error);

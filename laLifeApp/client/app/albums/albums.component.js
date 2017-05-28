@@ -42,7 +42,7 @@ var AlbumsComponent = (function () {
     AlbumsComponent = __decorate([
         core_1.Component({
             moduleId: module.id,
-            selector: "lalifeapp",
+            selector: "albums",
             templateUrl: 'albums.component.html'
         }), 
         __metadata('design:paramtypes', [album_service_1.AlbumService, router_1.Router, common_1.Location])

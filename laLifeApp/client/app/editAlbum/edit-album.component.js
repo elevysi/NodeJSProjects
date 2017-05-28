@@ -61,7 +61,7 @@ var EditAlbumComponent = (function () {
     EditAlbumComponent = __decorate([
         core_1.Component({
             moduleId: module.id,
-            selector: "edit-snap",
+            selector: "edit-album",
             templateUrl: "edit-album.component.html"
         }), 
         __metadata('design:paramtypes', [snap_service_1.SnapService, router_1.ActivatedRoute, alert_service_1.AlertService, common_1.Location])

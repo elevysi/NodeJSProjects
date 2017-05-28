@@ -12,10 +12,10 @@
     </div>
     <form name="form" (ngSubmit)="f.form.valid && submit()" #f="ngForm" novalidate>
 
-        <div class="input-group margin-bottom-20" [ngClass]="{ 'has-error': f.submitted && !email.valid }">
+        <div class="input-group margin-bottom-20" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
             <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-            <input type="text" class="form-control" placeholder="Email" name="email" [(ngModel)]="model.email" #email="ngModel" required>
-            <div *ngIf="f.submitted && !email.valid" class="help-block">Email is required</div>
+            <input type="text" class="form-control" placeholder="Username" name="username" [(ngModel)]="model.username" #username="ngModel" required>
+            <div *ngIf="f.submitted && !username.valid" class="help-block">Username is required</div>
         </div>
         <div class="input-group margin-bottom-20" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
             <span class="input-group-addon"><i class="fa fa-lock"></i></span>

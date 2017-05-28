@@ -59,7 +59,7 @@ export class AddAlbumComponent implements OnInit{
             address : this.model.address,
             featured : isFeatured,
             publicAlbum : isPublic,
-            owner : this.user.email
+            owner : this.user.username
         };
 
         this.albumService.addAlbum(album)

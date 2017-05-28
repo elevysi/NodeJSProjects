@@ -57,9 +57,30 @@ var UserService = (function () {
             return data['success'];
         });
     };
-    // update(user: User) {
-    //     return this.http.put('/api/users/' + user.id, user, this.jwt()).map((response: Response) => response.json());
-    // }
+    UserService.prototype.registerUser = function (user) {
+        var url = "" + this.registerUrl;
+        var authToken = localStorage.getItem('auth_token');
+        var headers = new http_1.Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('Authorization', "Bearer " + authToken);
+        return this.http.post(url, JSON.stringify({ user: user }), { headers: headers })
+            .map(function (response) {
+            var data = response.json();
+            return data;
+        });
+    };
+    UserService.prototype.delete = function (id) {
+        var url = this.userUrl + "/" + id;
+        var authToken = localStorage.getItem('auth_token');
+        var headers = new http_1.Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('Authorization', "Bearer " + authToken);
+        return this.http.delete(url, { headers: headers })
+            .map(function (response) {
+            var data = response.json();
+            return data;
+        });
+    };
     UserService.prototype.logout = function () {
     };
     UserService = __decorate([

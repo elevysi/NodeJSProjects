@@ -62,6 +62,8 @@ app.put("/api/snaps/:id", auth, apiRoute.editSnap);
 app.post("/api/snaps", auth, apiRoute.add(app.get('uploadsDir')));
 app.delete("/api/snaps/:id", auth, apiRoute.deleteSnap);
 
+app.get("/api/snap/:id", snapRoute.snap); //For the null layout to produce view.ejs with the pic
+
 //albums//Snaps
 app.get("/api/albums", albumRoute.list); //for public
 app.get("/api/all/albums/featured", albumRoute.listFeatured); //for featured
@@ -74,11 +76,10 @@ app.delete("/api/albums/:id", auth, albumRoute.delete);
 
 //Users
 app.post("/api/register", auth, usersRoute.register); //only i can register users
-// app.post("/api/register", usersRoute.register);
 app.post("/api/login", usersRoute.login);
 app.get("/api/profile", auth, usersRoute.profileRead);
 app.get("/api/users", auth, usersRoute.list);
-app.get("/api/snap/:id", snapRoute.snap);
+app.delete("/api/users/:id", auth, usersRoute.delete);
 
 app.get('/*', appRoute.index); // This route redirects all other requests to angular's index
 

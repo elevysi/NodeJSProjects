@@ -88,7 +88,7 @@ export class FileUploadComponent implements OnInit{
             form.append("name", this.name);
             form.append("description", this.description);
             // console.log("logged user is "+ this.user.);
-            form.append("userIdentifier", this.user.email);
+            form.append("userIdentifier", this.user.username);
         };
 
     }

@@ -11,7 +11,7 @@ import { AlertService } from "../_services/alert.service";
 
 @Component({
     moduleId : module.id,
-    selector : "edit-snap",
+    selector : "edit-album",
     templateUrl : "edit-album.component.html"
 })
 

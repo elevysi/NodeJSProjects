@@ -10,12 +10,24 @@ var userSchema = new mongoose.Schema({
     unique: true,
     required: true
   },
-  name: {
+  firstName: {
+    type: String,
+    required: true
+  },
+  lastName: {
     type: String,
     required: true
   },
   hash: String,
-  salt: String
+  salt: String,
+  username : {
+    type : String,
+    unique : true
+  },
+  bio : String,
+  created : {type: Date, default: Date.now},
+  avatarPath : String,
+  avatarPathThumbnail : String
 });
 
 userSchema.methods.setPassword = function(password){
@@ -35,7 +47,12 @@ userSchema.methods.generateJwt = function() {
   return jwt.sign({
     _id: this._id,
     email: this.email,
-    name: this.name,
+    firstName: this.firstName,
+    lasstName: this.lastName,
+    username: this.username,
+    bio: this.bio,
+    avatarPath : this.avatarPath,
+    avatarPathThumbnail : this.avatarPathThumbnail,
     exp: parseInt(expiry.getTime() / 1000),
   }, secretConfig.getSecret()); // DO NOT KEEP YOUR SECRET IN THE CODE!
 };

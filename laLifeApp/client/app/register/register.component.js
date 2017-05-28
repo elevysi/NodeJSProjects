@@ -17,15 +17,23 @@ var RegisterComponent = (function () {
         this.userService = userService;
         this.router = router;
         this.alertService = alertService;
+        this.model = {};
     }
     RegisterComponent.prototype.submit = function () {
         var _this = this;
-        this.userService.create(this.name, this.email, this.password)
+        var user = {
+            firstName: this.model.firstName,
+            lastName: this.model.lastName,
+            email: this.model.email,
+            password: this.model.password,
+            username: this.model.username,
+            bio: this.model.bio
+        };
+        this.userService.registerUser(user)
             .subscribe(function (data) {
-            console.log(data);
             // set success message and pass true paramater to persist the message after redirecting to the login page
-            _this.alertService.success('Registration successful', true);
-            _this.router.navigate(['/login']);
+            _this.alertService.success('The registration was successful', true);
+            _this.router.navigate(['/']);
         }, function (error) {
             _this.alertService.error(error);
             _this.loading = false;

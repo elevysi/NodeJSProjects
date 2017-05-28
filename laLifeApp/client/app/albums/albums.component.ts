@@ -7,7 +7,7 @@ import { AlbumService } from "../_services/album.service";
 
 @Component({
     moduleId: module.id,
-    selector : "lalifeapp",
+    selector : "albums",
     templateUrl : 'albums.component.html'
 })
 

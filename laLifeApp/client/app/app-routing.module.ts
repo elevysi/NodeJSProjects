@@ -87,17 +87,17 @@ const routes : Routes = [
         canActivate : [LoggedInGuard]
     },
     {
-        path: 'addAlbum',
+        path: 'albums/add',
         component: AddAlbumComponent,
         canActivate : [LoggedInGuard]
     },
     {
-        path: 'editAlbum/:id',
+        path: 'albums/edit/:id',
         component: EditAlbumComponent,
         canActivate : [LoggedInGuard]
     },
     {
-        path: 'viewalbum/:id',
+        path: 'albums/view/:id',
         component: ViewAlbumComponent,
         canActivate : [LoggedInGuard]
     },

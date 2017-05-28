@@ -92,17 +92,17 @@ var routes = [
         canActivate: [logged_in_guard_1.LoggedInGuard]
     },
     {
-        path: 'addAlbum',
+        path: 'albums/add',
         component: add_album_component_1.AddAlbumComponent,
         canActivate: [logged_in_guard_1.LoggedInGuard]
     },
     {
-        path: 'editAlbum/:id',
+        path: 'albums/edit/:id',
         component: edit_album_component_1.EditAlbumComponent,
         canActivate: [logged_in_guard_1.LoggedInGuard]
     },
     {
-        path: 'viewalbum/:id',
+        path: 'albums/view/:id',
         component: view_album_component_1.ViewAlbumComponent,
         canActivate: [logged_in_guard_1.LoggedInGuard]
     },

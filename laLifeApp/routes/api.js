@@ -23,7 +23,20 @@ const THUMBNAIL_HEIGHT = 500;
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
         // var newDestination = 'uploads/' + req.user._username;
-        var newDestination = UPLODAS_DIR_ABSOLUTE + req.body.userIdentifier + "/Originals/";
+
+        var parentFolder = UPLODAS_DIR_ABSOLUTE + req.body.userIdentifier + "/";
+        var parentStat = null;
+        try {
+            parentStat = fs.statSync(parentFolder);
+        } catch (err) {
+            fs.mkdirSync(parentFolder);
+        }
+        if (parentStat && !parentStat.isDirectory()) {
+            throw new Error('Directory cannot be created because an inode of a different type exists at "' + parentFolder + '"');
+        } 
+
+
+        var newDestination = parentFolder + "Originals/";
         var stat = null;
         try {
             stat = fs.statSync(newDestination);

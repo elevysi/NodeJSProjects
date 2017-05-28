@@ -12,7 +12,6 @@ var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
 require('rxjs/add/operator/map');
 var BehaviorSubject_1 = require('rxjs/BehaviorSubject');
-var user_1 = require("../_models/user");
 var AuthenticationService = (function () {
     function AuthenticationService(http) {
         this.http = http;
@@ -38,9 +37,9 @@ var AuthenticationService = (function () {
          */
         this.setCurrentUser();
     };
-    AuthenticationService.prototype.login = function (email, password) {
+    AuthenticationService.prototype.login = function (username, password) {
         var _this = this;
-        return this.http.post(this.loginUrl, JSON.stringify({ email: email, password: password }), { headers: this.headers })
+        return this.http.post(this.loginUrl, JSON.stringify({ username: username, password: password }), { headers: this.headers })
             .map(function (response) {
             // login successful if there's a jwt token in the response
             var data = response.json();
@@ -56,14 +55,11 @@ var AuthenticationService = (function () {
          * Set the current user
          */
         var _currentUser = this.currentUser();
-        if (_currentUser.email === null) {
+        if (_currentUser.username === null) {
             this.user.next(null);
         }
         else {
-            var _newUser = new user_1.User();
-            _newUser.email = _currentUser.email;
-            _newUser.name = _currentUser.name;
-            this.user.next(_newUser);
+            this.user.next(_currentUser);
         }
     };
     AuthenticationService.prototype.storeToken = function (auth_token) {
@@ -97,14 +93,22 @@ var AuthenticationService = (function () {
             payload = atob(payload);
             return {
                 email: JSON.parse(payload).email,
-                name: JSON.parse(payload).name,
-                success: true
+                firstName: JSON.parse(payload).firstName,
+                lastName: JSON.parse(payload).lastName,
+                username: JSON.parse(payload).username,
+                bio: JSON.parse(payload).bio,
+                avatarPath: JSON.parse(payload).avatarPath,
+                avatarPathThumbnail: JSON.parse(payload).avatarPathThumbnail
             };
         }
         return {
             email: null,
-            name: null,
-            success: false
+            firstName: null,
+            lastName: null,
+            username: null,
+            bio: null,
+            avatarPath: null,
+            avatarPathThumbnail: null
         };
     };
     AuthenticationService.prototype.handleError = function (error) {
