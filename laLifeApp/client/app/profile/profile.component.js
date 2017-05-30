@@ -20,6 +20,7 @@ var ProfileComponent = (function () {
         this.alertService = alertService;
         this.location = location;
         this.model = {};
+        this.tooglePasswordChange = false;
     }
     ProfileComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -34,6 +35,9 @@ var ProfileComponent = (function () {
             _this.model.email = user.email;
             _this.model.bio = user.bio;
         });
+    };
+    ProfileComponent.prototype.setTooglePasswordChange = function () {
+        this.tooglePasswordChange = !this.tooglePasswordChange;
     };
     ProfileComponent.prototype.submit = function () {
         var _this = this;
@@ -55,6 +59,22 @@ var ProfileComponent = (function () {
     };
     ProfileComponent.prototype.goBack = function () {
         this.location.back();
+    };
+    ProfileComponent.prototype.updatePass = function () {
+        var _this = this;
+        console.log("info has been posted ");
+        var updateInfo = {
+            username: this.user.username,
+            currentPassword: this.model.currentPassword,
+            newPassword: this.model.newPassword,
+        };
+        this.userService.updatePass(updateInfo)
+            .subscribe(function (data) {
+            _this.alertService.success('Successfully updated the password', true);
+            _this.goBack();
+        }, function (error) {
+            _this.alertService.error(error);
+        });
     };
     ProfileComponent = __decorate([
         core_1.Component({

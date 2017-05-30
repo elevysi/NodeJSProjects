@@ -14,6 +14,7 @@ export class UserService{
     private userUrl = "api/users";
     
     private registerUrl = "api/register";
+    private updatePassUrl = "api/users/updatepass";
     private loggedIn = false;
 
     private headers = new Headers({'Content-Type': 'application/json'});
@@ -124,7 +125,19 @@ export class UserService{
     }
  
 
-    logout() {
+    updatePass(updateInfo : any){
 
-    }    
+        const url = `${this.updatePassUrl}`;
+        let authToken = localStorage.getItem('auth_token');
+
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('Authorization', `Bearer ${authToken}`);
+
+        return this.http.post(url, JSON.stringify({user : updateInfo}), {headers: headers})
+            .map((response: Response) => {
+                var data = response.json();
+            return data;
+            });
+    }
 }

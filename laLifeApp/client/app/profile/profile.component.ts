@@ -17,6 +17,7 @@ export class ProfileComponent implements OnInit{
     // @Input()
     user : User;
     model: any = {};
+    tooglePasswordChange : boolean = false;
 
     constructor(
         private userService : UserService,
@@ -44,6 +45,10 @@ export class ProfileComponent implements OnInit{
             });
     }
 
+    setTooglePasswordChange() : void{
+        this.tooglePasswordChange = ! this.tooglePasswordChange;
+    }
+
     submit() : void {
         var user  : User = {
             _id : this.model._id,
@@ -68,6 +73,27 @@ export class ProfileComponent implements OnInit{
 
      goBack() {
         this.location.back();
+    }
+
+    updatePass(){
+        console.log("info has been posted ");
+        var updateInfo  = {
+            username : this.user.username,
+            currentPassword : this.model.currentPassword,
+            newPassword : this.model.newPassword,
+
+        };
+
+        this.userService.updatePass(updateInfo)
+            .subscribe(
+                data => {
+                    this.alertService.success('Successfully updated the password', true);
+                    this.goBack();
+                },
+                error => {
+                    this.alertService.error(error);
+                    
+                });
     }
 }
 

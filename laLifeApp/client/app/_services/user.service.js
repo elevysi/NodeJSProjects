@@ -18,6 +18,7 @@ var UserService = (function () {
         this.authenticationService = authenticationService;
         this.userUrl = "api/users";
         this.registerUrl = "api/register";
+        this.updatePassUrl = "api/users/updatepass";
         this.loggedIn = false;
         this.headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         this.loggedIn = !!localStorage.getItem('auth_token');
@@ -92,7 +93,17 @@ var UserService = (function () {
             return data;
         });
     };
-    UserService.prototype.logout = function () {
+    UserService.prototype.updatePass = function (updateInfo) {
+        var url = "" + this.updatePassUrl;
+        var authToken = localStorage.getItem('auth_token');
+        var headers = new http_1.Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('Authorization', "Bearer " + authToken);
+        return this.http.post(url, JSON.stringify({ user: updateInfo }), { headers: headers })
+            .map(function (response) {
+            var data = response.json();
+            return data;
+        });
     };
     UserService = __decorate([
         core_1.Injectable(), 

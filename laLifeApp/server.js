@@ -82,6 +82,7 @@ app.get("/api/users", auth, usersRoute.list);
 app.get("/api/users/:username", auth, usersRoute.getUser);
 app.put("/api/users", auth, usersRoute.edit);
 app.delete("/api/users/:id", auth, usersRoute.delete);
+app.post("/api/users/updatepass", auth, usersRoute.updatePass);
 
 app.get('/*', appRoute.index); // This route redirects all other requests to angular's index
 
