@@ -62,7 +62,7 @@ app.put("/api/snaps/:id", auth, apiRoute.editSnap);
 app.post("/api/snaps", auth, apiRoute.add(app.get('uploadsDir')));
 app.delete("/api/snaps/:id", auth, apiRoute.deleteSnap);
 
-app.get("/api/snap/:id", snapRoute.snap); //For the null layout to produce view.ejs with the pic
+app.get("/api/snap/:id", auth, snapRoute.snap); //For the null layout to produce view.ejs with the pic
 
 //albums
 app.get("/api/albums", albumRoute.list); //for public

@@ -30,7 +30,7 @@ var snapSchema = new mongoose.Schema({
     created : {type: Date, default: Date.now},
     featured : "boolean",
     publicSnap : "boolean",
-    album : {name : "String", description: "String", address : "String"}
+    album : {name : "String", description: "String", address : "String", _id : "String"}
 });
 
 module.exports = mongoose.model('Snap', snapSchema);

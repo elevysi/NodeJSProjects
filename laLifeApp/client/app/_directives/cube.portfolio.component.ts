@@ -25,6 +25,7 @@ export class CubePortfolioComponent implements OnInit, AfterViewInit{
     private _snaps = new BehaviorSubject<Snap[]>([]);
     snap : Snap;
     selectedSnapId : string;
+    authToken : string;
 
     @Input()
     set snaps(value) {
@@ -49,7 +50,8 @@ export class CubePortfolioComponent implements OnInit, AfterViewInit{
  
     applyCubePortfolio(){
 
-
+        let authToken = localStorage.getItem('auth_token');
+       
         var options = {
         layoutMode: 'grid',
         rewindNav: true,
@@ -103,7 +105,8 @@ export class CubePortfolioComponent implements OnInit, AfterViewInit{
                     url: "api/snap/"+url,
                     type: 'GET',
                     dataType: 'html',
-                    timeout: 5000
+                    timeout: 5000,
+                    headers: {'Authorization': 'Bearer ' + authToken}
                 })
                 .done(function(result) {
 
@@ -111,7 +114,7 @@ export class CubePortfolioComponent implements OnInit, AfterViewInit{
 
                 })
                 .fail(function() {
-                    t.updateSinglePageInline("Error! Please refresh the page!");
+                    t.updateSinglePageInline("Error! You need to login to view snaps.");
                 });
         }
     };

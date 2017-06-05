@@ -36,7 +36,7 @@ export class EditAlbumComponent implements OnInit {
                 this.model._id = snap._id;
                 this.model.name = snap.name;
                 this.model.description = snap.description;
-                this.model.path = snap.path;
+                // this.model.path = snap.path;
 
             });
     }
@@ -46,8 +46,8 @@ export class EditAlbumComponent implements OnInit {
         var snap  : Snap = {
             _id : this.model._id,
             name : this.model.name,
-            description : this.model.description,
-            path : this.model.path,
+            description : this.model.description
+            // path : this.model.path,
         };
 
         this.snapService.editSnap(snap)

@@ -52,26 +52,7 @@ export class AddSnapComponent implements OnInit{
     ngOnInit(): void {
 
     }
-
-    addSnap(): void {
-        var snap  : Snap = {
-            _id : null,
-            name : this.name,
-            description : this.description,
-            path : this.path
-        };
-
-        // var snap = {
-        //     name : this.name,
-        //     description : this.description,
-        //     path : this.path
-        // };
-
-        this.snapService.addSnap(snap)
-            .then(() => this.goBack());
-
-        // console.log(snap);
-    }
+   
 
     goBack() : void {
         this.location.back();

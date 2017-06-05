@@ -14,10 +14,12 @@ var common_1 = require("@angular/common");
 require("rxjs/add/operator/switchMap");
 var snap_1 = require("../_models/snap");
 var snap_service_1 = require("../_services/snap.service");
+var album_service_1 = require("../_services/album.service");
 var alert_service_1 = require("../_services/alert.service");
 var EditSnapComponent = (function () {
-    function EditSnapComponent(snapService, route, alertService, location) {
+    function EditSnapComponent(snapService, albumService, route, alertService, location) {
         this.snapService = snapService;
+        this.albumService = albumService;
         this.route = route;
         this.alertService = alertService;
         this.location = location;
@@ -32,7 +34,11 @@ var EditSnapComponent = (function () {
             _this.model._id = snap._id;
             _this.model.name = snap.name;
             _this.model.description = snap.description;
-            _this.model.path = snap.path;
+            // this.model.album = snap.album;
+        });
+        this.albumService.getAlbums()
+            .then(function (albums) {
+            _this.albums = albums;
         });
     };
     EditSnapComponent.prototype.submit = function () {
@@ -41,7 +47,7 @@ var EditSnapComponent = (function () {
             _id: this.model._id,
             name: this.model.name,
             description: this.model.description,
-            path: this.model.path,
+            album: this.model.album
         };
         this.snapService.editSnap(snap)
             .subscribe(function (data) {
@@ -64,7 +70,7 @@ var EditSnapComponent = (function () {
             selector: "edit-snap",
             templateUrl: "edit-snap.component.html"
         }), 
-        __metadata('design:paramtypes', [snap_service_1.SnapService, router_1.ActivatedRoute, alert_service_1.AlertService, common_1.Location])
+        __metadata('design:paramtypes', [snap_service_1.SnapService, album_service_1.AlbumService, router_1.ActivatedRoute, alert_service_1.AlertService, common_1.Location])
     ], EditSnapComponent);
     return EditSnapComponent;
 }());

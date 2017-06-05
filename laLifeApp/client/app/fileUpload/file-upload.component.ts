@@ -6,8 +6,10 @@ import {Subscription} from "rxjs/Subscription";
 
 import { Snap } from "../_models/snap";
 import { User } from "../_models/user";
+import { Album } from "../_models/album";
 
 import { SnapService } from "../_services/snap.service";
+import { AlbumService } from "../_services/album.service";
 import { AuthenticationService } from "../_services/authentication.service";
 
 
@@ -26,15 +28,15 @@ import "rxjs/add/operator/switchMap";
 export class FileUploadComponent implements OnInit{
 
     private snapUrl = "api/snaps";
-
     snap : Snap;
-
+    albums : Album [];
     private user : User;
 
 
     name : string;
     description : string;
     path : string;
+    album : Album;
 
     public uploader : FileUploader = new FileUploader({
         url: this.snapUrl,
@@ -49,6 +51,7 @@ export class FileUploadComponent implements OnInit{
 
     constructor(
         private snapService : SnapService,
+        private albumService : AlbumService,
         private router : Router,
         private location : Location,
         private authenticationService : AuthenticationService
@@ -58,20 +61,11 @@ export class FileUploadComponent implements OnInit{
         this.authenticationService.getUser().subscribe(userObservabble => {
             this.user = userObservabble;
         });
-    }
 
-    addSnap(): void {
-        var snap  : Snap = {
-            _id : null,
-            name : this.name,
-            description : this.description,
-            path : this.path
-        };
-
-        this.snapService.addSnap(snap)
-            .then(() => this.goBack());
-
-        // console.log(snap);
+       this.albumService.getAlbums()
+            .then(albums => {
+                this.albums = albums;
+        });
     }
 
     goBack() : void {
@@ -89,6 +83,8 @@ export class FileUploadComponent implements OnInit{
             form.append("description", this.description);
             // console.log("logged user is "+ this.user.);
             form.append("userIdentifier", this.user.username);
+            form.append("album", JSON.stringify(this.album));
+            
         };
 
     }

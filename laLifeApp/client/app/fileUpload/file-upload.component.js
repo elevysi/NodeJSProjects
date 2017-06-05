@@ -12,12 +12,14 @@ var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var common_1 = require('@angular/common');
 var snap_service_1 = require("../_services/snap.service");
+var album_service_1 = require("../_services/album.service");
 var authentication_service_1 = require("../_services/authentication.service");
 var ng2_file_upload_1 = require("ng2-file-upload/ng2-file-upload");
 require("rxjs/add/operator/switchMap");
 var FileUploadComponent = (function () {
-    function FileUploadComponent(snapService, router, location, authenticationService) {
+    function FileUploadComponent(snapService, albumService, router, location, authenticationService) {
         this.snapService = snapService;
+        this.albumService = albumService;
         this.router = router;
         this.location = location;
         this.authenticationService = authenticationService;
@@ -37,18 +39,10 @@ var FileUploadComponent = (function () {
         this.authenticationService.getUser().subscribe(function (userObservabble) {
             _this.user = userObservabble;
         });
-    };
-    FileUploadComponent.prototype.addSnap = function () {
-        var _this = this;
-        var snap = {
-            _id: null,
-            name: this.name,
-            description: this.description,
-            path: this.path
-        };
-        this.snapService.addSnap(snap)
-            .then(function () { return _this.goBack(); });
-        // console.log(snap);
+        this.albumService.getAlbums()
+            .then(function (albums) {
+            _this.albums = albums;
+        });
     };
     FileUploadComponent.prototype.goBack = function () {
         this.location.back();
@@ -64,6 +58,7 @@ var FileUploadComponent = (function () {
             form.append("description", _this.description);
             // console.log("logged user is "+ this.user.);
             form.append("userIdentifier", _this.user.username);
+            form.append("album", JSON.stringify(_this.album));
         };
     };
     FileUploadComponent = __decorate([
@@ -72,7 +67,7 @@ var FileUploadComponent = (function () {
             selector: "<file-upload></file-upload>",
             templateUrl: "file-upload.component.html"
         }), 
-        __metadata('design:paramtypes', [snap_service_1.SnapService, router_1.Router, common_1.Location, authentication_service_1.AuthenticationService])
+        __metadata('design:paramtypes', [snap_service_1.SnapService, album_service_1.AlbumService, router_1.Router, common_1.Location, authentication_service_1.AuthenticationService])
     ], FileUploadComponent);
     return FileUploadComponent;
 }());

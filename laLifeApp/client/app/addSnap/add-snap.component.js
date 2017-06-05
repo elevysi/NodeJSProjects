@@ -35,23 +35,6 @@ var AddSnapComponent = (function () {
     }
     AddSnapComponent.prototype.ngOnInit = function () {
     };
-    AddSnapComponent.prototype.addSnap = function () {
-        var _this = this;
-        var snap = {
-            _id: null,
-            name: this.name,
-            description: this.description,
-            path: this.path
-        };
-        // var snap = {
-        //     name : this.name,
-        //     description : this.description,
-        //     path : this.path
-        // };
-        this.snapService.addSnap(snap)
-            .then(function () { return _this.goBack(); });
-        // console.log(snap);
-    };
     AddSnapComponent.prototype.goBack = function () {
         this.location.back();
     };

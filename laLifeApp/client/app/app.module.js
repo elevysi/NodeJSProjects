@@ -34,13 +34,14 @@ var logout_component_1 = require("./logout/logout.component");
 var alert_component_1 = require("./_directives/alert.component");
 var error_component_1 = require("./error/error.component");
 var cube_portfolio_component_1 = require("./_directives/cube.portfolio.component");
-// import 
 var snap_service_1 = require('./_services/snap.service');
 var alert_service_1 = require("./_services/alert.service");
 var authentication_service_1 = require('./_services/authentication.service');
 var user_service_1 = require('./_services/user.service');
 var album_service_1 = require('./_services/album.service');
 var logged_in_guard_1 = require("./_guards/logged-in.guard");
+var validation_service_1 = require('./_services/validation-service');
+var control_messages_component_1 = require('./_directives/control-messages.component');
 // import './rxjs-extensions';
 var AppModule = (function () {
     function AppModule() {
@@ -51,6 +52,7 @@ var AppModule = (function () {
                 platform_browser_1.BrowserModule,
                 http_1.HttpModule,
                 forms_1.FormsModule,
+                forms_1.ReactiveFormsModule,
                 app_routing_module_1.AppRoutingModule
             ],
             declarations: [
@@ -72,9 +74,10 @@ var AppModule = (function () {
                 albums_component_1.AlbumsComponent,
                 add_album_component_1.AddAlbumComponent,
                 edit_album_component_1.EditAlbumComponent,
-                view_album_component_1.ViewAlbumComponent
+                view_album_component_1.ViewAlbumComponent,
+                control_messages_component_1.ControlMessagesComponent
             ],
-            providers: [logged_in_guard_1.LoggedInGuard, snap_service_1.SnapService, user_service_1.UserService, alert_service_1.AlertService, authentication_service_1.AuthenticationService, album_service_1.AlbumService],
+            providers: [logged_in_guard_1.LoggedInGuard, snap_service_1.SnapService, user_service_1.UserService, alert_service_1.AlertService, authentication_service_1.AuthenticationService, album_service_1.AlbumService, validation_service_1.ValidationService],
             bootstrap: [app_component_1.AppComponent]
         }), 
         __metadata('design:paramtypes', [])

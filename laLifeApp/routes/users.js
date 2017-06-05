@@ -120,49 +120,29 @@ module.exports.updatePass = function(req, res) {
   
   var username = req.body.user.username;
 
-  
 
-  User.findOne({username : username})
-    .exec(function(err, dbUser) {
-        if(err) res.send(err).status(501);
-        else{ 
-           if(dbUser.validPassword(req.body.user.currentPassword)){
-             
-             console.log("Have set the pass " + req.body.user.newPassword);
+  User.findOne({ username: username }, function (err, dbUser) {
+      if (err) { res.send(err).status(501); }
+      // Return if user not found in database
+      if (!dbUser) {
+        
+        return res.status(500).send({ error: "Could not find the logged in user."});
+      }
+      // Return if password is wrong
+      if (!dbUser.validPassword(req.body.user.currentPassword)) {
+        return res.status(500).send({ error: "The provided password is not correct."});
+      }else{
 
-              // var query = {'username': username};
-              // dbUser.setPassword(req.body.user.newPassword);
+        dbUser.setPassword(req.body.user.newPassword);
+        User.update({_id: dbUser._id}, {
+                  hash: dbUser.hash,
+                  salt: dbUser.salt,
+              }, function(err, resp) {
+                  if (err) return res.status(500).send({ error: err });
+                  return res.status(200).send(resp);
+        });
 
-              
-
-              // User.update({_id: dbUser._id}, {
-              //     hash: dbUser.hash,
-              //     salt: dbUser.salt,
-              // }, function(err, resp) {
-              //     if (err) return res.status(500).send({ error: err });
-              //     return res.status(200).send(resp);
-              // });
-
-
-              // User.update({_id: idd}, {
-              //     info: "some new info", 
-              //     password: newPassword
-              // }, function(err, affected, resp) {
-              //   console.log(resp);
-              // })
-
-          //     // User.findOneAndUpdate(query, req.body.user, {upsert:true}, function(err, resource){
-          //     //     if (err) return res.send(500, { error: err });
-          //     //     return res.json(resource).status(201); //201 HTML code for created
-          //     // });
-          // }else{
-              
-          }else{
-            //No valid password was provided
-            return res.status(500).send({ error: "The provided password is not correct."  });
-          }    
-            
-        }
+      }
     });
   
  

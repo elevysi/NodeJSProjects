@@ -1,6 +1,18 @@
+import { Album } from "../_models/album";
+
 export class Snap{
-    _id : string;
-    name : string;
-    description : string;
-    path : string;
+    // name : string;
+    // description : string;
+    // path? : string;
+
+     constructor(
+        public name : string,
+        public description : string,
+        public thumbnailPath? : string,
+        public originalPath? : string,
+        public _id?: string,
+        public album? : Album
+        
+       
+  ) {  }
 }

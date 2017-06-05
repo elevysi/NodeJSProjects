@@ -1,5 +1,4 @@
-<form class="form-horizontal" role="form" #userForm="ngForm" (submit)="userForm.form.valid && submit()" novalidate>
-
+<form class="form-horizontal" [formGroup]="registrationForm" role="form" (submit)="submit()" novalidate>
 
 <!--Reg Block-->
 <div class="reg-block">
@@ -16,44 +15,45 @@
 
      <div class="input-group margin-bottom-20">
         <span class="input-group-addon"><i class="fa fa-user"></i></span>
-        <input type="text" class="form-control" placeholder="Username" [(ngModel)]="model.username" name="username" #username="ngModel" required>
-        <div *ngIf="userForm.submitted && !username.valid" class="help-block alert alert-danger">Username is required</div>
+        <input type="text" class="form-control" placeholder="Username" formControlName="username">
+        <control-messages [control]="registrationForm.controls.username"></control-messages>
     </div>
 
     <div class="input-group margin-bottom-20">
         <span class="input-group-addon"><i class="fa fa-user"></i></span>
-        <input type="text" class="form-control" placeholder="First Name" [(ngModel)]="model.firstName" name="firstName" #firstName="ngModel" required>
-        <div *ngIf="userForm.submitted && !firstName.valid" class="help-block alert alert-danger">First Name is required</div>
+        <input type="text" class="form-control" placeholder="First Name" formControlName="firstName">
+       <control-messages [control]="registrationForm.controls.firstName"></control-messages>
     </div>
 
 
     <div class="input-group margin-bottom-20">
         <span class="input-group-addon"><i class="fa fa-user"></i></span>
-        <input type="text" class="form-control" placeholder="Last Name" [(ngModel)]="model.lastName" name="lastName" #lastName="ngModel" required>
-        <div *ngIf="userForm.submitted && !lastName.valid" class="help-block alert alert-danger">Last Name is required</div>
+        <input type="text" class="form-control" placeholder="Last Name" formControlName="lastName">
+        <control-messages [control]="registrationForm.controls.lastName"></control-messages>
     </div>
 
     <div class="input-group margin-bottom-20">
         <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-        <input type="email" class="form-control" placeholder="Email" [(ngModel)]="model.email" name="email" #email="ngModel" required>
-        <div *ngIf="userForm.submitted && !email.valid" class="help-block alert alert-danger">A valid email is required</div>
+        <input type="email" class="form-control" placeholder="Email" formControlName="email">
+        <control-messages [control]="registrationForm.controls.email"></control-messages>
     </div>
 
     <div class="input-group margin-bottom-20">
         <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-        <input type="password" class="form-control" placeholder="Password" [(ngModel)]="model.password" name="password" #password="ngModel" required>
-        <div *ngIf="userForm.submitted && !password.valid" class="help-block alert alert-danger">A password is required</div>
+        <input type="password" class="form-control" placeholder="Password" formControlName="password">
+        <control-messages [control]="registrationForm.controls.password"></control-messages>
     </div>
 
     <div class="input-group margin-bottom-20">
         <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-        <input type="password" class="form-control" placeholder="Confirm Password" [(ngModel)]="model.confirmPassword" name="confirmPassword" #confirmPassword="ngModel" required>
-        <div *ngIf="userForm.submitted && !confirmPassword.valid" class="help-block alert alert-danger">Please confirm the password</div>
+        <input type="password" class="form-control" placeholder="Confirm Password" formControlName="confirmPassword">
+        <!--<div *ngIf="registrationForm.submitted && !confirmPassword.valid" class="help-block alert alert-danger">Please confirm the password</div>-->
     </div>
 
     <div class="input-group margin-bottom-20">
         <span class="input-group-addon"><i class="fa fa-user"></i></span>
-        <textarea class="form-control" placeholder="Bio" [(ngModel)]="model.bio" name="bio" #bio="ngModel"></textarea>
+        <textarea class="form-control" placeholder="Bio" formControlName="bio"></textarea>
+        <control-messages [control]="registrationForm.controls.bio"></control-messages>
     </div>
     
     <hr>
@@ -61,14 +61,14 @@
 
     <div class="checkbox">
         <label>
-            <input type="checkbox" [(ngModel)]="model.conditions" name="conditions">I have read <a target="_blank" routerLink="terms">Terms and Conditions</a>
+            <input type="checkbox" name="conditions" >I have read <a target="_blank" routerLink="terms">Terms and Conditions</a>
             
         </label>
     </div>
 
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
-            <button type="submit" class="btn-u btn-u-green"> Register</button>
+            <button type="submit" class="btn-u btn-u-green">Register</button>
         </div>
     </div>
 </div>

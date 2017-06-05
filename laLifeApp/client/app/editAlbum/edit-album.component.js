@@ -32,7 +32,7 @@ var EditAlbumComponent = (function () {
             _this.model._id = snap._id;
             _this.model.name = snap.name;
             _this.model.description = snap.description;
-            _this.model.path = snap.path;
+            // this.model.path = snap.path;
         });
     };
     EditAlbumComponent.prototype.submit = function () {
@@ -40,8 +40,7 @@ var EditAlbumComponent = (function () {
         var snap = {
             _id: this.model._id,
             name: this.model.name,
-            description: this.model.description,
-            path: this.model.path,
+            description: this.model.description
         };
         this.snapService.editSnap(snap)
             .subscribe(function (data) {

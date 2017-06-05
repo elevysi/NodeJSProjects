@@ -5,7 +5,9 @@ import { Location } from "@angular/common";
 import "rxjs/add/operator/switchMap";
 
 import { Snap } from "../_models/snap";
+import { Album } from "../_models/album";
 import { SnapService } from "../_services/snap.service";
+import { AlbumService } from "../_services/album.service";
 import { AlertService } from "../_services/alert.service";
 
 
@@ -20,9 +22,11 @@ export class EditSnapComponent implements OnInit {
     @Input()
     snap : Snap;
     model: any = {};
+    albums : Album [];
 
     constructor(
         private snapService : SnapService,
+        private albumService : AlbumService,
         private route : ActivatedRoute,
         private alertService : AlertService,
         private location : Location
@@ -36,8 +40,14 @@ export class EditSnapComponent implements OnInit {
                 this.model._id = snap._id;
                 this.model.name = snap.name;
                 this.model.description = snap.description;
-                this.model.path = snap.path;
+                // this.model.album = snap.album;
+                
 
+            });
+
+            this.albumService.getAlbums()
+                .then(albums => {
+                    this.albums = albums;
             });
     }
 
@@ -47,7 +57,7 @@ export class EditSnapComponent implements OnInit {
             _id : this.model._id,
             name : this.model.name,
             description : this.model.description,
-            path : this.model.path,
+            album : this.model.album
         };
 
         this.snapService.editSnap(snap)

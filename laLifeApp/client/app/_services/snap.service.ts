@@ -31,23 +31,6 @@ export class SnapService{
     }
     
 
-    addSnap(snap : Snap): Promise<Snap>{
-
-        const url = `${this.snapUrl}`;
-        let authToken = localStorage.getItem('auth_token');
-
-        let headers = new Headers();
-        headers.append('Content-Type', 'application/json');
-        headers.append('Authorization', `Bearer ${authToken}`);
-        
-        return this.http
-            // .post(this.snapUrl, JSON.stringify({snap : snap}), {headers: this.headers})
-            .post(this.snapUrl, JSON.stringify({snap : snap}), {headers: headers})
-            .toPromise()
-            .then(res => res.json().data)
-            .catch(this.handleError);
-    }
-
     editSnap(snap : Snap){
 
         const url = `${this.snapUrl}/${snap._id}`;

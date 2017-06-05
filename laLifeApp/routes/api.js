@@ -15,8 +15,8 @@ const UPLOADS_THUMB_DIR_ABSOLUTE = './client/uploads/thumbnails/';
 const UPLOADS_DIR_RELATIVE = "uploads/";
 const UPLOADS_THUMBS_DIR_RELATIVE = "uploads/thumbnails/";
 
-const THUMBANAIL_WIDTH = 500;
-const THUMBNAIL_HEIGHT = 500;
+const THUMBANAIL_WIDTH = 400;
+const THUMBNAIL_HEIGHT = 400;
 
 
 //Dynamic Storage
@@ -139,7 +139,25 @@ exports.add = (dir) => {
              * Create the corresponding snap model item
              */
             // console.log(util.inspect(req.file, {showHidden: false, depth: null}));
-            // console.log(util.inspect(req.body, {showHidden: false, depth: null}));
+            
+
+            var album = {};
+
+            if(typeof req.body.album._id !== 'undefined'){
+
+                var postedAlbum = JSON.parse(req.body.album);
+
+                if(typeof postedAlbum._id !== 'undefined'){
+                    
+                    album = {
+                        "name" : postedAlbum.name,
+                        "description" : postedAlbum.description,
+                        "address" : postedAlbum.address,
+                        "_id" : postedAlbum._id,
+                    };
+                }
+            }
+
             var snap = new Snap({
                 "name" : req.body.name,
                 "description" : req.body.description,
@@ -151,7 +169,9 @@ exports.add = (dir) => {
                 "thumbnailPath" : thumbnailSavePathRelative,
                 "originalPath" : savePathRelative,
                 "featured" : false,
-                "publicSnap" : false
+                "publicSnap" : false,
+                "album" : album
+                
             });
             
             snap.save((err, resource) => {
@@ -195,21 +215,30 @@ exports.editSnap = (req, res, err) => {
         if(err) res.send(err).status(501);
         else{
 
+            // console.log(util.inspect(req.body, {showHidden: false, depth: null}));
             foundSnap.name = req.body.snap.name || foundSnap.name;
             foundSnap.description = req.body.snap.description || foundSnap.description;
+            foundSnap.album = req.body.snap.album || foundSnap.album;
 
             foundSnap.save((err, resource) => {
                 if(err) res.send(err).status(501);
-                else res.json(resource).status(200); //201 HTML code for created
+                else res.json(resource).status(200); //200 HTML code for success
             });
             
         }
     });
 };
 
+//http://sharp.dimens.io/en/stable/api-resize/
 function createImageThumbnail(inputPath, outputPath, width, height){
      sharp(inputPath)
             .resize(width, height)
+            // .background({r: 0, g: 0, b: 0, alpha: 0}) //THis is a black background
+            .background('white')
+            .embed()
+            .toFormat(sharp.format.webp)
+            // .max()
+            // .withoutEnlargement(true)
             .toFile(outputPath, function(err) {
                 // output.jpg is a 200 pixels wide and 200 pixels high image
                 // containing a scaled and cropped version of input.jpg

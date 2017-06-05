@@ -1,6 +1,6 @@
 import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppRoutingModule } from "./app-routing.module";
@@ -34,14 +34,15 @@ import { AlertComponent } from "./_directives/alert.component";
 import { ErrorComponent } from "./error/error.component";
 import { CubePortfolioComponent } from "./_directives/cube.portfolio.component";
 
-// import 
-
 import { SnapService } from './_services/snap.service';
 import { AlertService } from "./_services/alert.service";
 import { AuthenticationService } from './_services/authentication.service';
 import { UserService } from './_services/user.service';
 import { AlbumService } from './_services/album.service';
 import { LoggedInGuard } from "./_guards/logged-in.guard";
+
+import { ValidationService } from './_services/validation-service';
+import { ControlMessagesComponent } from './_directives/control-messages.component';
 
 
 // import './rxjs-extensions';
@@ -51,6 +52,7 @@ import { LoggedInGuard } from "./_guards/logged-in.guard";
       BrowserModule,
       HttpModule,
       FormsModule,
+      ReactiveFormsModule,
       AppRoutingModule
       // AlertModule
     ],
@@ -73,9 +75,10 @@ import { LoggedInGuard } from "./_guards/logged-in.guard";
     AlbumsComponent,
     AddAlbumComponent,
     EditAlbumComponent,
-    ViewAlbumComponent
+    ViewAlbumComponent,
+    ControlMessagesComponent
   ],
-  providers : [ LoggedInGuard, SnapService, UserService, AlertService, AuthenticationService, AlbumService],
+  providers : [ LoggedInGuard, SnapService, UserService, AlertService, AuthenticationService, AlbumService, ValidationService],
   bootstrap: [ AppComponent ]
   
 })

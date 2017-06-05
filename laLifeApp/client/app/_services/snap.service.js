@@ -28,18 +28,6 @@ var SnapService = (function () {
             .then(function (response) { return response.json(); })
             .catch(this.handleError);
     };
-    SnapService.prototype.addSnap = function (snap) {
-        var url = "" + this.snapUrl;
-        var authToken = localStorage.getItem('auth_token');
-        var headers = new http_1.Headers();
-        headers.append('Content-Type', 'application/json');
-        headers.append('Authorization', "Bearer " + authToken);
-        return this.http
-            .post(this.snapUrl, JSON.stringify({ snap: snap }), { headers: headers })
-            .toPromise()
-            .then(function (res) { return res.json().data; })
-            .catch(this.handleError);
-    };
     SnapService.prototype.editSnap = function (snap) {
         var url = this.snapUrl + "/" + snap._id;
         var authToken = localStorage.getItem('auth_token');

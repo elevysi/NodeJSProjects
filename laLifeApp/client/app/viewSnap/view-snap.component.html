@@ -31,6 +31,11 @@
         <td>{{snap.fileName}}</td>
     </tr>
 
+    <tr *ngIf="snap.album !== undefined">
+        <td>Album</td>
+        <td><a routerLink="/albums/view/{{snap.album._id}}">{{snap.album.name}}</a></td>
+    </tr>
+
     <tr>
         <td>Created</td>
         <td>{{snap.created}}</td>
