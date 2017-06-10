@@ -49,6 +49,16 @@
         <td><a routerLink="/albums/view/{{snap.album._id}}">{{snap.album.name}}</a></td>
     </tr>
 
+    <tr *ngIf="snap.featured !== undefined">
+        <td>Featured</td>
+        <td>{{snap.featured}}</td>
+    </tr>
+
+    <tr *ngIf="snap.publicSnap !== undefined">
+        <td>Public</td>
+        <td>{{snap.publicSnap}}</td>
+    </tr>
+
     <tr>
         <td>Created</td>
         <td>{{snap.created}}</td>

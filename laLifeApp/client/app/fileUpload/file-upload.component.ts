@@ -38,6 +38,8 @@ export class FileUploadComponent implements OnInit{
     path : string;
     album : Album;
     type : string;
+    featured : boolean = false;
+    publicSnap : boolean = true;
 
     public uploader : FileUploader = new FileUploader({
         url: this.snapUrl,
@@ -86,6 +88,8 @@ export class FileUploadComponent implements OnInit{
             // console.log("logged user is "+ this.user.);
             form.append("userIdentifier", this.user.username);
             form.append("album", JSON.stringify(this.album));
+            form.append("featured", JSON.stringify(this.featured));
+            form.append("publicSnap", JSON.stringify(this.publicSnap));
             
         };
 

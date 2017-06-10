@@ -36,6 +36,10 @@ var EditSnapComponent = (function () {
             _this.model.description = snap.description;
             if (typeof snap.type !== 'undefined')
                 _this.model.type = snap.type;
+            if (typeof snap.featured !== 'undefined')
+                _this.model.featured = snap.featured;
+            if (typeof snap.publicSnap !== 'undefined')
+                _this.model.publicSnap = snap.publicSnap;
             // this.model.album = snap.album;
         });
         this.albumService.getAlbums()
@@ -50,7 +54,9 @@ var EditSnapComponent = (function () {
             name: this.model.name,
             description: this.model.description,
             album: this.model.album,
-            type: this.model.type
+            type: this.model.type,
+            featured: this.model.featured,
+            publicSnap: this.model.publicSnap
         };
         this.snapService.editSnap(snap)
             .subscribe(function (data) {

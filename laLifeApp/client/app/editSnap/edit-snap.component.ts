@@ -40,7 +40,10 @@ export class EditSnapComponent implements OnInit {
                 this.model._id = snap._id;
                 this.model.name = snap.name;
                 this.model.description = snap.description;
+                
                 if(typeof snap.type !== 'undefined') this.model.type = snap.type;
+                if(typeof snap.featured !== 'undefined') this.model.featured = snap.featured;
+                if(typeof snap.publicSnap !== 'undefined') this.model.publicSnap = snap.publicSnap;
                 // this.model.album = snap.album;
                 
 
@@ -54,12 +57,15 @@ export class EditSnapComponent implements OnInit {
 
 
     submit() : void {
+
         var snap  : Snap = {
             _id : this.model._id,
             name : this.model.name,
             description : this.model.description,
             album : this.model.album,
-            type : this.model.type
+            type : this.model.type,
+            featured : this.model.featured,
+            publicSnap : this.model.publicSnap
         };
 
         this.snapService.editSnap(snap)

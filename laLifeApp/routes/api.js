@@ -14,12 +14,17 @@ var Snap = require("../models/snap");
 const UPLODAS_DIR_ABSOLUTE = './client/uploads/';
 const UPLOADS_THUMB_DIR_ABSOLUTE = './client/uploads/thumbnails/';
 
+// const PRESS_PLAY = './client/assets/img/playicon.png';
+
+const PRESS_PLAY =  path.join(__dirname + '/..', 'client/assets/img/playicon.png');
+
+
 const UPLOADS_DIR_RELATIVE = "uploads/";
 const UPLOADS_THUMBS_DIR_RELATIVE = "uploads/thumbnails/";
 
 
-const THUMBANAIL_WIDTH = 500;
-const THUMBNAIL_HEIGHT = 500;
+const THUMBANAIL_WIDTH = 400;
+const THUMBNAIL_HEIGHT = 400;
 
 
 
@@ -69,8 +74,10 @@ var upload = multer({
 
 exports.list = (req, res, next) => {
 
+    console.log(PRESS_PLAY);
+
     Snap.find({
-//     deal_id:deal._id // Search Filters
+            publicSnap: true // Search Filters
         }
         // ,
 //      ['type','date_added'], // Columns to Return,
@@ -153,6 +160,7 @@ exports.add = (dir) => {
                 var thumbnailName = req.file.fieldname + '-' + Date.now()+ '.' + '.png';
                 thumbnailSavePathRelative = UPLOADS_DIR_RELATIVE + req.body.userIdentifier + "/Thumbnails/" + thumbnailName;
                 createVideoThumbnail(savePathAbsolute, thumbnailSaveDirAbsolute, thumbnailName, THUMBANAIL_WIDTH, THUMBNAIL_HEIGHT);
+                // createVideoThumbnail(inputPath, outputDir, fileName, width, height){
                 itemType = "video";
             }
 
@@ -191,8 +199,8 @@ exports.add = (dir) => {
                 "size" : req.file.size,
                 "thumbnailPath" : thumbnailSavePathRelative,
                 "originalPath" : savePathRelative,
-                "featured" : false,
-                "publicSnap" : false,
+                "featured" : req.body.featured,
+                "publicSnap" : req.body.publicSnap,
                 "album" : album
                 
             });
@@ -216,7 +224,6 @@ function createImageThumbnail(inputPath, outputPath, width, height){
      sharp(inputPath)
             .resize(width, height)
             .background({r: 245, g: 245, b: 245, alpha: 100}) //THis is a black background
-            // .background('white')
             .embed()
             .toFormat(sharp.format.webp)
             // .max()
@@ -228,13 +235,6 @@ function createImageThumbnail(inputPath, outputPath, width, height){
 };
 
 function createVideoThumbnail(inputPath, outputDir, fileName, width, height){
-//     var proc = new ffmpeg(inputPath)
-//     .takeScreenshots({
-//         count: 1,
-//         timemarks: [ '50%' ] // number of seconds
-//         }, 'outputPath', function(err) {
-//         console.log('screenshots were saved')
-//   });
 
     ffmpeg(inputPath)
     .screenshots({
@@ -243,6 +243,29 @@ function createVideoThumbnail(inputPath, outputDir, fileName, width, height){
         folder: outputDir,
         size: width+'x'+height
         // size: '320x240'
+    })
+    .on('error', function(err, stdout, stderr) {
+        return false;
+    })
+    .on('end', function(stdout, stderr) {
+        if (compositeThumbnail(outputDir + fileName)) return true;
+    });
+
+    
+    
+};
+
+//ffmpeg https://github.com/fluent-ffmpeg/node-fluent-ffmpeg
+function compositeThumbnail(inputPath){
+
+    sharp(inputPath)
+        .overlayWith(PRESS_PLAY, { gravity: sharp.gravity.centre } )
+        // .quality(90)
+        // .webp()
+        .toBuffer()
+        .then(function(outputBuffer) {
+
+            return true;
     });
 };
 
@@ -274,11 +297,14 @@ exports.editSnap = (req, res, err) => {
         if(err) res.send(err).status(501);
         else{
 
-            // console.log(util.inspect(req.body, {showHidden: false, depth: null}));
+            console.log(util.inspect(req.body, {showHidden: false, depth: null}));
+            
             foundSnap.name = req.body.snap.name || foundSnap.name;
             foundSnap.description = req.body.snap.description || foundSnap.description;
             foundSnap.album = req.body.snap.album || foundSnap.album;
             foundSnap.type = req.body.snap.type || foundSnap.type;
+            foundSnap.featured = req.body.snap.featured;
+            foundSnap.publicSnap = req.body.snap.publicSnap;
 
             foundSnap.save((err, resource) => {
                 if(err) res.send(err).status(501);

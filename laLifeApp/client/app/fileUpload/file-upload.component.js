@@ -24,6 +24,8 @@ var FileUploadComponent = (function () {
         this.location = location;
         this.authenticationService = authenticationService;
         this.snapUrl = "api/snaps";
+        this.featured = false;
+        this.publicSnap = true;
         this.uploader = new ng2_file_upload_1.FileUploader({
             url: this.snapUrl,
             headers: [
@@ -60,6 +62,8 @@ var FileUploadComponent = (function () {
             // console.log("logged user is "+ this.user.);
             form.append("userIdentifier", _this.user.username);
             form.append("album", JSON.stringify(_this.album));
+            form.append("featured", JSON.stringify(_this.featured));
+            form.append("publicSnap", JSON.stringify(_this.publicSnap));
         };
     };
     FileUploadComponent = __decorate([

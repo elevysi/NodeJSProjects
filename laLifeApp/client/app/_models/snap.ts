@@ -12,6 +12,8 @@ export class Snap{
         public originalPath? : string,
         public _id?: string,
         public type?: string,
+        public featured? : boolean,
+        public publicSnap? : boolean,
         public album? : Album
        
   ) {  }
