@@ -30,6 +30,7 @@ var snapSchema = new mongoose.Schema({
     created : {type: Date, default: Date.now},
     featured : "boolean",
     publicSnap : "boolean",
+    type : "String",
     album : {name : "String", description: "String", address : "String", _id : "String"}
 });
 

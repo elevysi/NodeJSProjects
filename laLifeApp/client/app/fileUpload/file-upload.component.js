@@ -56,6 +56,7 @@ var FileUploadComponent = (function () {
         this.uploader.onBuildItemForm = function (item, form) {
             form.append("name", _this.name);
             form.append("description", _this.description);
+            form.append("type", _this.type);
             // console.log("logged user is "+ this.user.);
             form.append("userIdentifier", _this.user.username);
             form.append("album", JSON.stringify(_this.album));

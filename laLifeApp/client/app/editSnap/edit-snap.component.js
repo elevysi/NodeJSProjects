@@ -34,6 +34,8 @@ var EditSnapComponent = (function () {
             _this.model._id = snap._id;
             _this.model.name = snap.name;
             _this.model.description = snap.description;
+            if (typeof snap.type !== 'undefined')
+                _this.model.type = snap.type;
             // this.model.album = snap.album;
         });
         this.albumService.getAlbums()
@@ -47,7 +49,8 @@ var EditSnapComponent = (function () {
             _id: this.model._id,
             name: this.model.name,
             description: this.model.description,
-            album: this.model.album
+            album: this.model.album,
+            type: this.model.type
         };
         this.snapService.editSnap(snap)
             .subscribe(function (data) {

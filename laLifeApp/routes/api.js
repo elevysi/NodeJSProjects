@@ -3,6 +3,8 @@ var multer = require('multer');
 const util = require('util');
 var router = express.Router();
 var mime = require('mime');
+var path = require('path');
+var ffmpeg = require('fluent-ffmpeg');
 
 var fs = require("fs");
 var sharp = require("sharp");
@@ -15,8 +17,10 @@ const UPLOADS_THUMB_DIR_ABSOLUTE = './client/uploads/thumbnails/';
 const UPLOADS_DIR_RELATIVE = "uploads/";
 const UPLOADS_THUMBS_DIR_RELATIVE = "uploads/thumbnails/";
 
-const THUMBANAIL_WIDTH = 400;
-const THUMBNAIL_HEIGHT = 400;
+
+const THUMBANAIL_WIDTH = 500;
+const THUMBNAIL_HEIGHT = 500;
+
 
 
 //Dynamic Storage
@@ -115,25 +119,43 @@ exports.add = (dir) => {
             
             var savePathAbsolute = UPLODAS_DIR_ABSOLUTE + req.body.userIdentifier + "/Originals/" + req.file.filename;
             var savePathRelative = UPLOADS_DIR_RELATIVE + req.body.userIdentifier + "/Originals/" + req.file.filename;
+            var thumbnailSavePathRelative = "";
+            
 
-             var thumbnailSaveDirAbsolute = UPLODAS_DIR_ABSOLUTE + req.body.userIdentifier + "/Thumbnails/";
+            var filetypes = /jpeg|jpg|png|gif/;
+            var mimetype = filetypes.test(req.file.mimetype);
+            var extname = filetypes.test(path.extname(req.file.filename).toLowerCase());
 
+            var thumbnailSaveDirAbsolute = UPLODAS_DIR_ABSOLUTE + req.body.userIdentifier + "/Thumbnails/";
             var thumbnailSavePathAbsolute = thumbnailSaveDirAbsolute + req.file.filename;
-            var thumbnailSavePathRelative = UPLOADS_DIR_RELATIVE + req.body.userIdentifier + "/Thumbnails/" + req.file.filename;
+            
 
-            // Check if the thumbanil folder has been created
-            var stat = null;
-            try {
-                stat = fs.statSync(thumbnailSaveDirAbsolute);
-            } catch (err) {
-                fs.mkdirSync(thumbnailSaveDirAbsolute);
-            }
-            if (stat && !stat.isDirectory()) {
-                throw new Error('Directory cannot be created because an inode of a different type exists at "' + thumbnailSaveDirAbsolute + '"');
+                // Check if the thumbanil folder has been created
+                var stat = null;
+                try {
+                    stat = fs.statSync(thumbnailSaveDirAbsolute);
+                } catch (err) {
+                    fs.mkdirSync(thumbnailSaveDirAbsolute);
+                }
+                if (stat && !stat.isDirectory()) {
+                    throw new Error('Directory cannot be created because an inode of a different type exists at "' + thumbnailSaveDirAbsolute + '"');
             }
 
-            createImageThumbnail(savePathAbsolute, thumbnailSavePathAbsolute, THUMBANAIL_WIDTH, THUMBNAIL_HEIGHT);
-           
+            var itemType = "";
+
+            //Create a thumbnail for images only
+            if (mimetype && extname) {
+
+                thumbnailSavePathRelative = UPLOADS_DIR_RELATIVE + req.body.userIdentifier + "/Thumbnails/" + req.file.filename;
+                createImageThumbnail(savePathAbsolute, thumbnailSavePathAbsolute, THUMBANAIL_WIDTH, THUMBNAIL_HEIGHT);
+                itemType = "image";
+            }else{
+                var thumbnailName = req.file.fieldname + '-' + Date.now()+ '.' + '.png';
+                thumbnailSavePathRelative = UPLOADS_DIR_RELATIVE + req.body.userIdentifier + "/Thumbnails/" + thumbnailName;
+                createVideoThumbnail(savePathAbsolute, thumbnailSaveDirAbsolute, thumbnailName, THUMBANAIL_WIDTH, THUMBNAIL_HEIGHT);
+                itemType = "video";
+            }
+
 
             /**
              * Create the corresponding snap model item
@@ -161,6 +183,7 @@ exports.add = (dir) => {
             var snap = new Snap({
                 "name" : req.body.name,
                 "description" : req.body.description,
+                "type" : itemType,
                 "originalname" : req.file.originalname,
                 "fileName" : req.file.filename,
                 "path" : savePathRelative,
@@ -185,6 +208,42 @@ exports.add = (dir) => {
             });
         });   
     };
+};
+
+//http://sharp.dimens.io/en/stable/api-resize/
+//http://www.rapidtables.com/web/color/white-color.htm Colors
+function createImageThumbnail(inputPath, outputPath, width, height){
+     sharp(inputPath)
+            .resize(width, height)
+            .background({r: 245, g: 245, b: 245, alpha: 100}) //THis is a black background
+            // .background('white')
+            .embed()
+            .toFormat(sharp.format.webp)
+            // .max()
+            // .withoutEnlargement(true)
+            .toFile(outputPath, function(err) {
+                // output.jpg is a 200 pixels wide and 200 pixels high image
+                // containing a scaled and cropped version of input.jpg
+        });
+};
+
+function createVideoThumbnail(inputPath, outputDir, fileName, width, height){
+//     var proc = new ffmpeg(inputPath)
+//     .takeScreenshots({
+//         count: 1,
+//         timemarks: [ '50%' ] // number of seconds
+//         }, 'outputPath', function(err) {
+//         console.log('screenshots were saved')
+//   });
+
+    ffmpeg(inputPath)
+    .screenshots({
+        timestamps: ['50%'],
+        filename: fileName,
+        folder: outputDir,
+        size: width+'x'+height
+        // size: '320x240'
+    });
 };
 
 exports.deleteSnap = (req, res, err) => {
@@ -219,6 +278,7 @@ exports.editSnap = (req, res, err) => {
             foundSnap.name = req.body.snap.name || foundSnap.name;
             foundSnap.description = req.body.snap.description || foundSnap.description;
             foundSnap.album = req.body.snap.album || foundSnap.album;
+            foundSnap.type = req.body.snap.type || foundSnap.type;
 
             foundSnap.save((err, resource) => {
                 if(err) res.send(err).status(501);
@@ -229,21 +289,6 @@ exports.editSnap = (req, res, err) => {
     });
 };
 
-//http://sharp.dimens.io/en/stable/api-resize/
-function createImageThumbnail(inputPath, outputPath, width, height){
-     sharp(inputPath)
-            .resize(width, height)
-            // .background({r: 0, g: 0, b: 0, alpha: 0}) //THis is a black background
-            .background('white')
-            .embed()
-            .toFormat(sharp.format.webp)
-            // .max()
-            // .withoutEnlargement(true)
-            .toFile(outputPath, function(err) {
-                // output.jpg is a 200 pixels wide and 200 pixels high image
-                // containing a scaled and cropped version of input.jpg
-        });
-};
 
 function resizeImage(inputPath, width, height) {  
   // create the resize transform

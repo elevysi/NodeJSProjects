@@ -11,8 +11,8 @@ export class Snap{
         public thumbnailPath? : string,
         public originalPath? : string,
         public _id?: string,
+        public type?: string,
         public album? : Album
-        
        
   ) {  }
 }

@@ -9,7 +9,7 @@
             <div class="cbp-l-caption-alignLeft">
                 <div class="cbp-l-caption-body">
                     <div class="cbp-l-caption-title">{{snap.name}}</div>
-                    <div class="cbp-l-caption-desc">by Elevysi.com</div>
+                    <div *ngIf="(snap.album !== undefined)" class="cbp-l-caption-desc">In {{snap.album.name}}</div>
                 </div>
             </div>
         </div>

@@ -37,6 +37,7 @@ export class FileUploadComponent implements OnInit{
     description : string;
     path : string;
     album : Album;
+    type : string;
 
     public uploader : FileUploader = new FileUploader({
         url: this.snapUrl,
@@ -81,6 +82,7 @@ export class FileUploadComponent implements OnInit{
         this.uploader.onBuildItemForm = (item : any, form : any) => {
             form.append("name", this.name);
             form.append("description", this.description);
+            form.append("type", this.type);
             // console.log("logged user is "+ this.user.);
             form.append("userIdentifier", this.user.username);
             form.append("album", JSON.stringify(this.album));

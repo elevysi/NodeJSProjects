@@ -1,9 +1,17 @@
 <div *ngIf="snap">
     <h3 class="text-center">View Snap - {{snap.name}} </h3>
 <hr class="devider devider-dashed">
-    <div>
+    <div *ngIf="snap.type == undefined || (snap.type !== undefined && snap.type == 'image')">
         <img class="img-responsive full-width" src="{{snap.path}}" alt="img_view">
     </div>
+
+    <div *ngIf="snap.type !== undefined && snap.type == 'video'" class="text-center img-responsive full-width">
+        <video controls>
+            <source src="{{snap.path}}" type="{{snap.mime}}">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+    
 
 <table class="table">
     <tr>
@@ -14,6 +22,11 @@
     <tr>
         <td>Description</td>
         <td>{{snap.description}}</td>
+    </tr>
+
+    <tr>
+        <td>Type</td>
+        <td>{{snap.type}}</td>
     </tr>
 
     <tr>
