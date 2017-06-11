@@ -21,7 +21,7 @@ const THUMBANAIL_WIDTH = 400;
 const THUMBNAIL_HEIGHT = 400;
 
 const PRESS_PLAY =  path.join(__dirname + '/..', 'client/assets/img/1497205323_youtube-play.png');
-const WATERMARK =  path.join(__dirname + '/..', 'client/assets/img/logo-elevysi-white.png');
+const WATERMARK =  path.join(__dirname + '/..', 'client/assets/img/logoWhiteTransparent.png');
 
 
 //Dynamic Storage
