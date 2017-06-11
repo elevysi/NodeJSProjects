@@ -3,7 +3,7 @@ var Snap = (function () {
     // name : string;
     // description : string;
     // path? : string;
-    function Snap(name, description, thumbnailPath, originalPath, _id, type, featured, publicSnap, album) {
+    function Snap(name, description, thumbnailPath, originalPath, _id, type, featured, publicSnap, album, unMarkedThumbnailPath) {
         this.name = name;
         this.description = description;
         this.thumbnailPath = thumbnailPath;
@@ -13,6 +13,7 @@ var Snap = (function () {
         this.featured = featured;
         this.publicSnap = publicSnap;
         this.album = album;
+        this.unMarkedThumbnailPath = unMarkedThumbnailPath;
     }
     return Snap;
 }());

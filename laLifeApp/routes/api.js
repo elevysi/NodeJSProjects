@@ -14,24 +14,19 @@ var Snap = require("../models/snap");
 const UPLODAS_DIR_ABSOLUTE = './client/uploads/';
 const UPLOADS_THUMB_DIR_ABSOLUTE = './client/uploads/thumbnails/';
 
-// const PRESS_PLAY = './client/assets/img/playicon.png';
-
-const PRESS_PLAY =  path.join(__dirname + '/..', 'client/assets/img/playicon.png');
-
-
 const UPLOADS_DIR_RELATIVE = "uploads/";
 const UPLOADS_THUMBS_DIR_RELATIVE = "uploads/thumbnails/";
-
 
 const THUMBANAIL_WIDTH = 400;
 const THUMBNAIL_HEIGHT = 400;
 
+const PRESS_PLAY =  path.join(__dirname + '/..', 'client/assets/img/1497205323_youtube-play.png');
+const WATERMARK =  path.join(__dirname + '/..', 'client/assets/img/logo-elevysi-white.png');
 
 
 //Dynamic Storage
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        // var newDestination = 'uploads/' + req.user._username;
 
         var parentFolder = UPLODAS_DIR_ABSOLUTE + req.body.userIdentifier + "/";
         var parentStat = null;
@@ -73,8 +68,6 @@ var upload = multer({
 
 
 exports.list = (req, res, next) => {
-
-    console.log(PRESS_PLAY);
 
     Snap.find({
             publicSnap: true // Search Filters
@@ -146,47 +139,51 @@ exports.add = (dir) => {
                 }
                 if (stat && !stat.isDirectory()) {
                     throw new Error('Directory cannot be created because an inode of a different type exists at "' + thumbnailSaveDirAbsolute + '"');
-            }
+                }
 
             var itemType = "";
+            var unMarkedThumbnailPath = "";
 
             //Create a thumbnail for images only
             if (mimetype && extname) {
 
-                thumbnailSavePathRelative = UPLOADS_DIR_RELATIVE + req.body.userIdentifier + "/Thumbnails/" + req.file.filename;
-                createImageThumbnail(savePathAbsolute, thumbnailSavePathAbsolute, THUMBANAIL_WIDTH, THUMBNAIL_HEIGHT);
+                var thumbnailName = req.file.filename;
+
+                unMarkedThumbnailPath = UPLOADS_DIR_RELATIVE + req.body.userIdentifier + "/Thumbnails/" + thumbnailName;
+                createImageThumbnail(savePathAbsolute, thumbnailSaveDirAbsolute, thumbnailName, THUMBANAIL_WIDTH, THUMBNAIL_HEIGHT);
+                
+                thumbnailSavePathRelative = UPLOADS_DIR_RELATIVE + req.body.userIdentifier + "/Thumbnails/Watermarked/" + thumbnailName;
+                
                 itemType = "image";
             }else{
-                var thumbnailName = req.file.fieldname + '-' + Date.now()+ '.' + '.png';
-                thumbnailSavePathRelative = UPLOADS_DIR_RELATIVE + req.body.userIdentifier + "/Thumbnails/" + thumbnailName;
-                createVideoThumbnail(savePathAbsolute, thumbnailSaveDirAbsolute, thumbnailName, THUMBANAIL_WIDTH, THUMBNAIL_HEIGHT);
-                // createVideoThumbnail(inputPath, outputDir, fileName, width, height){
+                var thumbnailName = req.file.fieldname + '-' + Date.now()+ '.png';
+                
+                unMarkedThumbnailPath = UPLOADS_DIR_RELATIVE + req.body.userIdentifier + "/Thumbnails/" + thumbnailName;
+                var newThumbnailPath = createVideoThumbnail(savePathAbsolute, thumbnailSaveDirAbsolute, thumbnailName, THUMBANAIL_WIDTH, THUMBNAIL_HEIGHT);
+               
+                //new Path to thumbnail is here
+                thumbnailSavePathRelative = UPLOADS_DIR_RELATIVE + req.body.userIdentifier + "/Thumbnails/Videos/" + thumbnailName;
+
                 itemType = "video";
             }
 
-
-            /**
-             * Create the corresponding snap model item
-             */
             // console.log(util.inspect(req.file, {showHidden: false, depth: null}));
             
 
             var album = {};
 
-            if(typeof req.body.album._id !== 'undefined'){
+            var postedAlbum = JSON.parse(req.body.album);
 
-                var postedAlbum = JSON.parse(req.body.album);
-
-                if(typeof postedAlbum._id !== 'undefined'){
-                    
-                    album = {
-                        "name" : postedAlbum.name,
-                        "description" : postedAlbum.description,
-                        "address" : postedAlbum.address,
-                        "_id" : postedAlbum._id,
-                    };
-                }
+            if(typeof postedAlbum._id !== 'undefined'){
+                
+                album = {
+                    "name" : postedAlbum.name,
+                    "description" : postedAlbum.description,
+                    "address" : postedAlbum.address,
+                    "_id" : postedAlbum._id,
+                };
             }
+
 
             var snap = new Snap({
                 "name" : req.body.name,
@@ -201,7 +198,8 @@ exports.add = (dir) => {
                 "originalPath" : savePathRelative,
                 "featured" : req.body.featured,
                 "publicSnap" : req.body.publicSnap,
-                "album" : album
+                "album" : album,
+                "unMarkedThumbnailPath" : unMarkedThumbnailPath
                 
             });
             
@@ -220,7 +218,8 @@ exports.add = (dir) => {
 
 //http://sharp.dimens.io/en/stable/api-resize/
 //http://www.rapidtables.com/web/color/white-color.htm Colors
-function createImageThumbnail(inputPath, outputPath, width, height){
+
+function createImageThumbnail(inputPath, outputDir, fileName, width, height){
      sharp(inputPath)
             .resize(width, height)
             .background({r: 245, g: 245, b: 245, alpha: 100}) //THis is a black background
@@ -228,9 +227,8 @@ function createImageThumbnail(inputPath, outputPath, width, height){
             .toFormat(sharp.format.webp)
             // .max()
             // .withoutEnlargement(true)
-            .toFile(outputPath, function(err) {
-                // output.jpg is a 200 pixels wide and 200 pixels high image
-                // containing a scaled and cropped version of input.jpg
+            .toFile(outputDir + fileName, function(err) {
+                return addWatermark(fileName, outputDir);
         });
 };
 
@@ -248,25 +246,61 @@ function createVideoThumbnail(inputPath, outputDir, fileName, width, height){
         return false;
     })
     .on('end', function(stdout, stderr) {
-        if (compositeThumbnail(outputDir + fileName)) return true;
+        return compositeThumbnail(fileName, outputDir);
     });
+};
 
-    
-    
+function addWatermark(fileName, inputDir){
+    var pathToInputFile = inputDir + fileName;
+
+        //create new destination for this thumbnail
+        var watermarkThumbnails = inputDir + "Watermarked/";
+        var stat = null;
+        try {
+            stat = fs.statSync(watermarkThumbnails);
+        } catch (err) {
+            fs.mkdirSync(watermarkThumbnails);
+        }
+        if (stat && !stat.isDirectory()) {
+            throw new Error('Directory cannot be created because an inode of a different type exists at "' + watermarkThumbnails + '"');
+        }
+
+        var outputPath = watermarkThumbnails + fileName;
+
+        sharp(pathToInputFile)
+        .overlayWith(WATERMARK, { gravity: sharp.gravity.centre } )
+        .png()
+        .toFile(outputPath, function(err) {
+            return outputPath;
+        });
 };
 
 //ffmpeg https://github.com/fluent-ffmpeg/node-fluent-ffmpeg
-function compositeThumbnail(inputPath){
+function compositeThumbnail(fileName, inputDir){
 
-    sharp(inputPath)
+        var pathToInputFile = inputDir + fileName;
+
+        //create new destination for this thumbnail
+        var videoThumbnails = inputDir + "Videos/";
+        var stat = null;
+        try {
+            stat = fs.statSync(videoThumbnails);
+        } catch (err) {
+            fs.mkdirSync(videoThumbnails);
+        }
+        if (stat && !stat.isDirectory()) {
+            throw new Error('Directory cannot be created because an inode of a different type exists at "' + videoThumbnails + '"');
+        }
+
+        var outputPath = videoThumbnails + fileName;
+
+        sharp(pathToInputFile)
         .overlayWith(PRESS_PLAY, { gravity: sharp.gravity.centre } )
-        // .quality(90)
-        // .webp()
-        .toBuffer()
-        .then(function(outputBuffer) {
+        .png()
+        .toFile(outputPath, function(err) {
+            return outputPath;
+        });
 
-            return true;
-    });
 };
 
 exports.deleteSnap = (req, res, err) => {
@@ -296,8 +330,6 @@ exports.editSnap = (req, res, err) => {
     Snap.findById(req.body.snap._id, (err, foundSnap) => {
         if(err) res.send(err).status(501);
         else{
-
-            console.log(util.inspect(req.body, {showHidden: false, depth: null}));
             
             foundSnap.name = req.body.snap.name || foundSnap.name;
             foundSnap.description = req.body.snap.description || foundSnap.description;

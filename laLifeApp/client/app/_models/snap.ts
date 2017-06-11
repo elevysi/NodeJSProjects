@@ -14,7 +14,8 @@ export class Snap{
         public type?: string,
         public featured? : boolean,
         public publicSnap? : boolean,
-        public album? : Album
+        public album? : Album,
+        public unMarkedThumbnailPath? : string
        
   ) {  }
 }

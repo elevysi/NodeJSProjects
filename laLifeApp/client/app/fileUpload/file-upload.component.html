@@ -50,17 +50,17 @@
 
                                             <div class="form-group">
                                                 <label for="fileName">Name</label>
-                                                <input [(ngModel)]="name" class="form-control" id="fileName" placeholder="Name">
+                                                <input [(ngModel)]="model.name" class="form-control" id="fileName" placeholder="Name">
                                             </div>
 
                                             <div class="form-group">
                                                 <label for="fileDescription">Description</label>
-                                                <textarea [(ngModel)]="description" class="form-control" id="fileDescription"></textarea>
+                                                <textarea [(ngModel)]="model.description" class="form-control" id="fileDescription"></textarea>
                                             </div>
 
                                             <div class="form-group">
                                                 <label for="fileDescription">Choose type of upload</label>
-                                                <select name="album" [(ngModel)]="type" class="form-control">
+                                                <select name="album" [(ngModel)]="model.type" class="form-control">
                                                     <option value="image">Image</option>
                                                     <option value="video">Video</option>
                                                 </select>
@@ -68,7 +68,7 @@
 
                                             <div class="form-group">
                                                 <label for="fileDescription">Snap Album</label>
-                                                <select name="album" [(ngModel)]="album" class="form-control">
+                                                <select name="album" [(ngModel)]="model.album" class="form-control">
                                                     <option *ngFor="let album of albums" [ngValue]="album">  
                                                         {{album.name}}
                                                     </option>
@@ -79,7 +79,7 @@
                                                 <div class="col-lg-offset-2 col-lg-10">
                                                     <div class="checkbox">
                                                         <label>
-                                                            <input type="checkbox" [(ngModel)]="featured" name="featured"> Featured
+                                                            <input type="checkbox" [(ngModel)]="model.featured" name="featured"> Featured
                                                         </label>
                                                     </div>
                                                 </div>
@@ -89,7 +89,7 @@
                                                 <div class="col-lg-offset-2 col-lg-10">
                                                     <div class="checkbox">
                                                         <label>
-                                                            <input type="checkbox" [(ngModel)]="publicSnap" name="publicSnap"> Public Snap
+                                                            <input type="checkbox" [(ngModel)]="model.publicSnap" name="publicSnap"> Public Snap
                                                         </label>
                                                     </div>
                                                 </div>

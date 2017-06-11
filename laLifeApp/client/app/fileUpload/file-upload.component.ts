@@ -31,15 +31,8 @@ export class FileUploadComponent implements OnInit{
     snap : Snap;
     albums : Album [];
     private user : User;
-
-
-    name : string;
-    description : string;
-    path : string;
-    album : Album;
-    type : string;
-    featured : boolean = false;
-    publicSnap : boolean = true;
+    
+    model: any = {};
 
     public uploader : FileUploader = new FileUploader({
         url: this.snapUrl,
@@ -69,6 +62,8 @@ export class FileUploadComponent implements OnInit{
             .then(albums => {
                 this.albums = albums;
         });
+
+        this.model.publicSnap = true; //make the uploads public by default
     }
 
     goBack() : void {
@@ -78,18 +73,21 @@ export class FileUploadComponent implements OnInit{
     fileSubmit(): void {
         this.appendToFile();
         this.uploader.uploadAll();
+
+        //reset this model to null
+        this.model = {};
+        this.model.publicSnap = true; //make the uploads public by default
     }
 
     appendToFile() : void {
         this.uploader.onBuildItemForm = (item : any, form : any) => {
-            form.append("name", this.name);
-            form.append("description", this.description);
-            form.append("type", this.type);
-            // console.log("logged user is "+ this.user.);
+            form.append("name", this.model.name);
+            form.append("description", this.model.description);
+            form.append("type", this.model.type);
             form.append("userIdentifier", this.user.username);
-            form.append("album", JSON.stringify(this.album));
-            form.append("featured", JSON.stringify(this.featured));
-            form.append("publicSnap", JSON.stringify(this.publicSnap));
+            form.append("album", JSON.stringify(this.model.album));
+            form.append("featured", JSON.stringify(this.model.featured));
+            form.append("publicSnap", JSON.stringify(this.model.publicSnap));
             
         };
 

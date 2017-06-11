@@ -24,8 +24,7 @@ var FileUploadComponent = (function () {
         this.location = location;
         this.authenticationService = authenticationService;
         this.snapUrl = "api/snaps";
-        this.featured = false;
-        this.publicSnap = true;
+        this.model = {};
         this.uploader = new ng2_file_upload_1.FileUploader({
             url: this.snapUrl,
             headers: [
@@ -45,6 +44,7 @@ var FileUploadComponent = (function () {
             .then(function (albums) {
             _this.albums = albums;
         });
+        this.model.publicSnap = true; //make the uploads public by default
     };
     FileUploadComponent.prototype.goBack = function () {
         this.location.back();
@@ -52,18 +52,20 @@ var FileUploadComponent = (function () {
     FileUploadComponent.prototype.fileSubmit = function () {
         this.appendToFile();
         this.uploader.uploadAll();
+        //reset this model to null
+        this.model = {};
+        this.model.publicSnap = true; //make the uploads public by default
     };
     FileUploadComponent.prototype.appendToFile = function () {
         var _this = this;
         this.uploader.onBuildItemForm = function (item, form) {
-            form.append("name", _this.name);
-            form.append("description", _this.description);
-            form.append("type", _this.type);
-            // console.log("logged user is "+ this.user.);
+            form.append("name", _this.model.name);
+            form.append("description", _this.model.description);
+            form.append("type", _this.model.type);
             form.append("userIdentifier", _this.user.username);
-            form.append("album", JSON.stringify(_this.album));
-            form.append("featured", JSON.stringify(_this.featured));
-            form.append("publicSnap", JSON.stringify(_this.publicSnap));
+            form.append("album", JSON.stringify(_this.model.album));
+            form.append("featured", JSON.stringify(_this.model.featured));
+            form.append("publicSnap", JSON.stringify(_this.model.publicSnap));
         };
     };
     FileUploadComponent = __decorate([
