@@ -83,7 +83,7 @@ exports.list = (req, res, next) => {
 //      }
         )
         .sort({created: 'desc'})
-        .limit(20)
+        .limit(100)
         .exec(function(err, resources){
         if(err) res.send(err).status(404);
         else {
